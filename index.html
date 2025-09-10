@@ -446,58 +446,31 @@
                 <label for="participantCode">Selecciona el Participante:</label>
                 <select id="participantCode"></select>
             </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="specificType">Elige el Tipo Específico de Evidencia:</label>
+            <select id="specificType">
+                <option value="">-- Selecciona el tipo principal primero --</option>
+            </select>
+        </div>
+        
+        <div id="description-section" class="hidden">
             <div class="form-group">
-                <label for="specificParticipantType">Tipo Específico de Evidencia (Participante):</label>
-                <select id="specificParticipantType">
-                    <option value="">-- Selecciona una opción --</option>
-                    <option value="REGALOS PADRINOS">Regalos Padrinos</option>
-                    <option value="MEDICINA">Medicina</option>
-                    <option value="CUMPLEANOS">Cumpleaños</option>
-                    <option value="TFI">TFI</option>
-                    <option value="AYUDA ALIMENTARIA">Ayuda Alimentaria</option>
-                    <option value="DONACIONES PERSONAL">Donaciones Personal</option>
-                </select>
+                <label for="description">Descripción breve de la donación/gestión:</label>
+                <input type="text" id="description" placeholder="Ej: Gestiones con la iglesia para alimentos">
             </div>
         </div>
-
-        <div id="activities-section" class="hidden">
+        
+        <div id="tutor-section" class="hidden">
             <div class="form-group">
-                <label for="specificActivityType">Tipo Específico de Actividad:</label>
-                <select id="specificActivityType">
-                    <option value="">-- Selecciona una opción --</option>
-                    <option value="DONACIONES">Donaciones (Ropa, Regalos, etc. - como actividad)</option>
-                    <option value="CHEQUEOS">Chequeos Médicos</option>
-                    <option value="DIA DE LA BIBLIA">Día de la Biblia</option>
-                    <option value="PELICULAS">Proyección de Películas</option>
-                    <option value="ASEO GENERAL">Aseo General</option>
-                    <option value="NAVIDAD">Actividad de Navidad</option>
-                    <option value="ACTIVIDADES EXTRACURRICULARES">Actividades Extracurriculares</option>
-                </select>
-            </div>
-            <div id="tutor-section" class="hidden">
-                <div class="form-group">
-                    <label for="tutorName">Selecciona la Tutora:</label>
-                    <select id="tutorName">
-                        <option value="">-- Selecciona una tutora --</option>
-                        <option value="LISBETH">Lisbeth</option>
-                        <option value="DIANA">Diana</option>
-                        <option value="HELEN">Helen</option>
-                        <option value="JULIANA">Juliana</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div id="donations-section" class="hidden">
-            <div class="form-group">
-                <label for="specificDonationType">Tipo Específico de Donación/Gestión:</label>
-                <select id="specificDonationType">
-                    <option value="">-- Selecciona una opción --</option>
-                    <option value="ROPA">Ropa</option>
-                    <option value="REGALOS">Regalos</option>
-                    <option value="MATERIAL">Material (Escolar, oficina, etc.)</option>
-                    <option value="ELECTRODOMESTICOS">Electrodomésticos</option>
-                    <option value="MERCADO">Mercado (Alimentos)</option>
+                <label for="tutorName">Selecciona la Tutora:</label>
+                <select id="tutorName">
+                    <option value="">-- Selecciona una tutora --</option>
+                    <option value="LISBETH">Lisbeth</option>
+                    <option value="DIANA">Diana</option>
+                    <option value="HELEN">Helen</option>
+                    <option value="JULIANA">Juliana</option>
                 </select>
             </div>
         </div>
@@ -555,8 +528,8 @@
             </li>
             <li>**Estructura de Google Drive:**
                 <ul>
-                    <li>El sistema creará automáticamente las carpetas <code>Participantes</code>, <code>Actividades</code> y <code>Donaciones</code> dentro de tu Carpeta Principal (la de <code>MAIN_FOLDER_ID</code>).</li>
-                    <li>Dentro de estas, se crearán subcarpetas para cada **tipo específico** de evidencia (ej. <code>REGALOS PADRINOS</code>, <code>CHEQUEOS</code>, <code>ROPA</code>).</li>
+                    <li>El sistema creará automáticamente las carpetas <code>PARTICIPANTES</code>, <code>ACTIVIDADES</code> y <code>DONACIONES</code> dentro de tu Carpeta Principal (la de <code>MAIN_FOLDER_ID</code>).</li>
+                    <li>Dentro de estas, se crearán las subcarpetas específicas como <code>REGALOS_PADRINOS</code>, <code>ASEO_GENERAL</code>, etc.</li>
                 </ul>
             </li>
         </ol>
@@ -568,7 +541,7 @@
             <li>Completa los detalles. Una vez listos, haz clic en el botón **"Abrir Cámara"**.</li>
             <li>La interfaz de la cámara se abrirá en pantalla completa. Posiciona lo que deseas fotografiar y haz clic en <strong>"📸 Tomar Foto"</strong>.</li>
             <li>Revisa la foto. Si no estás conforme, haz clic en <strong>"🔄 Tomar Otra Foto"</strong>.</li>
-            <li>Si la foto es correcta, haz clic en <strong>"✅ Guardar Evidencia"</strong>. La foto se subirá automáticamente a Google Drive con un nombre estandarizado (<code>FECHA_TIPO_ESPECIFICO_CODIGO.jpg</code>).</li>
+            <li>Si la foto es correcta, haz clic en <strong>"✅ Guardar Evidencia"</strong>. La foto se subirá automáticamente a Google Drive con un nombre estandarizado y único.</li>
         </ol>
 
         <h3>⬇️ Descargar Evidencia:</h3>
@@ -614,6 +587,7 @@
     const tabs = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     const evidenceTypeSelect = document.getElementById('evidenceType');
+    const specificTypeSelect = document.getElementById('specificType');
     const downloadMainTypeSelect = document.getElementById('downloadMainType');
     const downloadSpecificTypeSelect = document.getElementById('downloadSpecificType');
     const downloadMonthInput = document.getElementById('downloadMonth');
@@ -627,24 +601,47 @@
     const saveButton = document.getElementById('save-button');
     const downloadButton = document.getElementById('download-button');
     const participantsSection = document.getElementById('participants-section');
-    const activitiesSection = document.getElementById('activities-section');
-    const donationsSection = document.getElementById('donations-section');
-    const participantCodeSelect = document.getElementById('participantCode');
-    const specificParticipantTypeSelect = document.getElementById('specificParticipantType');
-    const specificActivityTypeSelect = document.getElementById('specificActivityType');
-    const specificDonationTypeSelect = document.getElementById('specificDonationType');
+    const descriptionSection = document.getElementById('description-section');
     const tutorSection = document.getElementById('tutor-section');
+    const participantCodeSelect = document.getElementById('participantCode');
+    const descriptionInput = document.getElementById('description');
+    const tutorNameSelect = document.getElementById('tutorName');
     const fullscreenCameraModal = document.getElementById('fullscreen-camera-modal');
     const closeCameraButton = document.getElementById('close-camera');
 
     let capturedPhotoBlob = null;
     let stream = null;
+    let participantNameMap = {};
 
-    // Mapeo para los selectores de descarga
-    const downloadOptionsMap = {
-        'participantes': ['REGALOS PADRINOS', 'MEDICINA', 'CUMPLEANOS', 'TFI', 'AYUDA ALIMENTARIA', 'DONACIONES PERSONAL'],
-        'actividades': ['DONACIONES', 'CHEQUEOS', 'DIA DE LA BIBLIA', 'PELICULAS', 'ASEO GENERAL', 'NAVIDAD', 'ACTIVIDADES EXTRACURRICULARES'],
-        'donaciones': ['ROPA', 'REGALOS', 'MATERIAL', 'ELECTRODOMESTICOS', 'MERCADO']
+    const evidenceOptionsMap = {
+        'participantes': [
+            { value: 'REGALOS PADRINOS', text: 'Regalos Padrinos' },
+            { value: 'MEDICINA', text: 'Medicina' },
+            { value: 'CUMPLEANOS', text: 'Cumpleaños' },
+            { value: 'TFI', text: 'TFI' },
+            { value: 'AYUDA ALIMENTARIA', text: 'Ayuda Alimentaria' },
+            { value: 'DONACIONES PERSONAL', text: 'Donaciones Personal' }
+        ],
+        'actividades': [
+            { value: 'ASEO GENERAL', text: 'Aseo General' },
+            { value: 'PELICULAS', text: 'Proyección de Películas' },
+            { value: 'DIA BIBLIA', text: 'Día de la Biblia' },
+            { value: 'NAVIDAD', text: 'Actividad de Navidad' },
+            { value: 'FIESTAS', text: 'Fiestas (Día del Niño, etc.)' },
+            { value: 'CHEQUEOS', text: 'Chequeos Médicos' },
+            { value: 'ENCUENTROS SUPER', text: 'Encuentros con Supervisoras' },
+            { value: 'ENCUENTROS CAMINA', text: 'Encuentros con CAMINA' },
+            { value: 'ACTIVIDADES EXTRACURRICULARES', text: 'Actividades Extracurriculares' },
+            { value: 'DEPORTE', text: 'Deporte' }
+        ],
+        'donaciones': [
+            { value: 'DONACION ROPA', text: 'Donación Ropa' },
+            { value: 'DONACION MATERIAL', text: 'Donación Material (Escolar, oficina, etc.)' },
+            { value: 'DONACION MERCADO', text: 'Donación Mercado (Alimentos)' },
+            { value: 'DONACION ELECTRO', text: 'Donación Electrodomésticos' },
+            { value: 'DONACION DINERO', text: 'Donación Dinero' },
+            { value: 'GESTION IGLESIA', text: 'Gestión con Iglesia' }
+        ]
     };
 
     // Lógica de Tabs
@@ -655,7 +652,6 @@
             button.classList.add('active');
             document.getElementById(button.dataset.tab).classList.add('active');
             
-            // Si cambias a otro tab, detén la cámara y oculta el modal
             if (button.dataset.tab !== 'upload-tab') {
                 closeCameraModal();
                 messageElement.classList.remove('show', 'success', 'error', 'info');
@@ -677,12 +673,14 @@
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const participants = await response.json();
+            participantNameMap = {};
             participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
             participants.forEach(p => {
                 const option = document.createElement('option');
                 option.value = p.code;
                 option.textContent = `${p.code} - ${p.name}`;
                 participantCodeSelect.appendChild(option);
+                participantNameMap[p.code] = p.name;
             });
             showMessage('Participantes cargados.', 'success', messageElement, 2000);
         } catch (error) {
@@ -691,37 +689,44 @@
         }
     }
     
-    // Lógica para mostrar/ocultar secciones y botón de cámara
+    // Lógica para mostrar/ocultar secciones y cargar opciones de tipos específicos
     evidenceTypeSelect.addEventListener('change', () => {
         participantsSection.classList.add('hidden');
-        activitiesSection.classList.add('hidden');
-        donationsSection.classList.add('hidden');
+        descriptionSection.classList.add('hidden');
         tutorSection.classList.add('hidden');
         startCameraButton.classList.add('hidden');
         messageElement.classList.remove('show');
+        
+        const mainType = evidenceTypeSelect.value;
+        const specificSelect = specificTypeSelect;
+        specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
 
-        if (evidenceTypeSelect.value) {
-             startCameraButton.classList.remove('hidden');
+        if (mainType && evidenceOptionsMap[mainType]) {
+            evidenceOptionsMap[mainType].forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option.value;
+                opt.textContent = option.text;
+                specificSelect.appendChild(opt);
+            });
+            startCameraButton.classList.remove('hidden');
+        } else {
+            specificSelect.innerHTML = '<option value="">-- Selecciona el tipo principal primero --</option>';
         }
 
-        switch (evidenceTypeSelect.value) {
-            case 'participantes':
-                participantsSection.classList.remove('hidden');
-                loadParticipants();
-                break;
-            case 'actividades':
-                activitiesSection.classList.remove('hidden');
-                break;
-            case 'donaciones':
-                donationsSection.classList.remove('hidden');
-                break;
+        if (mainType === 'participantes') {
+            participantsSection.classList.remove('hidden');
+            loadParticipants();
         }
     });
 
-    // Mostrar el selector de tutora
-    specificActivityTypeSelect.addEventListener('change', () => {
+    specificTypeSelect.addEventListener('change', () => {
+        descriptionSection.classList.add('hidden');
         tutorSection.classList.add('hidden');
-        if (specificActivityTypeSelect.value === 'ACTIVIDADES EXTRACURRICULARES') {
+        const specificType = specificTypeSelect.value;
+
+        if (specificType === 'GESTION IGLESIA') {
+            descriptionSection.classList.remove('hidden');
+        } else if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
             tutorSection.classList.remove('hidden');
         }
     });
@@ -731,12 +736,12 @@
         const mainType = downloadMainTypeSelect.value;
         const specificSelect = downloadSpecificTypeSelect;
         specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
-        if (mainType && downloadOptionsMap[mainType]) {
-            downloadOptionsMap[mainType].forEach(optionText => {
-                const option = document.createElement('option');
-                option.value = optionText;
-                option.textContent = optionText.replace(/_/g, ' ');
-                specificSelect.appendChild(option);
+        if (mainType && evidenceOptionsMap[mainType]) {
+            evidenceOptionsMap[mainType].forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option.value;
+                opt.textContent = option.text;
+                specificSelect.appendChild(opt);
             });
         } else {
             specificSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
@@ -745,23 +750,24 @@
     
     // Control del modal de la cámara
     startCameraButton.addEventListener('click', () => {
-        // Validación de campos antes de abrir la cámara
         const evidenceType = evidenceTypeSelect.value;
+        const specificType = specificTypeSelect.value;
         let valid = true;
         
-        switch (evidenceType) {
-            case 'participantes':
-                if (!participantCodeSelect.value || !specificParticipantTypeSelect.value) valid = false;
-                break;
-            case 'actividades':
-                if (!specificActivityTypeSelect.value) valid = false;
-                if (specificActivityTypeSelect.value === 'ACTIVIDADES EXTRACURRICULARES' && !document.getElementById('tutorName').value) valid = false;
-                break;
-            case 'donaciones':
-                if (!specificDonationTypeSelect.value) valid = false;
-                break;
-            default:
-                valid = false;
+        if (!evidenceType || !specificType) {
+            valid = false;
+        }
+
+        if (evidenceType === 'participantes' && !participantCodeSelect.value) {
+            valid = false;
+        }
+        
+        if (specificType === 'GESTION IGLESIA' && !descriptionInput.value) {
+            valid = false;
+        }
+
+        if (specificType === 'ACTIVIDADES EXTRACURRICULARES' && !tutorNameSelect.value) {
+            valid = false;
         }
 
         if (!valid) {
@@ -773,7 +779,7 @@
         setTimeout(() => {
             fullscreenCameraModal.classList.add('show');
             startCamera();
-        }, 10); // Pequeño retraso para la animación
+        }, 10);
     });
 
     closeCameraButton.addEventListener('click', closeCameraModal);
@@ -784,7 +790,7 @@
             fullscreenCameraModal.classList.add('hidden');
             stopCamera();
             resetCameraAndButtons();
-        }, 500); // Coincide con la duración de la transición
+        }, 500);
     }
 
     // Lógica de la cámara
@@ -804,7 +810,7 @@
             webcamVideo.play();
         } catch (err) {
             console.error('Error al acceder a la cámara:', err);
-            showMessage('🚫 No se pudo acceder a la cámara trasera. Asegúrate de que el dispositivo tenga una o revisa los permisos.', 'error', messageElement);
+            showMessage('🚫 No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados o intenta desde otro dispositivo.', 'error', messageElement);
             closeCameraModal();
         }
     }
@@ -847,8 +853,6 @@
         }, 'image/jpeg', 0.95);
     });
 
-    retakeButton.addEventListener('click', resetCameraAndButtons);
-
     // Enviar la evidencia
     saveButton.addEventListener('click', async () => {
         if (!capturedPhotoBlob) {
@@ -857,24 +861,23 @@
         }
         
         const evidenceType = evidenceTypeSelect.value;
-        let specificType = '';
-        let participantCode = '';
+        let specificType = specificTypeSelect.value;
+        let participantCode = null;
+        let participantName = null;
+        let description = null;
 
-        switch (evidenceType) {
-            case 'participantes':
-                specificType = specificParticipantTypeSelect.value;
-                participantCode = participantCodeSelect.value;
-                break;
-            case 'actividades':
-                specificType = specificActivityTypeSelect.value;
-                if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
-                    const tutorName = document.getElementById('tutorName').value;
-                    specificType = `${specificType}_${tutorName}`;
-                }
-                break;
-            case 'donaciones':
-                specificType = specificDonationTypeSelect.value;
-                break;
+        if (evidenceType === 'participantes') {
+            participantCode = participantCodeSelect.value;
+            participantName = participantNameMap[participantCode];
+        }
+        
+        if (specificType === 'GESTION IGLESIA') {
+            description = descriptionInput.value;
+        }
+
+        if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
+            const tutorName = tutorNameSelect.value;
+            specificType = `${specificType}_${tutorName}`;
         }
         
         showMessage('⏳ Guardando evidencia en Google Drive...', 'info', messageElement);
@@ -885,6 +888,8 @@
         formData.append('evidenceType', evidenceType);
         formData.append('specificType', specificType);
         if (participantCode) formData.append('participantCode', participantCode);
+        if (participantName) formData.append('participantName', participantName);
+        if (description) formData.append('description', description);
 
         try {
             const response = await fetch(scriptURL, { method: 'POST', body: formData });
@@ -905,6 +910,11 @@
                 resetFormState();
             }, 3000);
         }
+    });
+    
+    retakeButton.addEventListener('click', () => {
+        resetCameraAndButtons();
+        startCamera();
     });
 
     // Descargar evidencias
@@ -956,14 +966,12 @@
 
     function resetFormState() {
         evidenceTypeSelect.value = '';
-        specificParticipantTypeSelect.value = '';
-        specificActivityTypeSelect.value = '';
-        specificDonationTypeSelect.value = '';
+        specificTypeSelect.value = '';
         participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
+        descriptionInput.value = '';
         
         participantsSection.classList.add('hidden');
-        activitiesSection.classList.add('hidden');
-        donationsSection.classList.add('hidden');
+        descriptionSection.classList.add('hidden');
         tutorSection.classList.add('hidden');
         startCameraButton.classList.add('hidden');
         
@@ -976,10 +984,6 @@
         downloadMonthInput.value = '';
         downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
         downloadMessageElement.textContent = '';
-    }
-
-    if (evidenceTypeSelect.value === 'participantes' && document.getElementById('upload-tab').classList.contains('active')) {
-        loadParticipants();
     }
 </script>
 
