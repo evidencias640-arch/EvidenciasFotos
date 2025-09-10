@@ -623,6 +623,12 @@
             { value: 'DONACIONES PERSONAL', text: 'Donaciones Personal' }
         ],
         'actividades': [
+            { value: 'CLASES DE LIDERAZGO', text: 'Clases de Liderazgo' },
+            { value: 'JORNADAS DE LIMPIEZA', text: 'Jornadas de Limpieza' },
+            { value: 'ACTIVIDADES EXTRACURRICULARES', text: 'Actividades Extracurriculares' },
+            { value: 'REGALOS', text: 'Regalos' },
+            { value: 'TEFI', text: 'Tefi' },
+            { value: 'AYUDAS', text: 'Ayudas' },
             { value: 'ASEO GENERAL', text: 'Aseo General' },
             { value: 'PELICULAS', text: 'Proyección de Películas' },
             { value: 'DIA BIBLIA', text: 'Día de la Biblia' },
@@ -631,8 +637,8 @@
             { value: 'CHEQUEOS', text: 'Chequeos Médicos' },
             { value: 'ENCUENTROS SUPER', text: 'Encuentros con Supervisoras' },
             { value: 'ENCUENTROS CAMINA', text: 'Encuentros con CAMINA' },
-            { value: 'ACTIVIDADES EXTRACURRICULARES', text: 'Actividades Extracurriculares' },
-            { value: 'DEPORTE', text: 'Deporte' }
+            { value: 'DEPORTE', text: 'Deporte' },
+            { value: 'GESTION IGLESIA', text: 'Gestión con Iglesia' }
         ],
         'donaciones': [
             { value: 'DONACION ROPA', text: 'Donación Ropa' },
@@ -724,7 +730,7 @@
         tutorSection.classList.add('hidden');
         const specificType = specificTypeSelect.value;
 
-        if (specificType === 'GESTION IGLESIA') {
+        if (specificType === 'GESTION IGLESIA' || specificType === 'PERFIL') {
             descriptionSection.classList.remove('hidden');
         } else if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
             tutorSection.classList.remove('hidden');
@@ -762,10 +768,11 @@
             valid = false;
         }
         
-        if (specificType === 'GESTION IGLESIA' && !descriptionInput.value) {
-            valid = false;
+        if (specificType === 'GESTION IGLESIA' || specificType === 'PERFIL') {
+            if (!descriptionInput.value) {
+                valid = false;
+            }
         }
-
         if (specificType === 'ACTIVIDADES EXTRACURRICULARES' && !tutorNameSelect.value) {
             valid = false;
         }
@@ -861,60 +868,42 @@
         }
         
         const evidenceType = evidenceTypeSelect.value;
-        let specificType = '';
+        const specificType = specificTypeSelect.value;
         let participantCode = '';
-        let participantName = ''; // Añadir esta línea
-        let description = ''; // Añadir esta línea
+        let additionalInfo = '';
 
-        switch (evidenceType) {
-            case 'participantes':
-                specificType = specificParticipantTypeSelect.value;
-                participantCode = participantCodeSelect.value;
-                // Obtener el nombre del participante para la función
-                const selectedOption = participantCodeSelect.options[participantCodeSelect.selectedIndex];
-                participantName = selectedOption.textContent.split(' - ')[1].trim();
-                break;
-            case 'actividades':
-                specificType = specificActivityTypeSelect.value;
-                if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
-                    const tutorName = document.getElementById('tutorName').value;
-                    specificType = `${specificType}_${tutorName}`;
-                }
-                // Si la actividad es 'GESTION IGLESIA', necesitamos la descripción
-                if (specificType.toUpperCase() === 'GESTION IGLESIA') {
-                    // Si tienes un campo de descripción para actividades, recógelo aquí
-                    // Por ahora, lo dejamos vacío si no existe
-                    description = ''; 
-                }
-                break;
-            case 'donaciones':
-                specificType = specificDonationTypeSelect.value;
-                // Si la donación es 'GESTION IGLESIA', necesitamos la descripción
-                if (specificType.toUpperCase() === 'GESTION IGLESIA') {
-                    // Si tienes un campo de descripción, recógelo aquí
-                    // Por ahora, lo dejamos vacío si no existe
-                    description = '';
-                }
-                break;
+        if (evidenceType === 'participantes') {
+            participantCode = participantCodeSelect.value;
+            additionalInfo = participantNameMap[participantCode];
+            if (specificType === 'PERFIL') {
+                additionalInfo = descriptionInput.value;
+            }
+        } else if (evidenceType === 'actividades') {
+            if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
+                additionalInfo = tutorNameSelect.value;
+            } else if (specificType === 'GESTION IGLESIA') {
+                additionalInfo = descriptionInput.value;
+            }
+        } else if (evidenceType === 'donaciones') {
+            if (specificType === 'GESTION IGLESIA') {
+                additionalInfo = descriptionInput.value;
+            }
         }
         
         showMessage('⏳ Guardando evidencia en Google Drive...', 'info', messageElement);
         closeCameraModal();
 
-        // Convertir el Blob a un string Base64
         const reader = new FileReader();
         reader.readAsDataURL(capturedPhotoBlob);
         reader.onloadend = async function() {
             const base64data = reader.result.split(',')[1];
             
-            // Crear el objeto JSON para enviar
             const postData = {
                 photoData: base64data,
                 evidenceType: evidenceType,
                 specificType: specificType,
                 participantCode: participantCode,
-                participantName: participantName, // Enviar el nombre también
-                description: description
+                additionalInfo: additionalInfo
             };
 
             try {
@@ -1002,6 +991,7 @@
         specificTypeSelect.value = '';
         participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
         descriptionInput.value = '';
+        tutorNameSelect.value = '';
         
         participantsSection.classList.add('hidden');
         descriptionSection.classList.add('hidden');
