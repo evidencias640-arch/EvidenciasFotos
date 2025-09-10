@@ -581,7 +581,7 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxSQvXIsVZCj15gzRaVK0mZOhk5xxfFDCawu-JvG3m5lkaz9vFH05AYLoYAQ22QbMrS3g/exec'; // ⚠️ ¡Reemplaza con tu URL del Apps Script!
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz7rDuN7_MT48PpPF_97ZbwfMuP0RPDUJ7bVY4-16yyZmBqGtMgkSFCuAMYR4C5FlKxTw/exec'; // ⚠️ ¡Reemplaza con tu URL del Apps Script!
     
     // Selectores y elementos del DOM
     const tabs = document.querySelectorAll('.tab-button');
@@ -853,7 +853,7 @@
         }, 'image/jpeg', 0.95);
     });
 
-    // Enviar la evidencia
+   // Enviar la evidencia
     saveButton.addEventListener('click', async () => {
         if (!capturedPhotoBlob) {
             showMessage('⚠️ Por favor, toma una foto primero antes de guardar.', 'error', messageElement);
@@ -861,55 +861,88 @@
         }
         
         const evidenceType = evidenceTypeSelect.value;
-        let specificType = specificTypeSelect.value;
-        let participantCode = null;
-        let participantName = null;
-        let description = null;
+        let specificType = '';
+        let participantCode = '';
+        let participantName = ''; // Añadir esta línea
+        let description = ''; // Añadir esta línea
 
-        if (evidenceType === 'participantes') {
-            participantCode = participantCodeSelect.value;
-            participantName = participantNameMap[participantCode];
-        }
-        
-        if (specificType === 'GESTION IGLESIA') {
-            description = descriptionInput.value;
-        }
-
-        if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
-            const tutorName = tutorNameSelect.value;
-            specificType = `${specificType}_${tutorName}`;
+        switch (evidenceType) {
+            case 'participantes':
+                specificType = specificParticipantTypeSelect.value;
+                participantCode = participantCodeSelect.value;
+                // Obtener el nombre del participante para la función
+                const selectedOption = participantCodeSelect.options[participantCodeSelect.selectedIndex];
+                participantName = selectedOption.textContent.split(' - ')[1].trim();
+                break;
+            case 'actividades':
+                specificType = specificActivityTypeSelect.value;
+                if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
+                    const tutorName = document.getElementById('tutorName').value;
+                    specificType = `${specificType}_${tutorName}`;
+                }
+                // Si la actividad es 'GESTION IGLESIA', necesitamos la descripción
+                if (specificType.toUpperCase() === 'GESTION IGLESIA') {
+                    // Si tienes un campo de descripción para actividades, recógelo aquí
+                    // Por ahora, lo dejamos vacío si no existe
+                    description = ''; 
+                }
+                break;
+            case 'donaciones':
+                specificType = specificDonationTypeSelect.value;
+                // Si la donación es 'GESTION IGLESIA', necesitamos la descripción
+                if (specificType.toUpperCase() === 'GESTION IGLESIA') {
+                    // Si tienes un campo de descripción, recógelo aquí
+                    // Por ahora, lo dejamos vacío si no existe
+                    description = '';
+                }
+                break;
         }
         
         showMessage('⏳ Guardando evidencia en Google Drive...', 'info', messageElement);
         closeCameraModal();
 
-        const formData = new FormData();
-        formData.append('photo', capturedPhotoBlob, 'photo.jpg');
-        formData.append('evidenceType', evidenceType);
-        formData.append('specificType', specificType);
-        if (participantCode) formData.append('participantCode', participantCode);
-        if (participantName) formData.append('participantName', participantName);
-        if (description) formData.append('description', description);
+        // Convertir el Blob a un string Base64
+        const reader = new FileReader();
+        reader.readAsDataURL(capturedPhotoBlob);
+        reader.onloadend = async function() {
+            const base64data = reader.result.split(',')[1];
+            
+            // Crear el objeto JSON para enviar
+            const postData = {
+                photoData: base64data,
+                evidenceType: evidenceType,
+                specificType: specificType,
+                participantCode: participantCode,
+                participantName: participantName, // Enviar el nombre también
+                description: description
+            };
 
-        try {
-            const response = await fetch(scriptURL, { method: 'POST', body: formData });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            try {
+                const response = await fetch(scriptURL, { 
+                    method: 'POST', 
+                    body: JSON.stringify(postData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                if (result.status === 'success') {
+                    showMessage('🎉 ¡Evidencia guardada correctamente en Drive! 🎉', 'success', messageElement);
+                } else {
+                    showMessage(`❌ Error al guardar: ${result.message}`, 'error', messageElement);
+                }
+            } catch (error) {
+                console.error('Error al guardar:', error);
+                showMessage('🚨 Ocurrió un error inesperado al subir. Inténtalo de nuevo. Asegúrate de que el Apps Script esté desplegado correctamente.', 'error', messageElement);
+            } finally {
+                setTimeout(() => {
+                    resetFormState();
+                }, 3000);
             }
-            const result = await response.json();
-            if (result.status === 'success') {
-                showMessage('🎉 ¡Evidencia guardada correctamente en Drive! 🎉', 'success', messageElement);
-            } else {
-                showMessage(`❌ Error al guardar: ${result.message}`, 'error', messageElement);
-            }
-        } catch (error) {
-            console.error('Error al guardar:', error);
-            showMessage('🚨 Ocurrió un error inesperado al subir. Inténtalo de nuevo. Asegúrate de que el Apps Script esté desplegado correctamente.', 'error', messageElement);
-        } finally {
-            setTimeout(() => {
-                resetFormState();
-            }, 3000);
-        }
+        };
     });
     
     retakeButton.addEventListener('click', () => {
