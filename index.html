@@ -279,6 +279,26 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+        
+        .button-group-modal button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        #capture-button {
+            background-color: var(--primary-color);
+        }
+        
+        #retake-button {
+            background-color: #f39c12;
+        }
+        
+        #save-button {
+            background-color: #27ae60;
+        }
+        
+        #switch-camera-button {
+            background-color: #3498db;
+        }
 
         .close-button {
             background-color: #f44336;
@@ -574,6 +594,7 @@
                 <button id="capture-button">📸 Tomar Foto</button>
                 <button id="retake-button" class="hidden">🔄 Tomar Otra</button>
                 <button id="save-button" class="hidden">✅ Guardar</button>
+                <button id="switch-camera-button" class="hidden">🔄 Cambiar Cámara</button>
             </div>
             <button id="close-camera" class="close-button">Cerrar</button>
         </div>
@@ -608,10 +629,13 @@
     const tutorNameSelect = document.getElementById('tutorName');
     const fullscreenCameraModal = document.getElementById('fullscreen-camera-modal');
     const closeCameraButton = document.getElementById('close-camera');
+    const switchCameraButton = document.getElementById('switch-camera-button'); // Nuevo selector para el botón de cambio
 
     let capturedPhotoBlob = null;
     let stream = null;
     let participantNameMap = {};
+    let facingMode = 'environment'; // Variable para controlar la cámara activa
+    let cameraDevices = []; // Variable para almacenar los dispositivos de video
 
     const evidenceOptionsMap = {
         'participantes': [
@@ -803,23 +827,40 @@
     // Lógica de la cámara
     async function startCamera() {
         if (stream) {
-            webcamVideo.play();
-            return;
+            stopCamera();
         }
         try {
             const constraints = {
                 video: {
-                    facingMode: { exact: 'environment' }
+                    facingMode: facingMode
                 }
             };
             stream = await navigator.mediaDevices.getUserMedia(constraints);
             webcamVideo.srcObject = stream;
             webcamVideo.play();
+
+            // Verificar si hay más de una cámara para mostrar el botón de cambio
+            navigator.mediaDevices.enumerateDevices()
+                .then(devices => {
+                    cameraDevices = devices.filter(device => device.kind === 'videoinput');
+                    if (cameraDevices.length > 1) {
+                        switchCameraButton.classList.remove('hidden');
+                    } else {
+                        switchCameraButton.classList.add('hidden');
+                    }
+                });
+
         } catch (err) {
             console.error('Error al acceder a la cámara:', err);
             showMessage('🚫 No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados o intenta desde otro dispositivo.', 'error', messageElement);
             closeCameraModal();
         }
+    }
+    
+    // Nueva función para cambiar de cámara
+    function switchCamera() {
+        facingMode = (facingMode === 'environment') ? 'user' : 'environment';
+        startCamera();
     }
 
     function stopCamera() {
@@ -836,6 +877,7 @@
         captureButton.classList.remove('hidden');
         retakeButton.classList.add('hidden');
         saveButton.classList.add('hidden');
+        switchCameraButton.classList.remove('hidden');
         capturedPhotoBlob = null;
     }
 
@@ -856,9 +898,13 @@
             captureButton.classList.add('hidden');
             retakeButton.classList.remove('hidden');
             saveButton.classList.remove('hidden');
+            switchCameraButton.classList.add('hidden'); // Ocultar el botón al tomar la foto
             stopCamera();
         }, 'image/jpeg', 0.95);
     });
+    
+    // Event listener para el nuevo botón de cambio de cámara
+    switchCameraButton.addEventListener('click', switchCamera);
 
    // Enviar la evidencia
     saveButton.addEventListener('click', async () => {
