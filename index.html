@@ -22,960 +22,726 @@
             --error-color: #d32f2f; /* Rojo oscuro para error */
             --info-color: #1976d2; /* Azul para información */
         }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, var(--background-light) 0%, var(--background-dark) 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-light);
             color: var(--text-dark);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding: 20px;
             min-height: 100vh;
-            font-size: 16px;
         }
 
         .container {
-            width: 95%;
-            max-width: 950px;
-            margin: 25px auto;
-            background: var(--card-bg);
-            border-radius: 18px;
-            box-shadow: 0 15px 40px var(--shadow-medium);
-            overflow: hidden;
-            padding: 35px;
-            animation: fadeIn 0.8s ease-out;
-            border: 1px solid var(--border-color);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-            position: relative;
-        }
-
-        .header h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.8em;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-weight: 700;
-        }
-
-        .header h1 span {
-            display: inline-block;
-            animation: bounceIn 0.8s ease-out both;
-        }
-        .header h1 span:nth-child(1) { animation-delay: 0.1s; }
-        .header h1 span:nth-child(2) { animation-delay: 0.2s; }
-        .header h1 span:nth-child(3) { animation-delay: 0.3s; }
-        .header h1 span:nth-child(4) { animation-delay: 0.4s; }
-
-        .header p {
-            font-style: italic;
-            color: var(--text-light);
-            margin-top: 0;
-            font-size: 1.1em;
-        }
-        
-        /* Navegación Modular */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--border-color);
-            background-color: #f7fdf7;
-            border-radius: 10px;
-            padding: 5px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .tab-button {
-            background: none;
-            border: none;
-            padding: 15px 28px;
-            font-size: 1.15em;
-            font-weight: 600;
-            cursor: pointer;
-            color: var(--text-light);
-            transition: all 0.3s ease-in-out;
-            border-bottom: 4px solid transparent;
-            position: relative;
-            z-index: 1;
-            border-radius: 8px;
-        }
-
-        .tab-button.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .tab-button:hover:not(.active) {
-            color: var(--primary-color);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 1.05em;
-        }
-
-        select, input[type="text"], input[type="month"] {
             width: 100%;
-            padding: 14px;
-            box-sizing: border-box;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1.05em;
-            background-color: #fcfcfc;
-            transition: all 0.3s ease-in-out;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.1L146.2%20227.3%2018.8%2074.5a17.6%2017.6%200%200%200-25.3%2023.6l130.4%20130.4c6.6%206.6%2017.3%206.6%2023.9%200l130.4-130.4c7.3-7.3%207.3-19.1%200-26.4z%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat, repeat;
-            background-position: right .7em top 50%, 0 0;
-            background-size: .65em auto, 100%;
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
-        }
-
-        button.main-button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: 600;
-            transition: all 0.3s ease-in-out;
-            width: 100%;
-            margin-top: 15px;
-            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        button.main-button:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
-        }
-        
-        button.main-button:active {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(76, 175, 80, 0.2);
-        }
-        
-        /* Estilos del Modal de Cámara */
-        #fullscreen-camera-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s ease-in-out;
-            opacity: 0;
-        }
-        
-        #fullscreen-camera-modal.show {
-            opacity: 1;
-        }
-
-        .modal-content {
+            max-width: 900px;
             display: flex;
             flex-direction: column;
-            width: 95%;
-            max-width: 700px;
-            max-height: 90vh;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
-        
-        .camera-title {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
+            gap: 20px;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        .camera-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        #webcam-video, #photo-canvas {
-            width: 100%;
-            max-width: 500px;
-            aspect-ratio: 4/3;
-            border-radius: 10px;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            margin-bottom: 20px;
-            object-fit: cover;
-        }
-        
-        #photo-canvas { display: none; }
-
-        .button-group-modal {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 500px;
-        }
-        
-        .button-group-modal button {
-            flex: 1;
-            min-width: 120px;
-            padding: 15px;
-            font-size: 1.1em;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .button-group-modal button:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        #capture-button {
-            background-color: var(--primary-color);
-        }
-        
-        #retake-button {
-            background-color: #f39c12;
-        }
-        
-        #save-button {
-            background-color: #27ae60;
-        }
-        
-        #switch-camera-button {
-            background-color: #3498db;
-        }
-
-        .close-button {
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 15px;
-        }
-        .close-button:hover { background-color: #d32f2f; }
-
-        #message {
-            margin-top: 30px;
-            padding: 18px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            display: none;
-            opacity: 0;
-            transition: all 0.6s ease-in-out;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            line-height: 1.4;
-        }
-
-        #message.show {
-            opacity: 1;
-            display: block;
-        }
-
-        .success { background-color: #e6ffed; color: var(--success-color); border: 1px solid var(--success-color); }
-        .error { background-color: #ffe6e6; color: var(--error-color); border: 1px solid var(--error-color); }
-        .info { background-color: #e0f2f7; color: var(--info-color); border: 1px solid var(--info-color); }
-
-        .hidden { display: none !important; }
-
-        /* Estilos específicos para la sección de información */
-        #info-tab h2 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-size: 2em;
-            text-align: center;
-        }
-        #info-tab h3 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--secondary-color);
-            margin-top: 25px;
-            margin-bottom: 10px;
-            font-size: 1.4em;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-        }
-        #info-tab p, #info-tab ul {
-            line-height: 1.6;
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-        #info-tab ul {
-            list-style-type: disc;
-            padding-left: 25px;
-        }
-        #info-tab li {
-            margin-bottom: 8px;
-        }
-        #info-tab code {
-            background-color: #f0f0f0;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9em;
-        }
-        #info-tab strong {
-            color: var(--text-dark);
-        }
-
-        /* Animaciones */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes bounceIn {
-            0%, 20%, 40%, 60%, 80%, 100% {
-                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-            }
-            0% {
-                opacity: 0;
-                transform: scale3d(.3, .3, .3);
-            }
-            20% {
-                transform: scale3d(1.1, 1.1, 1.1);
-            }
-            40% {
-                transform: scale3d(.9, .9, .9);
-            }
-            60% {
-                opacity: 1;
-                transform: scale3d(1.03, 1.03, 1.03);
-            }
-            80% {
-                transform: scale3d(.97, .97, .97);
-            }
-            100% {
-                opacity: 1;
-                transform: scale3d(1, 1, 1);
-            }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px var(--shadow-medium);
         }
 
-        /* Media Queries para Responsividad */
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 8px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px var(--shadow-medium);
+        }
+
+        .card h2 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .form-group select, .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #43A047;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7CB342;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+        }
+
+        .btn-warning:hover {
+            background-color: #FFB300;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #ef5350;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #e53935;
+            transform: translateY(-2px);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .camera-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background-color: #333;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+        }
+        
+        #camera-stream {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        #photo-canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        
+        .placeholder-text {
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .message.show {
+            opacity: 1;
+        }
+
+        .message.success {
+            background-color: #e8f5e9;
+            color: var(--success-color);
+        }
+        
+        .message.error {
+            background-color: #ffebee;
+            color: var(--error-color);
+        }
+        
+        .message.info {
+            background-color: #e3f2fd;
+            color: var(--info-color);
+        }
+        
         @media (max-width: 768px) {
-            .container { padding: 25px; margin: 15px auto; }
-            .header h1 { font-size: 2.2em; }
-            .header p { font-size: 1em; }
-            .tab-button { padding: 12px 18px; font-size: 1em; }
-            button { padding: 12px 18px; font-size: 1em; }
-            .button-group { flex-direction: column; }
-            #info-tab h2 { font-size: 1.8em; }
-            #info-tab h3 { font-size: 1.2em; }
-            body { font-size: 15px; }
-        }
-
-        @media (max-width: 480px) {
-            .container { padding: 15px; margin: 10px auto; }
-            .header h1 { font-size: 1.8em; gap: 5px;}
-            .header p { font-size: 0.9em; }
-            .tabs { flex-wrap: wrap; }
-            .tab-button { width: 100%; margin-bottom: 5px; }
-            label { font-size: 0.95em; }
-            select, input[type="text"], input[type="month"], button { font-size: 0.95em; padding: 12px; }
-            #info-tab h2 { font-size: 1.6em; }
-            #info-tab h3 { font-size: 1.1em; }
-            body { font-size: 14px; }
+            .container {
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1><span>📸</span> <span>Sistema</span> <span>de</span> <span>Evidencias</span></h1>
-        <p>Una herramienta intuitiva y eficiente para tu ONG.</p>
-    </div>
-
-    <div class="tabs">
-        <button class="tab-button active" data-tab="upload-tab">⬆️ Cargar Evidencia</button>
-        <button class="tab-button" data-tab="download-tab">⬇️ Descargar Evidencia</button>
-        <button class="tab-button" data-tab="info-tab">ℹ️ Información & Ayuda</button>
-    </div>
-    
-    <div id="upload-tab" class="tab-content active">
-        <div class="form-group">
-            <label for="evidenceType">Elige el Tipo Principal de Evidencia:</label>
-            <select id="evidenceType">
-                <option value="">-- Selecciona una opción --</option>
-                <option value="participantes">Participantes</option>
-                <option value="actividades">Actividades</option>
-                <option value="donaciones">Donaciones y Gestión</option>
-            </select>
+    <div class="container">
+        <div class="header">
+            <h1>Sistema de Evidencias</h1>
+            <p>Captura y guarda evidencias fotográficas de tus gestiones.</p>
         </div>
 
-        <div id="participants-section" class="hidden">
-            <div class="form-group">
-                <label for="participantCode">Selecciona el Participante:</label>
-                <select id="participantCode"></select>
+        <div class="card">
+            <h2>Capturar Evidencia</h2>
+            <div id="evidence-form">
+                <div class="form-group">
+                    <label for="evidenceType">Tipo de Evidencia:</label>
+                    <select id="evidenceType" required>
+                        <option value="">-- Selecciona el tipo principal --</option>
+                        <option value="Seguimiento a participantes">Seguimiento a participantes</option>
+                        <option value="Operativas de gestión">Operativas de gestión</option>
+                        <option value="Visitas Domiciliarias">Visitas Domiciliarias</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="specificType">Tipo Específico:</label>
+                    <select id="specificType" required>
+                        <option value="">-- Primero selecciona el tipo principal --</option>
+                    </select>
+                </div>
+
+                <div id="participants-section" class="form-group hidden">
+                    <label for="participantCode">Participante:</label>
+                    <select id="participantCode">
+                        <option value="">-- Selecciona un participante --</option>
+                    </select>
+                </div>
+
+                <div id="tutor-section" class="form-group hidden">
+                    <label for="tutor-name">Tutor:</label>
+                    <select id="tutor-name">
+                        <option value="">-- Selecciona un tutor --</option>
+                    </select>
+                </div>
+
+                <div id="description-section" class="form-group hidden">
+                    <label for="additional-info">Descripción Adicional (Opcional):</label>
+                    <textarea id="additional-info" rows="3" placeholder="Añade detalles relevantes..."></textarea>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label for="specificType">Elige el Tipo Específico de Evidencia:</label>
-            <select id="specificType">
-                <option value="">-- Selecciona el tipo principal primero --</option>
-            </select>
-        </div>
-        
-        <div id="description-section" class="hidden">
-            <div class="form-group">
-                <label for="description">Descripción breve de la donación/gestión:</label>
-                <input type="text" id="description" placeholder="Ej: Gestiones con la iglesia para alimentos">
+
+            <div class="camera-container">
+                <video id="camera-stream" playsinline></video>
+                <canvas id="photo-canvas"></canvas>
+                <span id="placeholder-text" class="placeholder-text">Click en "Iniciar Cámara" para comenzar</span>
             </div>
-        </div>
-        
-        <div id="tutor-section" class="hidden">
-            <div class="form-group">
-                <label for="tutorName">Selecciona la Tutora:</label>
-                <select id="tutorName">
-                    <option value="">-- Selecciona una tutora --</option>
-                    <option value="LISBETH">Lisbeth</option>
-                    <option value="DIANA">Diana</option>
-                    <option value="HELEN">Helen</option>
-                    <option value="JULIANA">Juliana</option>
-                </select>
+
+            <div class="btn-container">
+                <button id="start-camera-button" class="btn btn-primary">Iniciar Cámara</button>
+                <button id="stop-camera-button" class="btn btn-danger hidden">Detener Cámara</button>
             </div>
-        </div>
-        
-        <button id="start-camera-button" class="main-button hidden">Abrir Cámara</button>
 
-        <p id="message" class="info"></p>
-    </div>
-    
-    <div id="download-tab" class="tab-content">
-        <div class="form-group">
-            <label for="downloadMainType">Tipo Principal de Evidencia a Descargar:</label>
-            <select id="downloadMainType">
-                <option value="">-- Selecciona una opción --</option>
-                <option value="participantes">Participantes</option>
-                <option value="actividades">Actividades</option>
-                <option value="donaciones">Donaciones y Gestión</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="downloadSpecificType">Tipo Específico de Evidencia a Descargar:</label>
-            <select id="downloadSpecificType">
-                <option value="">-- Primero selecciona el tipo principal --</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="downloadMonth">Selecciona el Mes de las Evidencias:</label>
-            <input type="month" id="downloadMonth">
-        </div>
-        <button id="download-button" class="main-button">⬇️ Descargar Evidencias (ZIP)</button>
-        <p id="download-message" class="info"></p>
-    </div>
-
-    <div id="info-tab" class="tab-content">
-        <h2>ℹ️ Información y Cómo Usar el Sistema</h2>
-        <p>Este sistema ha sido diseñado para simplificar la captura, organización y descarga de todas las evidencias fotográficas de nuestra ONG. Es intuitivo, rápido y mantiene todo ordenado en Google Drive.</p>
-
-        <h3>🚀 Inicio Rápido:</h3>
-        <ol>
-            <li>**Configuración Inicial (Solo una vez):**
-                <ul>
-                    <li>Abre tu Google Sheet de participantes y ve a <code>Extensiones > Apps Script</code>.</li>
-                    <li>Pega el código del Apps Script proporcionado.</li>
-                    <li>**Reemplaza** <code>ID_DE_TU_SHEET</code> y <code>ID_DE_TU_DRIVE</code> con los IDs reales de tu Google Sheet y tu Carpeta Principal de Google Drive (ver sección "IDs Necesarios").</li>
-                    <li>**Despliega el Script:** Haz clic en <code>Desplegar > Nuevo despliegue</code>. Elige "Aplicación web". Ejecuta como "Yo" y con acceso "Cualquiera" o "Cualquiera, incluso anónimo". Guarda la URL del script desplegado.</li>
-                    <li>**Configura el Frontend:** Abre este archivo <code>index.html</code> y reemplaza <code>URL_DEL_SCRIPT_AQUI</code> con la URL que obtuviste del despliegue del Apps Script.</li>
-                </ul>
-            </li>
-            <li>**Estructura de Google Sheets:**
-                <ul>
-                    <li>Asegúrate de tener una hoja llamada <code>Participantes</code>.</li>
-                    <li>La **columna A** debe contener los <strong>códigos únicos</strong> de los participantes.</li>
-                    <li>La **columna B** debe contener los <strong>nombres</strong> de los participantes.</li>
-                </ul>
-            </li>
-            <li>**Estructura de Google Drive:**
-                <ul>
-                    <li>El sistema creará automáticamente las carpetas <code>PARTICIPANTES</code>, <code>ACTIVIDADES</code> y <code>DONACIONES</code> dentro de tu Carpeta Principal (la de <code>MAIN_FOLDER_ID</code>).</li>
-                    <li>Dentro de estas, se crearán las subcarpetas específicas como <code>REGALOS_PADRINOS</code>, <code>ASEO_GENERAL</code>, etc.</li>
-                </ul>
-            </li>
-        </ol>
-
-        <h3>📸 Cargar Evidencia:</h3>
-        <ol>
-            <li>Ve a la pestaña <strong>"⬆️ Cargar Evidencia"</strong>.</li>
-            <li>Selecciona el <strong>"Tipo Principal de Evidencia"</strong> (Participantes, Actividades, Donaciones). Esto mostrará los campos relevantes.</li>
-            <li>Completa los detalles. Una vez listos, haz clic en el botón **"Abrir Cámara"**.</li>
-            <li>La interfaz de la cámara se abrirá en pantalla completa. Posiciona lo que deseas fotografiar y haz clic en <strong>"📸 Tomar Foto"</strong>.</li>
-            <li>Revisa la foto. Si no estás conforme, haz clic en <strong>"🔄 Tomar Otra Foto"</strong>.</li>
-            <li>Si la foto es correcta, haz clic en <strong>"✅ Guardar Evidencia"</strong>. La foto se subirá automáticamente a Google Drive con un nombre estandarizado y único.</li>
-        </ol>
-
-        <h3>⬇️ Descargar Evidencia:</h3>
-        <ol>
-            <li>Ve a la pestaña <strong>"⬇️ Descargar Evidencia"</strong>.</li>
-            <li>Selecciona el <strong>"Tipo Principal de Evidencia"</strong> y el <strong>"Tipo Específico de Evidencia"</strong> que deseas descargar.</li>
-            <li>Selecciona el <strong>"Mes de Descarga"</strong>.</li>
-            <li>Haz clic en <strong>"⬇️ Descargar Evidencias (ZIP)"</strong>. Se generará un archivo ZIP con todas las fotos que coincidan con tus criterios y se iniciará la descarga.</li>
-        </ol>
-
-        <h3>🔑 IDs Necesarios:</h3>
-        <ul>
-            <li><strong>ID_DE_TU_SHEET:</strong> Lo encuentras en la URL de tu Google Sheet. Es la cadena de caracteres larga entre <code>/d/</code> y <code>/edit</code>.</li>
-            <li><strong>ID_DE_TU_DRIVE:</strong> Lo encuentras en la URL de tu carpeta principal de Google Drive. Es la cadena de caracteres larga después de <code>folders/</code>.</li>
-        </ul>
-        <p>¡Gracias por usar el sistema! Si tienes dudas o sugerencias, consulta al equipo técnico.</p>
-    </div>
-
-</div>
-
-<div id="fullscreen-camera-modal" class="hidden">
-    <div class="modal-content">
-        <div class="camera-title">
-            <span>📷</span> Tomar Evidencia
-        </div>
-        <div class="camera-container">
-            <video id="webcam-video" autoplay playsinline></video>
-            <canvas id="photo-canvas"></canvas>
-            <div class="button-group-modal">
-                <button id="capture-button">📸 Tomar Foto</button>
-                <button id="retake-button" class="hidden">🔄 Tomar Otra</button>
-                <button id="save-button" class="hidden">✅ Guardar</button>
-                <button id="switch-camera-button" class="hidden">🔄 Cambiar Cámara</button>
+            <div class="btn-container">
+                <button id="capture-button" class="btn btn-primary hidden">Capturar Foto</button>
             </div>
-            <button id="close-camera" class="close-button">Cerrar</button>
+
+            <div id="save-section" class="btn-container hidden">
+                <button id="save-button" class="btn btn-success">Guardar Evidencia</button>
+                <button id="reset-button" class="btn btn-warning">Tomar Otra Foto</button>
+            </div>
+
+            <div id="message" class="message"></div>
         </div>
+
+        <div class="card">
+            <h2>Descargar Evidencias</h2>
+            <div id="download-form">
+                <div class="form-group">
+                    <label for="download-main-type">Tipo de Evidencia:</label>
+                    <select id="download-main-type">
+                        <option value="">-- Selecciona el tipo principal --</option>
+                        <option value="Seguimiento a participantes">Seguimiento a participantes</option>
+                        <option value="Operativas de gestión">Operativas de gestión</option>
+                        <option value="Visitas Domiciliarias">Visitas Domiciliarias</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="download-specific-type">Tipo Específico:</label>
+                    <select id="download-specific-type">
+                        <option value="">-- Primero selecciona el tipo principal --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="download-month">Mes y Año:</label>
+                    <input type="month" id="download-month" required>
+                </div>
+                <div class="btn-container">
+                    <button id="download-button" class="btn btn-secondary">Descargar Evidencias</button>
+                </div>
+            </div>
+            <div id="download-message" class="message"></div>
+        </div>
+
     </div>
-</div>
 
-<script>
-    // URL de tu Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec';
+    <script>
+        // URL de tu Apps Script
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec';
 
-    // Elementos del DOM
-    const cameraStreamElement = document.getElementById('camera-stream');
-    const captureButton = document.getElementById('capture-button');
-    const canvas = document.getElementById('photo-canvas');
-    const saveButton = document.getElementById('save-button');
-    const startCameraButton = document.getElementById('start-camera-button');
-    const stopCameraButton = document.getElementById('stop-camera-button');
-    const saveSection = document.getElementById('save-section');
-    const evidenceForm = document.getElementById('evidence-form');
+        // Elementos del DOM
+        const cameraStreamElement = document.getElementById('camera-stream');
+        const captureButton = document.getElementById('capture-button');
+        const canvas = document.getElementById('photo-canvas');
+        const saveButton = document.getElementById('save-button');
+        const startCameraButton = document.getElementById('start-camera-button');
+        const stopCameraButton = document.getElementById('stop-camera-button');
+        const saveSection = document.getElementById('save-section');
+        const evidenceForm = document.getElementById('evidence-form');
 
-    const evidenceTypeSelect = document.getElementById('evidenceType');
-    const specificTypeSelect = document.getElementById('specificType');
-    const participantsSection = document.getElementById('participants-section');
-    const participantCodeSelect = document.getElementById('participantCode');
-    const descriptionSection = document.getElementById('description-section');
-    const descriptionInput = document.getElementById('additional-info');
-    const tutorSection = document.getElementById('tutor-section');
-    const tutorNameSelect = document.getElementById('tutor-name');
-    const messageElement = document.getElementById('message');
-    
-    // Descarga
-    const downloadForm = document.getElementById('download-form');
-    const downloadMainTypeSelect = document.getElementById('download-main-type');
-    const downloadSpecificTypeSelect = document.getElementById('download-specific-type');
-    const downloadMonthInput = document.getElementById('download-month');
-    const downloadButton = document.getElementById('download-button');
-    const downloadMessageElement = document.getElementById('download-message');
+        const evidenceTypeSelect = document.getElementById('evidenceType');
+        const specificTypeSelect = document.getElementById('specificType');
+        const participantsSection = document.getElementById('participants-section');
+        const participantCodeSelect = document.getElementById('participantCode');
+        const descriptionSection = document.getElementById('description-section');
+        const descriptionInput = document.getElementById('additional-info');
+        const tutorSection = document.getElementById('tutor-section');
+        const tutorNameSelect = document.getElementById('tutor-name');
+        const messageElement = document.getElementById('message');
+        
+        // Descarga
+        const downloadForm = document.getElementById('download-form');
+        const downloadMainTypeSelect = document.getElementById('download-main-type');
+        const downloadSpecificTypeSelect = document.getElementById('download-specific-type');
+        const downloadMonthInput = document.getElementById('download-month');
+        const downloadButton = document.getElementById('download-button');
+        const downloadMessageElement = document.getElementById('download-message');
+        const resetButton = document.getElementById('reset-button');
+        const placeholderText = document.getElementById('placeholder-text');
 
-    // Variables de estado
-    let mediaStream = null;
-    let photoTaken = false;
+        // Variables de estado
+        let mediaStream = null;
+        let photoTaken = false;
 
-    // Diccionario para opciones de tipos de evidencia
-    const EVIDENCE_OPTIONS = {
-        'Seguimiento a participantes': [
-            'Asistencia', 'Seguimiento Psicosocial', 'Registro Nutricional', 'Llamada de Verificación'
-        ],
-        'Operativas de gestión': [
-            'Donación de Equipos', 'Reunión de Equipo', 'Reunión con Aliados', 'Capacitaciones'
-        ],
-        'Visitas Domiciliarias': [
-            'Visita de Bienvenida', 'Visita de Seguimiento', 'Visita de Entrega de Apoyo'
-        ]
-    };
+        // Diccionario para opciones de tipos de evidencia
+        const EVIDENCE_OPTIONS = {
+            'Seguimiento a participantes': [
+                'Asistencia', 'Seguimiento Psicosocial', 'Registro Nutricional', 'Llamada de Verificación'
+            ],
+            'Operativas de gestión': [
+                'Donación de Equipos', 'Reunión de Equipo', 'Reunión con Aliados', 'Capacitaciones'
+            ],
+            'Visitas Domiciliarias': [
+                'Visita de Bienvenida', 'Visita de Seguimiento', 'Visita de Entrega de Apoyo'
+            ]
+        };
 
-    // Diccionario de participantes (ejemplo)
-    const PARTICIPANTS_OPTIONS = [
-        { name: "Andrés Gutiérrez", code: "P001" },
-        { name: "Sofía Vargas", code: "P002" },
-        { name: "Juan David Ramírez", code: "P003" },
-        { name: "Camila Sánchez", code: "P004" },
-        { name: "Valeria Herrera", code: "P005" }
-    ];
+        // Diccionario de participantes (ejemplo)
+        const PARTICIPANTS_OPTIONS = [
+            { name: "Andrés Gutiérrez", code: "P001" },
+            { name: "Sofía Vargas", code: "P002" },
+            { name: "Juan David Ramírez", code: "P003" },
+            { name: "Camila Sánchez", code: "P004" },
+            { name: "Valeria Herrera", code: "P005" }
+        ];
 
-    // Diccionario de tutores
-    const TUTOR_OPTIONS = [
-        "Jhonatan Osorio", "Karen Jaramillo", "Carolina Gómez", "Luis Cardona"
-    ];
+        // Diccionario de tutores
+        const TUTOR_OPTIONS = [
+            "Jhonatan Osorio", "Karen Jaramillo", "Carolina Gómez", "Luis Cardona"
+        ];
 
-    // Eventos del formulario de captura
-    evidenceTypeSelect.addEventListener('change', () => {
-        updateSpecificTypes();
-        toggleSections();
-        resetPhoto();
-    });
+        // Eventos del formulario de captura
+        evidenceTypeSelect.addEventListener('change', () => {
+            updateSpecificTypes();
+            toggleSections();
+            resetPhoto();
+        });
 
-    specificTypeSelect.addEventListener('change', () => {
-        toggleSections();
-        resetPhoto();
-    });
+        specificTypeSelect.addEventListener('change', () => {
+            toggleSections();
+            resetPhoto();
+        });
+        
+        resetButton.addEventListener('click', () => {
+            resetPhoto();
+            startCameraButton.classList.remove('hidden');
+        });
 
-    // Eventos del formulario de descarga
-    downloadMainTypeSelect.addEventListener('change', () => {
-        updateDownloadSpecificTypes();
-        downloadMessageElement.textContent = '';
-        downloadMessageElement.className = 'message';
-    });
+        // Eventos del formulario de descarga
+        downloadMainTypeSelect.addEventListener('change', () => {
+            updateDownloadSpecificTypes();
+            downloadMessageElement.textContent = '';
+            downloadMessageElement.className = 'message';
+        });
 
-    // Funciones de la cámara
-    startCameraButton.addEventListener('click', () => {
-        startCamera();
-        showMessage('Cámara iniciada', 'info', messageElement);
-    });
+        // Funciones de la cámara
+        startCameraButton.addEventListener('click', () => {
+            startCamera();
+        });
 
-    stopCameraButton.addEventListener('click', () => {
-        stopCamera();
-        showMessage('Cámara detenida', 'info', messageElement);
-    });
+        stopCameraButton.addEventListener('click', () => {
+            stopCamera();
+        });
 
-    captureButton.addEventListener('click', () => {
-        capturePhoto();
-    });
+        captureButton.addEventListener('click', () => {
+            capturePhoto();
+        });
 
-    saveButton.addEventListener('click', async () => {
-        const evidenceType = evidenceTypeSelect.value;
-        const specificType = specificTypeSelect.value;
-        const participantCode = participantCodeSelect.value;
-        const additionalInfo = descriptionInput.value || '';
-        const tutorName = tutorNameSelect.value;
+        saveButton.addEventListener('click', async () => {
+            const evidenceType = evidenceTypeSelect.value;
+            const specificType = specificTypeSelect.value;
+            const participantCode = participantCodeSelect.value;
+            const additionalInfo = descriptionInput.value || '';
+            const tutorName = tutorNameSelect.value;
 
-        if (!evidenceType || !specificType) {
-            showMessage('Selecciona un tipo de evidencia y uno específico para continuar.', 'error', messageElement);
-            return;
-        }
+            if (!evidenceType || !specificType) {
+                showMessage('Selecciona un tipo de evidencia y uno específico para continuar.', 'error', messageElement);
+                return;
+            }
 
-        if (evidenceType === 'Seguimiento a participantes' && !participantCode) {
-            showMessage('Por favor, selecciona un participante.', 'error', messageElement);
-            return;
-        }
+            if (evidenceType === 'Seguimiento a participantes' && !participantCode) {
+                showMessage('Por favor, selecciona un participante.', 'error', messageElement);
+                return;
+            }
 
-        if (evidenceType === 'Operativas de gestión' && !tutorName) {
-            showMessage('Por favor, selecciona el nombre del tutor.', 'error', messageElement);
-            return;
-        }
+            if (evidenceType === 'Operativas de gestión' && !tutorName) {
+                showMessage('Por favor, selecciona el nombre del tutor.', 'error', messageElement);
+                return;
+            }
 
-        if (photoTaken) {
-            showMessage('Guardando evidencia, por favor espera...', 'info', messageElement, 0);
+            if (photoTaken) {
+                showMessage('Guardando evidencia, por favor espera...', 'info', messageElement, 0);
+
+                try {
+                    // Convertir la imagen capturada a un formato de datos base64
+                    const imageDataURL = canvas.toDataURL('image/jpeg', 0.8);
+                    const base64data = imageDataURL.split(',')[1];
+                    
+                    // Creamos un objeto FormData en lugar de un objeto JSON
+                    const formData = new FormData();
+                    formData.append('base64data', base64data);
+                    formData.append('evidenceType', evidenceType);
+                    formData.append('specificType', specificType);
+                    formData.append('participantCode', participantCode);
+                    formData.append('additionalInfo', additionalInfo);
+                    formData.append('tutorName', tutorName);
+
+                    const response = await fetch(scriptURL, {
+                        method: 'POST',
+                        body: formData, // Enviar el FormData en lugar del JSON
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.status === 'success') {
+                            showMessage(`✅ ¡Evidencia guardada exitosamente!`, 'success', messageElement);
+                            setTimeout(resetFormState, 2000);
+                        } else {
+                            showMessage(`❌ Error: ${result.message}`, 'error', messageElement);
+                        }
+                    } else {
+                        showMessage('❌ Error en la conexión al servicio. Asegúrate que el Apps Script esté desplegado con acceso "Cualquiera".', 'error', messageElement);
+                    }
+                } catch (error) {
+                    console.error('Error al guardar:', error);
+                    showMessage('❌ Error al guardar: ' + error.message, 'error', messageElement);
+                }
+            } else {
+                showMessage('❌ Por favor, captura una foto antes de guardar.', 'error', messageElement);
+            }
+        });
+
+        downloadButton.addEventListener('click', async () => {
+            const mainType = downloadMainTypeSelect.value;
+            const specificType = downloadSpecificTypeSelect.value;
+            const month = downloadMonthInput.value;
+            
+            if (!mainType || !specificType || !month) {
+                showMessage('Por favor, selecciona un tipo, subtipo y mes para descargar.', 'error', downloadMessageElement);
+                return;
+            }
+
+            showMessage('Generando archivo de descarga, por favor espera...', 'info', downloadMessageElement, 0);
+
+            const params = new URLSearchParams({
+                action: 'download',
+                mainType: mainType,
+                specificType: specificType,
+                month: month,
+            });
+
+            const url = `${scriptURL}?${params.toString()}`;
 
             try {
-                // Convertir la imagen capturada a un formato de datos base64
-                const imageDataURL = canvas.toDataURL('image/jpeg', 0.8);
-                const base64data = imageDataURL.split(',')[1];
+                const response = await fetch(url);
+                const result = await response.json();
                 
-                // Creamos un objeto FormData en lugar de un objeto JSON
-                const formData = new FormData();
-                formData.append('base64data', base64data);
-                formData.append('evidenceType', evidenceType);
-                formData.append('specificType', specificType);
-                formData.append('participantCode', participantCode);
-                formData.append('additionalInfo', additionalInfo);
-                formData.append('tutorName', tutorName);
-
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData, // Enviar el FormData en lugar del JSON
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.status === 'success') {
-                        showMessage(`✅ ¡Evidencia guardada exitosamente!`, 'success', messageElement);
-                        setTimeout(resetFormState, 2000);
-                    } else {
-                        showMessage(`❌ Error: ${result.message}`, 'error', messageElement);
-                    }
+                if (result.status === 'success' && result.url) {
+                    showMessage('✅ Archivo listo. Descargando...', 'success', downloadMessageElement);
+                    window.open(result.url, '_blank');
+                    setTimeout(() => {
+                        showMessage('¡Descarga completada!', 'success', downloadMessageElement);
+                    }, 5000);
+                } else if (result.status === 'success' && !result.url) {
+                    showMessage('⚠️ ' + result.message, 'info', downloadMessageElement);
                 } else {
-                    showMessage('❌ Error en la conexión al servicio. Asegúrate que el Apps Script esté desplegado con acceso "Cualquiera".', 'error', messageElement);
+                    showMessage('❌ ' + result.message, 'error', downloadMessageElement);
                 }
             } catch (error) {
-                console.error('Error al guardar:', error);
-                showMessage('❌ Error al guardar: ' + error.message, 'error', messageElement);
+                showMessage('❌ Error al procesar la descarga: ' + error.message, 'error', downloadMessageElement);
             }
-        } else {
-            showMessage('❌ Por favor, captura una foto antes de guardar.', 'error', messageElement);
-        }
-    });
-
-    downloadButton.addEventListener('click', async () => {
-        const mainType = downloadMainTypeSelect.value;
-        const specificType = downloadSpecificTypeSelect.value;
-        const month = downloadMonthInput.value;
-        
-        if (!mainType || !specificType || !month) {
-            showMessage('Por favor, selecciona un tipo, subtipo y mes para descargar.', 'error', downloadMessageElement);
-            return;
-        }
-
-        showMessage('Generando archivo de descarga, por favor espera...', 'info', downloadMessageElement, 0);
-
-        const params = new URLSearchParams({
-            action: 'download',
-            mainType: mainType,
-            specificType: specificType,
-            month: month,
         });
 
-        const url = `${scriptURL}?${params.toString()}`;
-
-        try {
-            const response = await fetch(url);
-            const result = await response.json();
-            
-            if (result.status === 'success' && result.url) {
-                showMessage('✅ Archivo listo. Descargando...', 'success', downloadMessageElement);
-                window.open(result.url, '_blank');
-                setTimeout(() => {
-                    showMessage('¡Descarga completada!', 'success', downloadMessageElement);
-                }, 5000);
-            } else if (result.status === 'success' && !result.url) {
-                showMessage('⚠️ ' + result.message, 'info', downloadMessageElement);
-            } else {
-                showMessage('❌ ' + result.message, 'error', downloadMessageElement);
+        // Funciones utilitarias
+        function startCamera() {
+            if (mediaStream) {
+                stopCamera();
             }
-        } catch (error) {
-            showMessage('❌ Error al procesar la descarga: ' + error.message, 'error', downloadMessageElement);
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                .then(stream => {
+                    mediaStream = stream;
+                    cameraStreamElement.srcObject = stream;
+                    cameraStreamElement.style.display = 'block';
+                    cameraStreamElement.play();
+                    captureButton.style.display = 'block';
+                    stopCameraButton.style.display = 'block';
+                    startCameraButton.classList.add('hidden');
+                    canvas.style.display = 'none';
+                    saveSection.style.display = 'none';
+                    placeholderText.style.display = 'none';
+                    photoTaken = false;
+                    showMessage('Cámara iniciada', 'info', messageElement);
+                })
+                .catch(error => {
+                    showMessage('❌ No se puede acceder a la cámara. Revisa los permisos de tu navegador: ' + error.message, 'error', messageElement);
+                    console.error('Error al acceder a la cámara:', error);
+                });
         }
-    });
 
-    // Funciones utilitarias
-    function startCamera() {
-        if (mediaStream) {
-            stopCamera();
-        }
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-            .then(stream => {
-                mediaStream = stream;
-                cameraStreamElement.srcObject = stream;
-                cameraStreamElement.style.display = 'block';
-                cameraStreamElement.play();
-                captureButton.style.display = 'block';
-                stopCameraButton.style.display = 'block';
-                startCameraButton.classList.add('hidden');
-                canvas.style.display = 'none';
+        function stopCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                cameraStreamElement.srcObject = null;
+                cameraStreamElement.style.display = 'none';
+                captureButton.style.display = 'none';
+                stopCameraButton.style.display = 'none';
+                startCameraButton.classList.remove('hidden');
                 saveSection.style.display = 'none';
-                photoTaken = false;
-                showMessage('Cámara iniciada', 'info', messageElement);
-            })
-            .catch(error => {
-                showMessage('❌ No se puede acceder a la cámara. Revisa los permisos de tu navegador: ' + error.message, 'error', messageElement);
-                console.error('Error al acceder a la cámara:', error);
-            });
-    }
+                placeholderText.style.display = 'block';
+            }
+        }
 
-    function stopCamera() {
-        if (mediaStream) {
-            mediaStream.getTracks().forEach(track => track.stop());
-            cameraStreamElement.srcObject = null;
+        function capturePhoto() {
+            if (!mediaStream) {
+                showMessage('❌ Primero inicia la cámara.', 'error', messageElement);
+                return;
+            }
+            
+            const context = canvas.getContext('2d');
+            const videoWidth = cameraStreamElement.videoWidth;
+            const videoHeight = cameraStreamElement.videoHeight;
+            
+            canvas.width = videoWidth;
+            canvas.height = videoHeight;
+            
+            context.drawImage(cameraStreamElement, 0, 0, videoWidth, videoHeight);
+            
+            photoTaken = true;
+            cameraStreamElement.pause();
             cameraStreamElement.style.display = 'none';
+            canvas.style.display = 'block';
+            saveSection.style.display = 'flex';
             captureButton.style.display = 'none';
             stopCameraButton.style.display = 'none';
-            startCameraButton.classList.remove('hidden');
+            showMessage('Foto capturada. Puedes guardarla o tomar otra.', 'success', messageElement);
+        }
+
+        function resetPhoto() {
+            stopCamera();
+            photoTaken = false;
+            canvas.style.display = 'none';
             saveSection.style.display = 'none';
-        }
-    }
-
-    function capturePhoto() {
-        if (!mediaStream) {
-            showMessage('❌ Primero inicia la cámara.', 'error', messageElement);
-            return;
-        }
-        
-        const context = canvas.getContext('2d');
-        const videoWidth = cameraStreamElement.videoWidth;
-        const videoHeight = cameraStreamElement.videoHeight;
-        
-        canvas.width = videoWidth;
-        canvas.height = videoHeight;
-        
-        context.drawImage(cameraStreamElement, 0, 0, videoWidth, videoHeight);
-        
-        photoTaken = true;
-        cameraStreamElement.pause();
-        cameraStreamElement.style.display = 'none';
-        canvas.style.display = 'block';
-        saveSection.style.display = 'flex';
-        showMessage('Foto capturada. Puedes guardarla o volver a intentarlo.', 'success', messageElement);
-    }
-
-    function resetPhoto() {
-        stopCamera();
-        photoTaken = false;
-        canvas.style.display = 'none';
-        saveSection.style.display = 'none';
-        messageElement.textContent = '';
-        messageElement.className = 'message';
-        startCameraButton.classList.remove('hidden');
-    }
-
-    function updateSpecificTypes() {
-        const selectedType = evidenceTypeSelect.value;
-        const specificTypes = EVIDENCE_OPTIONS[selectedType] || [];
-        specificTypeSelect.innerHTML = '<option value="">-- Selecciona el tipo específico --</option>';
-        specificTypes.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type;
-            specificTypeSelect.appendChild(option);
-        });
-    }
-
-    function updateDownloadSpecificTypes() {
-        const selectedType = downloadMainTypeSelect.value;
-        const specificTypes = EVIDENCE_OPTIONS[selectedType] || [];
-        downloadSpecificTypeSelect.innerHTML = '<option value="">-- Selecciona el tipo específico --</option>';
-        specificTypes.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type;
-            downloadSpecificTypeSelect.appendChild(option);
-        });
-    }
-
-    function toggleSections() {
-        const selectedType = evidenceTypeSelect.value;
-        
-        participantsSection.classList.add('hidden');
-        descriptionSection.classList.add('hidden');
-        tutorSection.classList.add('hidden');
-        startCameraButton.classList.add('hidden');
-
-        if (selectedType) {
-            // Mostrar la sección de la cámara
+            messageElement.textContent = '';
+            messageElement.className = 'message';
             startCameraButton.classList.remove('hidden');
+        }
 
-            if (selectedType === 'Seguimiento a participantes') {
-                participantsSection.classList.remove('hidden');
-                descriptionSection.classList.remove('hidden');
-                
-                // Actualizar la lista de participantes
-                participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
-                PARTICIPANTS_OPTIONS.forEach(p => {
-                    const option = document.createElement('option');
-                    option.value = p.code;
-                    option.textContent = p.name;
-                    participantCodeSelect.appendChild(option);
-                });
+        function updateSpecificTypes() {
+            const selectedType = evidenceTypeSelect.value;
+            const specificTypes = EVIDENCE_OPTIONS[selectedType] || [];
+            specificTypeSelect.innerHTML = '<option value="">-- Selecciona el tipo específico --</option>';
+            specificTypes.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                specificTypeSelect.appendChild(option);
+            });
+        }
 
-            } else if (selectedType === 'Operativas de gestión') {
-                tutorSection.classList.remove('hidden');
-                descriptionSection.classList.remove('hidden');
-                
-                // Actualizar la lista de tutores
-                tutorNameSelect.innerHTML = '<option value="">-- Selecciona un tutor --</option>';
-                TUTOR_OPTIONS.forEach(t => {
-                    const option = document.createElement('option');
-                    option.value = t;
-                    option.textContent = t;
-                    tutorNameSelect.appendChild(option);
-                });
-            } else if (selectedType === 'Visitas Domiciliarias') {
-                 // Las visitas no tienen secciones adicionales
+        function updateDownloadSpecificTypes() {
+            const selectedType = downloadMainTypeSelect.value;
+            const specificTypes = EVIDENCE_OPTIONS[selectedType] || [];
+            downloadSpecificTypeSelect.innerHTML = '<option value="">-- Selecciona el tipo específico --</option>';
+            specificTypes.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                downloadSpecificTypeSelect.appendChild(option);
+            });
+        }
+
+        function toggleSections() {
+            const selectedType = evidenceTypeSelect.value;
+            
+            participantsSection.classList.add('hidden');
+            descriptionSection.classList.add('hidden');
+            tutorSection.classList.add('hidden');
+            
+            if (selectedType) {
+                if (selectedType === 'Seguimiento a participantes') {
+                    participantsSection.classList.remove('hidden');
+                    descriptionSection.classList.remove('hidden');
+                    
+                    // Actualizar la lista de participantes
+                    participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
+                    PARTICIPANTS_OPTIONS.forEach(p => {
+                        const option = document.createElement('option');
+                        option.value = p.code;
+                        option.textContent = p.name;
+                        participantCodeSelect.appendChild(option);
+                    });
+
+                } else if (selectedType === 'Operativas de gestión') {
+                    tutorSection.classList.remove('hidden');
+                    descriptionSection.classList.remove('hidden');
+                    
+                    // Actualizar la lista de tutores
+                    tutorNameSelect.innerHTML = '<option value="">-- Selecciona un tutor --</option>';
+                    TUTOR_OPTIONS.forEach(t => {
+                        const option = document.createElement('option');
+                        option.value = t;
+                        option.textContent = t;
+                        tutorNameSelect.appendChild(option);
+                    });
+                } else if (selectedType === 'Visitas Domiciliarias') {
+                    descriptionSection.classList.remove('hidden');
+                }
             }
         }
-    }
 
-    // Funciones utilitarias
-    function showMessage(msg, type, element, duration = 5000) {
-        element.textContent = msg;
-        element.className = `message show ${type}`;
-        
-        if (duration > 0) {
-            setTimeout(() => {
-                element.classList.remove('show');
-                element.textContent = '';
-            }, duration);
+        // Funciones utilitarias
+        function showMessage(msg, type, element, duration = 5000) {
+            element.textContent = msg;
+            element.className = `message show ${type}`;
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    element.classList.remove('show');
+                    element.textContent = '';
+                }, duration);
+            }
         }
-    }
 
-    function resetFormState() {
-        evidenceTypeSelect.value = '';
-        specificTypeSelect.innerHTML = '<option value="">-- Selecciona el tipo específico --</option>';
-        participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
-        descriptionInput.value = '';
-        tutorNameSelect.value = '';
-        
-        participantsSection.classList.add('hidden');
-        descriptionSection.classList.add('hidden');
-        tutorSection.classList.add('hidden');
-        startCameraButton.classList.add('hidden');
-        
-        messageElement.classList.remove('show', 'success', 'error', 'info');
-        messageElement.textContent = '';
-        stopCamera();
-        
-        downloadMainTypeSelect.value = '';
-        downloadSpecificTypeSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
-        downloadMonthInput.value = '';
-        downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
-        downloadMessageElement.textContent = '';
-    }
-</script>
+        function resetFormState() {
+            evidenceTypeSelect.value = '';
+            specificTypeSelect.innerHTML = '<option value="">-- Selecciona el tipo específico --</option>';
+            participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
+            descriptionInput.value = '';
+            tutorNameSelect.value = '';
+            
+            participantsSection.classList.add('hidden');
+            descriptionSection.classList.add('hidden');
+            tutorSection.classList.add('hidden');
+            
+            messageElement.classList.remove('show', 'success', 'error', 'info');
+            messageElement.textContent = '';
+            stopCamera();
+            
+            downloadMainTypeSelect.value = '';
+            downloadSpecificTypeSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
+            downloadMonthInput.value = '';
+            downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
+            downloadMessageElement.textContent = '';
+        }
 
+    </script>
 </body>
 </html>
