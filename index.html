@@ -944,41 +944,50 @@
         reader.onloadend = async function() {
             const base64data = reader.result.split(',')[1];
             
-            const postData = {
-                photoData: base64data,
-                evidenceType: evidenceType,
-                specificType: specificType,
-                participantCode: participantCode,
-                additionalInfo: additionalInfo
-            };
-
-            try {
-                const response = await fetch(scriptURL, { 
-                    method: 'POST', 
-                    body: JSON.stringify(postData),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const result = await response.json();
-                if (result.status === 'success') {
-                    showMessage('🎉 ¡Evidencia guardada correctamente en Drive! 🎉', 'success', messageElement);
-                } else {
-                    showMessage(`❌ Error al guardar: ${result.message}`, 'error', messageElement);
-                }
-            } catch (error) {
-                console.error('Error al guardar:', error);
-                showMessage('🚨 Ocurrió un error inesperado al subir. Inténtalo de nuevo. Asegúrate de que el Apps Script esté desplegado correctamente.', 'error', messageElement);
-            } finally {
-                setTimeout(() => {
-                    resetFormState();
-                }, 3000);
-            }
+        const postData = {
+            photoData: base64data,
+            evidenceType: evidenceType,
+            specificType: specificType,
+            participantCode: participantCode,
+            additionalInfo: additionalInfo
         };
+
+        // 👉 Codificamos como x-www-form-urlencoded para evitar preflight
+        const formBody = new URLSearchParams();
+        formBody.append('payload', JSON.stringify(postData));
+
+        try {
+            const response = await fetch(scriptURL, {
+                method: 'POST',
+                body: formBody    // el navegador pone Content-Type automáticamente
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            if (result.status === 'success') {
+                showMessage('🎉 ¡Evidencia guardada correctamente en Drive! 🎉',
+                            'success', messageElement);
+            } else {
+                showMessage(`❌ Error al guardar: ${result.message}`,
+                            'error', messageElement);
+            }
+        } catch (error) {
+            console.error('Error al guardar:', error);
+            showMessage(
+                '🚨 Ocurrió un error inesperado al subir. Inténtalo de nuevo. Asegúrate de que el Apps Script esté desplegado correctamente.',
+                'error',
+                messageElement
+            );
+        } finally {
+            setTimeout(() => {
+                resetFormState();
+            }, 3000);
+        }
     });
+});
     
     retakeButton.addEventListener('click', () => {
         resetCameraAndButtons();
