@@ -699,9 +699,11 @@
                     <ul>
                         <li>El sistema creará automáticamente las carpetas <code>PARTICIPANTES</code>,
                             <code>ACTIVIDADES</code> y <code>DONACIONES</code> dentro de tu Carpeta Principal (la de
-                            <code>MAIN_FOLDER_ID</code>).</li>
+                            <code>MAIN_FOLDER_ID</code>).
+                        </li>
                         <li>Dentro de estas, se crearán las subcarpetas específicas como <code>REGALOS_PADRINOS</code>,
-                            <code>ASEO_GENERAL</code>, etc.</li>
+                            <code>ASEO_GENERAL</code>, etc.
+                        </li>
                     </ul>
                 </li>
             </ol>
@@ -999,30 +1001,37 @@
             try {
                 const constraints = {
                     video: {
-                        facingMode: facingMode
+                        // 👇 mayor resolución deseada
+                        width: { ideal: 1920 },    // o 1280 si quieres algo más ligero
+                        height: { ideal: 1080 },
+                        facingMode: facingMode      // 'environment' o 'user' según el valor actual
                     }
                 };
+
                 stream = await navigator.mediaDevices.getUserMedia(constraints);
                 webcamVideo.srcObject = stream;
                 webcamVideo.play();
 
                 // Verificar si hay más de una cámara para mostrar el botón de cambio
-                navigator.mediaDevices.enumerateDevices()
-                    .then(devices => {
-                        cameraDevices = devices.filter(device => device.kind === 'videoinput');
-                        if (cameraDevices.length > 1) {
-                            switchCameraButton.classList.remove('hidden');
-                        } else {
-                            switchCameraButton.classList.add('hidden');
-                        }
-                    });
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                cameraDevices = devices.filter(device => device.kind === 'videoinput');
+                if (cameraDevices.length > 1) {
+                    switchCameraButton.classList.remove('hidden');
+                } else {
+                    switchCameraButton.classList.add('hidden');
+                }
 
             } catch (err) {
                 console.error('Error al acceder a la cámara:', err);
-                showMessage('🚫 No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados o intenta desde otro dispositivo.', 'error', messageElement);
+                showMessage(
+                    '🚫 No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados o intenta desde otro dispositivo.',
+                    'error',
+                    messageElement
+                );
                 closeCameraModal();
             }
         }
+
 
         // Nueva función para cambiar de cámara
         function switchCamera() {
@@ -1151,9 +1160,15 @@
                     );
                 } finally {
                     setTimeout(() => {
-                        resetFormState();
+                        const type = evidenceTypeSelect.value; // obtiene la selección actual
+                        if (type === 'participantes') {
+                            resetAll();            // 🔄 Reinicia todo
+                        } else {
+                            resetKeepSelection();   // ✅ Mantiene selects en Actividades/Donaciones
+                        }
                     }, 3000);
                 }
+
             };
         });
 
@@ -1232,6 +1247,25 @@
             downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
             downloadMessageElement.textContent = '';
         }
+
+        // Limpia todo (usa tu lógica original de resetFormState)
+        function resetAll() {
+            resetFormState();  // tu función que borra selects, inputs, etc.
+        }
+
+        // Limpia solo la cámara y mensajes, deja los selects tal como están
+        function resetKeepSelection() {
+            capturedPhotoBlob = null;
+            webcamVideo.style.display = 'block';
+            photoCanvas.style.display = 'none';
+            captureButton.classList.remove('hidden');
+            retakeButton.classList.add('hidden');
+            saveButton.classList.add('hidden');
+            switchCameraButton.classList.remove('hidden');
+            messageElement.textContent = '';
+            // No tocamos evidenceTypeSelect, specificTypeSelect ni participantCodeSelect
+        }
+
     </script>
 
 </body>
