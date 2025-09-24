@@ -276,12 +276,16 @@
         #photo-canvas {
             width: 100%;
             max-width: 500px;
-            aspect-ratio: 4/3;
+            /* aspect-ratio: 4/3;  ← opcional, el JS lo ajusta */
             border-radius: 10px;
             box-shadow: 0 8px 25px var(--shadow-light);
             margin-bottom: 20px;
-            object-fit: cover;
+            object-fit: contain;
+            /* ✅ ahora muestra todo el frame */
+            background: black;
+            /* ✅ rellena bordes si la relación no coincide */
         }
+
 
         #photo-canvas {
             display: none;
@@ -1001,16 +1005,32 @@
             try {
                 const constraints = {
                     video: {
-                        // 👇 mayor resolución deseada
-                        width: { ideal: 1920 },    // o 1280 si quieres algo más ligero
+                        width: { ideal: 1920 },   // resolución alta deseada
                         height: { ideal: 1080 },
-                        facingMode: facingMode      // 'environment' o 'user' según el valor actual
+                        facingMode: facingMode     // 'environment' o 'user'
                     }
                 };
 
                 stream = await navigator.mediaDevices.getUserMedia(constraints);
                 webcamVideo.srcObject = stream;
                 webcamVideo.play();
+
+                // ✅ Ajustar la vista previa a la relación real de la cámara
+                webcamVideo.addEventListener('loadedmetadata', () => {
+                    const vW = webcamVideo.videoWidth;
+                    const vH = webcamVideo.videoHeight;
+
+                    // Forzar misma proporción en el contenedor
+                    const wrapper = document.querySelector('.camera-wrapper'); // tu div padre del video
+                    if (wrapper) {
+                        wrapper.style.aspectRatio = `${vW} / ${vH}`;
+                    }
+
+                    // Asegurar que el <video> se muestre completo sin recorte
+                    webcamVideo.style.width = '100%';
+                    webcamVideo.style.height = '100%';
+                    webcamVideo.style.objectFit = 'contain';
+                });
 
                 // Verificar si hay más de una cámara para mostrar el botón de cambio
                 const devices = await navigator.mediaDevices.enumerateDevices();
@@ -1031,6 +1051,7 @@
                 closeCameraModal();
             }
         }
+
 
 
         // Nueva función para cambiar de cámara
