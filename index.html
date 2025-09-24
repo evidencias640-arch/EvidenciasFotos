@@ -879,6 +879,7 @@
         saveButton.classList.add('hidden');
         switchCameraButton.classList.remove('hidden');
         capturedPhotoBlob = null;
+    
     }
 
     captureButton.addEventListener('click', () => {
@@ -986,8 +987,9 @@
                 resetFormState();
             }, 3000);
         }
-    });
+    };
 });
+
     
     retakeButton.addEventListener('click', () => {
         resetCameraAndButtons();
