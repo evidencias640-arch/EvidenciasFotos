@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌟 Sistema de Evidencias - ONG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4CAF50; /* Verde brillante para la acción */
-            --secondary-color: #8BC34A; /* Verde más suave */
-            --accent-color: #FFC107; /* Amarillo para destacar */
-            --background-light: #e8f5e9; /* Fondo suave verde claro */
-            --background-dark: #f0f4c3; /* Alternativa para secciones */
+            --primary-color: #4CAF50;
+            /* Verde brillante para la acción */
+            --secondary-color: #8BC34A;
+            /* Verde más suave */
+            --accent-color: #FFC107;
+            /* Amarillo para destacar */
+            --background-light: #e8f5e9;
+            /* Fondo suave verde claro */
+            --background-dark: #f0f4c3;
+            /* Alternativa para secciones */
             --text-dark: #333;
             --text-light: #555;
             --card-bg: #fff;
             --border-color: #c8e6c9;
             --shadow-light: rgba(0, 0, 0, 0.1);
             --shadow-medium: rgba(0, 0, 0, 0.15);
-            --success-color: #2e7d32; /* Verde oscuro para éxito */
-            --error-color: #d32f2f; /* Rojo oscuro para error */
-            --info-color: #1976d2; /* Azul para información */
+            --success-color: #2e7d32;
+            /* Verde oscuro para éxito */
+            --error-color: #d32f2f;
+            /* Rojo oscuro para error */
+            --info-color: #1976d2;
+            /* Azul para información */
         }
 
         body {
@@ -71,10 +82,22 @@
             display: inline-block;
             animation: bounceIn 0.8s ease-out both;
         }
-        .header h1 span:nth-child(1) { animation-delay: 0.1s; }
-        .header h1 span:nth-child(2) { animation-delay: 0.2s; }
-        .header h1 span:nth-child(3) { animation-delay: 0.3s; }
-        .header h1 span:nth-child(4) { animation-delay: 0.4s; }
+
+        .header h1 span:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .header h1 span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .header h1 span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .header h1 span:nth-child(4) {
+            animation-delay: 0.4s;
+        }
 
         .header p {
             font-style: italic;
@@ -82,7 +105,7 @@
             margin-top: 0;
             font-size: 1.1em;
         }
-        
+
         /* Navegación Modular */
         .tabs {
             display: flex;
@@ -92,7 +115,7 @@
             background-color: #f7fdf7;
             border-radius: 10px;
             padding: 5px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .tab-button {
@@ -114,7 +137,7 @@
             color: var(--primary-color);
             border-bottom-color: var(--primary-color);
             background-color: var(--card-bg);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .tab-button:hover:not(.active) {
@@ -129,7 +152,7 @@
         .tab-content.active {
             display: block;
         }
-        
+
         .form-group {
             margin-bottom: 25px;
         }
@@ -142,7 +165,9 @@
             font-size: 1.05em;
         }
 
-        select, input[type="text"], input[type="month"] {
+        select,
+        input[type="text"],
+        input[type="month"] {
             width: 100%;
             padding: 14px;
             box-sizing: border-box;
@@ -160,7 +185,8 @@
             background-size: .65em auto, 100%;
         }
 
-        select:focus, input:focus {
+        select:focus,
+        input:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
@@ -190,12 +216,12 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
         }
-        
+
         button.main-button:active {
             transform: translateY(-1px);
             box-shadow: 0 2px 5px rgba(76, 175, 80, 0.2);
         }
-        
+
         /* Estilos del Modal de Cámara */
         #fullscreen-camera-modal {
             position: fixed;
@@ -211,7 +237,7 @@
             transition: opacity 0.5s ease-in-out;
             opacity: 0;
         }
-        
+
         #fullscreen-camera-modal.show {
             opacity: 1;
         }
@@ -227,7 +253,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
-        
+
         .camera-title {
             background-color: var(--primary-color);
             color: white;
@@ -246,7 +272,8 @@
             padding: 20px;
         }
 
-        #webcam-video, #photo-canvas {
+        #webcam-video,
+        #photo-canvas {
             width: 100%;
             max-width: 500px;
             aspect-ratio: 4/3;
@@ -255,8 +282,10 @@
             margin-bottom: 20px;
             object-fit: cover;
         }
-        
-        #photo-canvas { display: none; }
+
+        #photo-canvas {
+            display: none;
+        }
 
         .button-group-modal {
             display: flex;
@@ -266,7 +295,7 @@
             width: 100%;
             max-width: 500px;
         }
-        
+
         .button-group-modal button {
             flex: 1;
             min-width: 120px;
@@ -279,23 +308,23 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        
+
         .button-group-modal button:hover {
             background-color: var(--secondary-color);
         }
-        
+
         #capture-button {
             background-color: var(--primary-color);
         }
-        
+
         #retake-button {
             background-color: #f39c12;
         }
-        
+
         #save-button {
             background-color: #27ae60;
         }
-        
+
         #switch-camera-button {
             background-color: #3498db;
         }
@@ -310,7 +339,10 @@
             font-size: 1em;
             margin-top: 15px;
         }
-        .close-button:hover { background-color: #d32f2f; }
+
+        .close-button:hover {
+            background-color: #d32f2f;
+        }
 
         #message {
             margin-top: 30px;
@@ -330,11 +362,27 @@
             display: block;
         }
 
-        .success { background-color: #e6ffed; color: var(--success-color); border: 1px solid var(--success-color); }
-        .error { background-color: #ffe6e6; color: var(--error-color); border: 1px solid var(--error-color); }
-        .info { background-color: #e0f2f7; color: var(--info-color); border: 1px solid var(--info-color); }
+        .success {
+            background-color: #e6ffed;
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
 
-        .hidden { display: none !important; }
+        .error {
+            background-color: #ffe6e6;
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+
+        .info {
+            background-color: #e0f2f7;
+            color: var(--info-color);
+            border: 1px solid var(--info-color);
+        }
+
+        .hidden {
+            display: none !important;
+        }
 
         /* Estilos específicos para la sección de información */
         #info-tab h2 {
@@ -344,6 +392,7 @@
             font-size: 2em;
             text-align: center;
         }
+
         #info-tab h3 {
             font-family: 'Poppins', sans-serif;
             color: var(--secondary-color);
@@ -353,18 +402,23 @@
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 5px;
         }
-        #info-tab p, #info-tab ul {
+
+        #info-tab p,
+        #info-tab ul {
             line-height: 1.6;
             margin-bottom: 15px;
             color: var(--text-light);
         }
+
         #info-tab ul {
             list-style-type: disc;
             padding-left: 25px;
         }
+
         #info-tab li {
             margin-bottom: 8px;
         }
+
         #info-tab code {
             background-color: #f0f0f0;
             padding: 2px 6px;
@@ -372,37 +426,57 @@
             font-family: monospace;
             font-size: 0.9em;
         }
+
         #info-tab strong {
             color: var(--text-dark);
         }
 
         /* Animaciones */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes bounceIn {
-            0%, 20%, 40%, 60%, 80%, 100% {
+
+            0%,
+            20%,
+            40%,
+            60%,
+            80%,
+            100% {
                 transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
             }
+
             0% {
                 opacity: 0;
                 transform: scale3d(.3, .3, .3);
             }
+
             20% {
                 transform: scale3d(1.1, 1.1, 1.1);
             }
+
             40% {
                 transform: scale3d(.9, .9, .9);
             }
+
             60% {
                 opacity: 1;
                 transform: scale3d(1.03, 1.03, 1.03);
             }
+
             80% {
                 transform: scale3d(.97, .97, .97);
             }
+
             100% {
                 opacity: 1;
                 transform: scale3d(1, 1, 1);
@@ -411,661 +485,755 @@
 
         /* Media Queries para Responsividad */
         @media (max-width: 768px) {
-            .container { padding: 25px; margin: 15px auto; }
-            .header h1 { font-size: 2.2em; }
-            .header p { font-size: 1em; }
-            .tab-button { padding: 12px 18px; font-size: 1em; }
-            button { padding: 12px 18px; font-size: 1em; }
-            .button-group { flex-direction: column; }
-            #info-tab h2 { font-size: 1.8em; }
-            #info-tab h3 { font-size: 1.2em; }
-            body { font-size: 15px; }
+            .container {
+                padding: 25px;
+                margin: 15px auto;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .tab-button {
+                padding: 12px 18px;
+                font-size: 1em;
+            }
+
+            button {
+                padding: 12px 18px;
+                font-size: 1em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            #info-tab h2 {
+                font-size: 1.8em;
+            }
+
+            #info-tab h3 {
+                font-size: 1.2em;
+            }
+
+            body {
+                font-size: 15px;
+            }
         }
 
         @media (max-width: 480px) {
-            .container { padding: 15px; margin: 10px auto; }
-            .header h1 { font-size: 1.8em; gap: 5px;}
-            .header p { font-size: 0.9em; }
-            .tabs { flex-wrap: wrap; }
-            .tab-button { width: 100%; margin-bottom: 5px; }
-            label { font-size: 0.95em; }
-            select, input[type="text"], input[type="month"], button { font-size: 0.95em; padding: 12px; }
-            #info-tab h2 { font-size: 1.6em; }
-            #info-tab h3 { font-size: 1.1em; }
-            body { font-size: 14px; }
+            .container {
+                padding: 15px;
+                margin: 10px auto;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+                gap: 5px;
+            }
+
+            .header p {
+                font-size: 0.9em;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-button {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            label {
+                font-size: 0.95em;
+            }
+
+            select,
+            input[type="text"],
+            input[type="month"],
+            button {
+                font-size: 0.95em;
+                padding: 12px;
+            }
+
+            #info-tab h2 {
+                font-size: 1.6em;
+            }
+
+            #info-tab h3 {
+                font-size: 1.1em;
+            }
+
+            body {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1><span>📸</span> <span>Sistema</span> <span>de</span> <span>Evidencias</span></h1>
-        <p>Una herramienta intuitiva y eficiente para tu ONG.</p>
-    </div>
-
-    <div class="tabs">
-        <button class="tab-button active" data-tab="upload-tab">⬆️ Cargar Evidencia</button>
-        <button class="tab-button" data-tab="download-tab">⬇️ Descargar Evidencia</button>
-        <button class="tab-button" data-tab="info-tab">ℹ️ Información & Ayuda</button>
-    </div>
-    
-    <div id="upload-tab" class="tab-content active">
-        <div class="form-group">
-            <label for="evidenceType">Elige el Tipo Principal de Evidencia:</label>
-            <select id="evidenceType">
-                <option value="">-- Selecciona una opción --</option>
-                <option value="participantes">Participantes</option>
-                <option value="actividades">Actividades</option>
-                <option value="donaciones">Donaciones y Gestión</option>
-            </select>
+    <div class="container">
+        <div class="header">
+            <h1><span>📸</span> <span>Sistema</span> <span>de</span> <span>Evidencias</span></h1>
+            <p>Una herramienta intuitiva y eficiente para tu ONG.</p>
         </div>
 
-        <div id="participants-section" class="hidden">
-            <div class="form-group">
-                <label for="participantCode">Selecciona el Participante:</label>
-                <select id="participantCode"></select>
-            </div>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="upload-tab">⬆️ Cargar Evidencia</button>
+            <button class="tab-button" data-tab="download-tab">⬇️ Descargar Evidencia</button>
+            <button class="tab-button" data-tab="info-tab">ℹ️ Información & Ayuda</button>
         </div>
-        
-        <div class="form-group">
-            <label for="specificType">Elige el Tipo Específico de Evidencia:</label>
-            <select id="specificType">
-                <option value="">-- Selecciona el tipo principal primero --</option>
-            </select>
-        </div>
-        
-        <div id="description-section" class="hidden">
+
+        <div id="upload-tab" class="tab-content active">
             <div class="form-group">
-                <label for="description">Descripción breve de la donación/gestión:</label>
-                <input type="text" id="description" placeholder="Ej: Gestiones con la iglesia para alimentos">
-            </div>
-        </div>
-        
-        <div id="tutor-section" class="hidden">
-            <div class="form-group">
-                <label for="tutorName">Selecciona la Tutora:</label>
-                <select id="tutorName">
-                    <option value="">-- Selecciona una tutora --</option>
-                    <option value="LISBETH">Lisbeth</option>
-                    <option value="DIANA">Diana</option>
-                    <option value="HELEN">Helen</option>
-                    <option value="JULIANA">Juliana</option>
+                <label for="evidenceType">Elige el Tipo Principal de Evidencia:</label>
+                <select id="evidenceType">
+                    <option value="">-- Selecciona una opción --</option>
+                    <option value="participantes">Participantes</option>
+                    <option value="actividades">Actividades</option>
+                    <option value="donaciones">Donaciones, Gestión y Regalos ICC</option>
                 </select>
             </div>
-        </div>
-        
-        <button id="start-camera-button" class="main-button hidden">Abrir Cámara</button>
 
-        <p id="message" class="info"></p>
-    </div>
-    
-    <div id="download-tab" class="tab-content">
-        <div class="form-group">
-            <label for="downloadMainType">Tipo Principal de Evidencia a Descargar:</label>
-            <select id="downloadMainType">
-                <option value="">-- Selecciona una opción --</option>
-                <option value="participantes">Participantes</option>
-                <option value="actividades">Actividades</option>
-                <option value="donaciones">Donaciones y Gestión</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="downloadSpecificType">Tipo Específico de Evidencia a Descargar:</label>
-            <select id="downloadSpecificType">
-                <option value="">-- Primero selecciona el tipo principal --</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="downloadMonth">Selecciona el Mes de las Evidencias:</label>
-            <input type="month" id="downloadMonth">
-        </div>
-        <button id="download-button" class="main-button">⬇️ Descargar Evidencias (ZIP)</button>
-        <p id="download-message" class="info"></p>
-    </div>
-
-    <div id="info-tab" class="tab-content">
-        <h2>ℹ️ Información y Cómo Usar el Sistema</h2>
-        <p>Este sistema ha sido diseñado para simplificar la captura, organización y descarga de todas las evidencias fotográficas de nuestra ONG. Es intuitivo, rápido y mantiene todo ordenado en Google Drive.</p>
-
-        <h3>🚀 Inicio Rápido:</h3>
-        <ol>
-            <li>**Configuración Inicial (Solo una vez):**
-                <ul>
-                    <li>Abre tu Google Sheet de participantes y ve a <code>Extensiones > Apps Script</code>.</li>
-                    <li>Pega el código del Apps Script proporcionado.</li>
-                    <li>**Reemplaza** <code>ID_DE_TU_SHEET</code> y <code>ID_DE_TU_DRIVE</code> con los IDs reales de tu Google Sheet y tu Carpeta Principal de Google Drive (ver sección "IDs Necesarios").</li>
-                    <li>**Despliega el Script:** Haz clic en <code>Desplegar > Nuevo despliegue</code>. Elige "Aplicación web". Ejecuta como "Yo" y con acceso "Cualquiera" o "Cualquiera, incluso anónimo". Guarda la URL del script desplegado.</li>
-                    <li>**Configura el Frontend:** Abre este archivo <code>index.html</code> y reemplaza <code>URL_DEL_SCRIPT_AQUI</code> con la URL que obtuviste del despliegue del Apps Script.</li>
-                </ul>
-            </li>
-            <li>**Estructura de Google Sheets:**
-                <ul>
-                    <li>Asegúrate de tener una hoja llamada <code>Participantes</code>.</li>
-                    <li>La **columna A** debe contener los <strong>códigos únicos</strong> de los participantes.</li>
-                    <li>La **columna B** debe contener los <strong>nombres</strong> de los participantes.</li>
-                </ul>
-            </li>
-            <li>**Estructura de Google Drive:**
-                <ul>
-                    <li>El sistema creará automáticamente las carpetas <code>PARTICIPANTES</code>, <code>ACTIVIDADES</code> y <code>DONACIONES</code> dentro de tu Carpeta Principal (la de <code>MAIN_FOLDER_ID</code>).</li>
-                    <li>Dentro de estas, se crearán las subcarpetas específicas como <code>REGALOS_PADRINOS</code>, <code>ASEO_GENERAL</code>, etc.</li>
-                </ul>
-            </li>
-        </ol>
-
-        <h3>📸 Cargar Evidencia:</h3>
-        <ol>
-            <li>Ve a la pestaña <strong>"⬆️ Cargar Evidencia"</strong>.</li>
-            <li>Selecciona el <strong>"Tipo Principal de Evidencia"</strong> (Participantes, Actividades, Donaciones). Esto mostrará los campos relevantes.</li>
-            <li>Completa los detalles. Una vez listos, haz clic en el botón **"Abrir Cámara"**.</li>
-            <li>La interfaz de la cámara se abrirá en pantalla completa. Posiciona lo que deseas fotografiar y haz clic en <strong>"📸 Tomar Foto"</strong>.</li>
-            <li>Revisa la foto. Si no estás conforme, haz clic en <strong>"🔄 Tomar Otra Foto"</strong>.</li>
-            <li>Si la foto es correcta, haz clic en <strong>"✅ Guardar Evidencia"</strong>. La foto se subirá automáticamente a Google Drive con un nombre estandarizado y único.</li>
-        </ol>
-
-        <h3>⬇️ Descargar Evidencia:</h3>
-        <ol>
-            <li>Ve a la pestaña <strong>"⬇️ Descargar Evidencia"</strong>.</li>
-            <li>Selecciona el <strong>"Tipo Principal de Evidencia"</strong> y el <strong>"Tipo Específico de Evidencia"</strong> que deseas descargar.</li>
-            <li>Selecciona el <strong>"Mes de Descarga"</strong>.</li>
-            <li>Haz clic en <strong>"⬇️ Descargar Evidencias (ZIP)"</strong>. Se generará un archivo ZIP con todas las fotos que coincidan con tus criterios y se iniciará la descarga.</li>
-        </ol>
-
-        <h3>🔑 IDs Necesarios:</h3>
-        <ul>
-            <li><strong>ID_DE_TU_SHEET:</strong> Lo encuentras en la URL de tu Google Sheet. Es la cadena de caracteres larga entre <code>/d/</code> y <code>/edit</code>.</li>
-            <li><strong>ID_DE_TU_DRIVE:</strong> Lo encuentras en la URL de tu carpeta principal de Google Drive. Es la cadena de caracteres larga después de <code>folders/</code>.</li>
-        </ul>
-        <p>¡Gracias por usar el sistema! Si tienes dudas o sugerencias, consulta al equipo técnico.</p>
-    </div>
-
-</div>
-
-<div id="fullscreen-camera-modal" class="hidden">
-    <div class="modal-content">
-        <div class="camera-title">
-            <span>📷</span> Tomar Evidencia
-        </div>
-        <div class="camera-container">
-            <video id="webcam-video" autoplay playsinline></video>
-            <canvas id="photo-canvas"></canvas>
-            <div class="button-group-modal">
-                <button id="capture-button">📸 Tomar Foto</button>
-                <button id="retake-button" class="hidden">🔄 Tomar Otra</button>
-                <button id="save-button" class="hidden">✅ Guardar</button>
-                <button id="switch-camera-button" class="hidden">🔄 Cambiar Cámara</button>
+            <div id="participants-section" class="hidden">
+                <div class="form-group">
+                    <label for="participantCode">Selecciona el Participante:</label>
+                    <select id="participantCode"></select>
+                </div>
             </div>
-            <button id="close-camera" class="close-button">Cerrar</button>
+
+            <div class="form-group">
+                <label for="specificType">Elige el Tipo Específico de Evidencia:</label>
+                <select id="specificType">
+                    <option value="">-- Selecciona el tipo principal primero --</option>
+                </select>
+            </div>
+
+            <div id="description-section" class="hidden">
+                <div class="form-group">
+                    <label for="description">Descripción breve de la donación/gestión:</label>
+                    <input type="text" id="description" placeholder="Ej: Gestiones con la iglesia para alimentos">
+                </div>
+            </div>
+
+            <div id="tutor-section" class="hidden">
+                <div class="form-group">
+                    <label for="tutorName">Selecciona la Tutora:</label>
+                    <select id="tutorName">
+                        <option value="">-- Selecciona una tutora --</option>
+                        <option value="LISBETH">Lisbeth</option>
+                        <option value="DIANA">Diana</option>
+                        <option value="HELEN">Helen</option>
+                        <option value="JULIANA">Juliana</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="start-camera-button" class="main-button hidden">Abrir Cámara</button>
+
+            <p id="message" class="info"></p>
+        </div>
+
+        <div id="download-tab" class="tab-content">
+            <div class="form-group">
+                <label for="downloadMainType">Tipo Principal de Evidencia a Descargar:</label>
+                <select id="downloadMainType">
+                    <option value="">-- Selecciona una opción --</option>
+                    <option value="participantes">Participantes</option>
+                    <option value="actividades">Actividades</option>
+                    <option value="donaciones">Donaciones y Gestión</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="downloadSpecificType">Tipo Específico de Evidencia a Descargar:</label>
+                <select id="downloadSpecificType">
+                    <option value="">-- Primero selecciona el tipo principal --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="downloadMonth">Selecciona el Mes de las Evidencias:</label>
+                <input type="month" id="downloadMonth">
+            </div>
+            <button id="download-button" class="main-button">⬇️ Descargar Evidencias (ZIP)</button>
+            <p id="download-message" class="info"></p>
+        </div>
+
+        <div id="info-tab" class="tab-content">
+            <h2>ℹ️ Información y Cómo Usar el Sistema</h2>
+            <p>Este sistema ha sido diseñado para simplificar la captura, organización y descarga de todas las
+                evidencias fotográficas de nuestra ONG. Es intuitivo, rápido y mantiene todo ordenado en Google Drive.
+            </p>
+
+            <h3>🚀 Inicio Rápido:</h3>
+            <ol>
+                <li>**Configuración Inicial (Solo una vez):**
+                    <ul>
+                        <li>Abre tu Google Sheet de participantes y ve a <code>Extensiones > Apps Script</code>.</li>
+                        <li>Pega el código del Apps Script proporcionado.</li>
+                        <li>**Reemplaza** <code>ID_DE_TU_SHEET</code> y <code>ID_DE_TU_DRIVE</code> con los IDs reales
+                            de tu Google Sheet y tu Carpeta Principal de Google Drive (ver sección "IDs Necesarios").
+                        </li>
+                        <li>**Despliega el Script:** Haz clic en <code>Desplegar > Nuevo despliegue</code>. Elige
+                            "Aplicación web". Ejecuta como "Yo" y con acceso "Cualquiera" o "Cualquiera, incluso
+                            anónimo". Guarda la URL del script desplegado.</li>
+                        <li>**Configura el Frontend:** Abre este archivo <code>index.html</code> y reemplaza
+                            <code>URL_DEL_SCRIPT_AQUI</code> con la URL que obtuviste del despliegue del Apps Script.
+                        </li>
+                    </ul>
+                </li>
+                <li>**Estructura de Google Sheets:**
+                    <ul>
+                        <li>Asegúrate de tener una hoja llamada <code>Participantes</code>.</li>
+                        <li>La **columna A** debe contener los <strong>códigos únicos</strong> de los participantes.
+                        </li>
+                        <li>La **columna B** debe contener los <strong>nombres</strong> de los participantes.</li>
+                    </ul>
+                </li>
+                <li>**Estructura de Google Drive:**
+                    <ul>
+                        <li>El sistema creará automáticamente las carpetas <code>PARTICIPANTES</code>,
+                            <code>ACTIVIDADES</code> y <code>DONACIONES</code> dentro de tu Carpeta Principal (la de
+                            <code>MAIN_FOLDER_ID</code>).</li>
+                        <li>Dentro de estas, se crearán las subcarpetas específicas como <code>REGALOS_PADRINOS</code>,
+                            <code>ASEO_GENERAL</code>, etc.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>📸 Cargar Evidencia:</h3>
+            <ol>
+                <li>Ve a la pestaña <strong>"⬆️ Cargar Evidencia"</strong>.</li>
+                <li>Selecciona el <strong>"Tipo Principal de Evidencia"</strong> (Participantes, Actividades,
+                    Donaciones). Esto mostrará los campos relevantes.</li>
+                <li>Completa los detalles. Una vez listos, haz clic en el botón **"Abrir Cámara"**.</li>
+                <li>La interfaz de la cámara se abrirá en pantalla completa. Posiciona lo que deseas fotografiar y haz
+                    clic en <strong>"📸 Tomar Foto"</strong>.</li>
+                <li>Revisa la foto. Si no estás conforme, haz clic en <strong>"🔄 Tomar Otra Foto"</strong>.</li>
+                <li>Si la foto es correcta, haz clic en <strong>"✅ Guardar Evidencia"</strong>. La foto se subirá
+                    automáticamente a Google Drive con un nombre estandarizado y único.</li>
+            </ol>
+
+            <h3>⬇️ Descargar Evidencia:</h3>
+            <ol>
+                <li>Ve a la pestaña <strong>"⬇️ Descargar Evidencia"</strong>.</li>
+                <li>Selecciona el <strong>"Tipo Principal de Evidencia"</strong> y el <strong>"Tipo Específico de
+                        Evidencia"</strong> que deseas descargar.</li>
+                <li>Selecciona el <strong>"Mes de Descarga"</strong>.</li>
+                <li>Haz clic en <strong>"⬇️ Descargar Evidencias (ZIP)"</strong>. Se generará un archivo ZIP con todas
+                    las fotos que coincidan con tus criterios y se iniciará la descarga.</li>
+            </ol>
+
+            <h3>🔑 IDs Necesarios:</h3>
+            <ul>
+                <li><strong>ID_DE_TU_SHEET:</strong> Lo encuentras en la URL de tu Google Sheet. Es la cadena de
+                    caracteres larga entre <code>/d/</code> y <code>/edit</code>.</li>
+                <li><strong>ID_DE_TU_DRIVE:</strong> Lo encuentras en la URL de tu carpeta principal de Google Drive. Es
+                    la cadena de caracteres larga después de <code>folders/</code>.</li>
+            </ul>
+            <p>¡Gracias por usar el sistema! Si tienes dudas o sugerencias, consulta al equipo técnico.</p>
+        </div>
+
+    </div>
+
+    <div id="fullscreen-camera-modal" class="hidden">
+        <div class="modal-content">
+            <div class="camera-title">
+                <span>📷</span> Tomar Evidencia
+            </div>
+            <div class="camera-container">
+                <video id="webcam-video" autoplay playsinline></video>
+                <canvas id="photo-canvas"></canvas>
+                <div class="button-group-modal">
+                    <button id="capture-button">📸 Tomar Foto</button>
+                    <button id="retake-button" class="hidden">🔄 Tomar Otra</button>
+                    <button id="save-button" class="hidden">✅ Guardar</button>
+                    <button id="switch-camera-button" class="hidden">🔄 Cambiar Cámara</button>
+                </div>
+                <button id="close-camera" class="close-button">Cerrar</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec'; // ⚠️ ¡Reemplaza con tu URL del Apps Script!
-    
-    // Selectores y elementos del DOM
-    const tabs = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-    const evidenceTypeSelect = document.getElementById('evidenceType');
-    const specificTypeSelect = document.getElementById('specificType');
-    const downloadMainTypeSelect = document.getElementById('downloadMainType');
-    const downloadSpecificTypeSelect = document.getElementById('downloadSpecificType');
-    const downloadMonthInput = document.getElementById('downloadMonth');
-    const webcamVideo = document.getElementById('webcam-video');
-    const photoCanvas = document.getElementById('photo-canvas');
-    const messageElement = document.getElementById('message');
-    const downloadMessageElement = document.getElementById('download-message');
-    const startCameraButton = document.getElementById('start-camera-button');
-    const captureButton = document.getElementById('capture-button');
-    const retakeButton = document.getElementById('retake-button');
-    const saveButton = document.getElementById('save-button');
-    const downloadButton = document.getElementById('download-button');
-    const participantsSection = document.getElementById('participants-section');
-    const descriptionSection = document.getElementById('description-section');
-    const tutorSection = document.getElementById('tutor-section');
-    const participantCodeSelect = document.getElementById('participantCode');
-    const descriptionInput = document.getElementById('description');
-    const tutorNameSelect = document.getElementById('tutorName');
-    const fullscreenCameraModal = document.getElementById('fullscreen-camera-modal');
-    const closeCameraButton = document.getElementById('close-camera');
-    const switchCameraButton = document.getElementById('switch-camera-button'); // Nuevo selector para el botón de cambio
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec'; // ⚠️ ¡Reemplaza con tu URL del Apps Script!
 
-    let capturedPhotoBlob = null;
-    let stream = null;
-    let participantNameMap = {};
-    let facingMode = 'environment'; // Variable para controlar la cámara activa
-    let cameraDevices = []; // Variable para almacenar los dispositivos de video
+        // Selectores y elementos del DOM
+        const tabs = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const evidenceTypeSelect = document.getElementById('evidenceType');
+        const specificTypeSelect = document.getElementById('specificType');
+        const downloadMainTypeSelect = document.getElementById('downloadMainType');
+        const downloadSpecificTypeSelect = document.getElementById('downloadSpecificType');
+        const downloadMonthInput = document.getElementById('downloadMonth');
+        const webcamVideo = document.getElementById('webcam-video');
+        const photoCanvas = document.getElementById('photo-canvas');
+        const messageElement = document.getElementById('message');
+        const downloadMessageElement = document.getElementById('download-message');
+        const startCameraButton = document.getElementById('start-camera-button');
+        const captureButton = document.getElementById('capture-button');
+        const retakeButton = document.getElementById('retake-button');
+        const saveButton = document.getElementById('save-button');
+        const downloadButton = document.getElementById('download-button');
+        const participantsSection = document.getElementById('participants-section');
+        const descriptionSection = document.getElementById('description-section');
+        const tutorSection = document.getElementById('tutor-section');
+        const participantCodeSelect = document.getElementById('participantCode');
+        const descriptionInput = document.getElementById('description');
+        const tutorNameSelect = document.getElementById('tutorName');
+        const fullscreenCameraModal = document.getElementById('fullscreen-camera-modal');
+        const closeCameraButton = document.getElementById('close-camera');
+        const switchCameraButton = document.getElementById('switch-camera-button'); // Nuevo selector para el botón de cambio
 
-    const evidenceOptionsMap = {
-        'participantes': [
-            { value: 'REGALOS PADRINOS', text: 'Regalos Padrinos' },
-            { value: 'MEDICINA', text: 'Medicina' },
-            { value: 'CUMPLEANOS', text: 'Cumpleaños' },
-            { value: 'TFI', text: 'TFI' },
-            { value: 'AYUDA ALIMENTARIA', text: 'Ayuda Alimentaria' },
-            { value: 'DONACIONES PERSONAL', text: 'Donaciones Personal' }
-        ],
-        'actividades': [
-            { value: 'CLASES DE LIDERAZGO', text: 'Clases de Liderazgo' },
-            { value: 'JORNADAS DE LIMPIEZA', text: 'Jornadas de Limpieza' },
-            { value: 'ACTIVIDADES EXTRACURRICULARES', text: 'Actividades Extracurriculares' },
-            { value: 'REGALOS', text: 'Regalos' },
-            { value: 'TEFI', text: 'Tefi' },
-            { value: 'AYUDAS', text: 'Ayudas' },
-            { value: 'ASEO GENERAL', text: 'Aseo General' },
-            { value: 'PELICULAS', text: 'Proyección de Películas' },
-            { value: 'DIA BIBLIA', text: 'Día de la Biblia' },
-            { value: 'NAVIDAD', text: 'Actividad de Navidad' },
-            { value: 'FIESTAS', text: 'Fiestas (Día del Niño, etc.)' },
-            { value: 'CHEQUEOS', text: 'Chequeos Médicos' },
-            { value: 'ENCUENTROS SUPER', text: 'Encuentros con Supervisoras' },
-            { value: 'ENCUENTROS CAMINA', text: 'Encuentros con CAMINA' },
-            { value: 'DEPORTE', text: 'Deporte' },
-            { value: 'GESTION IGLESIA', text: 'Gestión con Iglesia' }
-        ],
-        'donaciones': [
-            { value: 'DONACION ROPA', text: 'Donación Ropa' },
-            { value: 'DONACION MATERIAL', text: 'Donación Material (Escolar, oficina, etc.)' },
-            { value: 'DONACION MERCADO', text: 'Donación Mercado (Alimentos)' },
-            { value: 'DONACION ELECTRO', text: 'Donación Electrodomésticos' },
-            { value: 'DONACION DINERO', text: 'Donación Dinero' },
-            { value: 'GESTION IGLESIA', text: 'Gestión con Iglesia' }
-        ]
-    };
+        let capturedPhotoBlob = null;
+        let stream = null;
+        let participantNameMap = {};
+        let facingMode = 'environment'; // Variable para controlar la cámara activa
+        let cameraDevices = []; // Variable para almacenar los dispositivos de video
 
-    // Lógica de Tabs
-    tabs.forEach(button => {
-        button.addEventListener('click', () => {
-            tabs.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            button.classList.add('active');
-            document.getElementById(button.dataset.tab).classList.add('active');
-            
-            if (button.dataset.tab !== 'upload-tab') {
-                closeCameraModal();
-                messageElement.classList.remove('show', 'success', 'error', 'info');
-                messageElement.textContent = '';
-            } else {
-                 resetFormState();
-            }
-             downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
-             downloadMessageElement.textContent = '';
-        });
-    });
-
-    // Cargar la lista de participantes
-    async function loadParticipants() {
-        showMessage('Cargando participantes...', 'info', messageElement);
-        try {
-            const response = await fetch(`${scriptURL}?action=getParticipants`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const participants = await response.json();
-            participantNameMap = {};
-            participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
-            participants.forEach(p => {
-                const option = document.createElement('option');
-                option.value = p.code;
-                option.textContent = `${p.code} - ${p.name}`;
-                participantCodeSelect.appendChild(option);
-                participantNameMap[p.code] = p.name;
-            });
-            showMessage('Participantes cargados.', 'success', messageElement, 2000);
-        } catch (error) {
-            console.error('Error al cargar participantes:', error);
-            showMessage('❌ Error al cargar la lista de participantes. Verifica la conexión o el script.', 'error', messageElement);
-        }
-    }
-    
-    // Lógica para mostrar/ocultar secciones y cargar opciones de tipos específicos
-    evidenceTypeSelect.addEventListener('change', () => {
-        participantsSection.classList.add('hidden');
-        descriptionSection.classList.add('hidden');
-        tutorSection.classList.add('hidden');
-        startCameraButton.classList.add('hidden');
-        messageElement.classList.remove('show');
-        
-        const mainType = evidenceTypeSelect.value;
-        const specificSelect = specificTypeSelect;
-        specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
-
-        if (mainType && evidenceOptionsMap[mainType]) {
-            evidenceOptionsMap[mainType].forEach(option => {
-                const opt = document.createElement('option');
-                opt.value = option.value;
-                opt.textContent = option.text;
-                specificSelect.appendChild(opt);
-            });
-            startCameraButton.classList.remove('hidden');
-        } else {
-            specificSelect.innerHTML = '<option value="">-- Selecciona el tipo principal primero --</option>';
-        }
-
-        if (mainType === 'participantes') {
-            participantsSection.classList.remove('hidden');
-            loadParticipants();
-        }
-    });
-
-    specificTypeSelect.addEventListener('change', () => {
-        descriptionSection.classList.add('hidden');
-        tutorSection.classList.add('hidden');
-        const specificType = specificTypeSelect.value;
-
-        if (specificType === 'GESTION IGLESIA' || specificType === 'PERFIL') {
-            descriptionSection.classList.remove('hidden');
-        } else if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
-            tutorSection.classList.remove('hidden');
-        }
-    });
-
-    // Cargar opciones del selector de descarga
-    downloadMainTypeSelect.addEventListener('change', () => {
-        const mainType = downloadMainTypeSelect.value;
-        const specificSelect = downloadSpecificTypeSelect;
-        specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
-        if (mainType && evidenceOptionsMap[mainType]) {
-            evidenceOptionsMap[mainType].forEach(option => {
-                const opt = document.createElement('option');
-                opt.value = option.value;
-                opt.textContent = option.text;
-                specificSelect.appendChild(opt);
-            });
-        } else {
-            specificSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
-        }
-    });
-    
-    // Control del modal de la cámara
-    startCameraButton.addEventListener('click', () => {
-        const evidenceType = evidenceTypeSelect.value;
-        const specificType = specificTypeSelect.value;
-        let valid = true;
-        
-        if (!evidenceType || !specificType) {
-            valid = false;
-        }
-
-        if (evidenceType === 'participantes' && !participantCodeSelect.value) {
-            valid = false;
-        }
-        
-        if (specificType === 'GESTION IGLESIA' || specificType === 'PERFIL') {
-            if (!descriptionInput.value) {
-                valid = false;
-            }
-        }
-        if (specificType === 'ACTIVIDADES EXTRACURRICULARES' && !tutorNameSelect.value) {
-            valid = false;
-        }
-
-        if (!valid) {
-            showMessage('⚠️ Por favor, llena todos los campos del formulario antes de abrir la cámara.', 'error', messageElement);
-            return;
-        }
-
-        fullscreenCameraModal.classList.remove('hidden');
-        setTimeout(() => {
-            fullscreenCameraModal.classList.add('show');
-            startCamera();
-        }, 10);
-    });
-
-    closeCameraButton.addEventListener('click', closeCameraModal);
-
-    function closeCameraModal() {
-        fullscreenCameraModal.classList.remove('show');
-        setTimeout(() => {
-            fullscreenCameraModal.classList.add('hidden');
-            stopCamera();
-            resetCameraAndButtons();
-        }, 500);
-    }
-
-    // Lógica de la cámara
-    async function startCamera() {
-        if (stream) {
-            stopCamera();
-        }
-        try {
-            const constraints = {
-                video: {
-                    facingMode: facingMode
-                }
-            };
-            stream = await navigator.mediaDevices.getUserMedia(constraints);
-            webcamVideo.srcObject = stream;
-            webcamVideo.play();
-
-            // Verificar si hay más de una cámara para mostrar el botón de cambio
-            navigator.mediaDevices.enumerateDevices()
-                .then(devices => {
-                    cameraDevices = devices.filter(device => device.kind === 'videoinput');
-                    if (cameraDevices.length > 1) {
-                        switchCameraButton.classList.remove('hidden');
-                    } else {
-                        switchCameraButton.classList.add('hidden');
-                    }
-                });
-
-        } catch (err) {
-            console.error('Error al acceder a la cámara:', err);
-            showMessage('🚫 No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados o intenta desde otro dispositivo.', 'error', messageElement);
-            closeCameraModal();
-        }
-    }
-    
-    // Nueva función para cambiar de cámara
-    function switchCamera() {
-        facingMode = (facingMode === 'environment') ? 'user' : 'environment';
-        startCamera();
-    }
-
-    function stopCamera() {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-            webcamVideo.srcObject = null;
-            stream = null;
-        }
-    }
-
-    function resetCameraAndButtons() {
-        webcamVideo.style.display = 'block';
-        photoCanvas.style.display = 'none';
-        captureButton.classList.remove('hidden');
-        retakeButton.classList.add('hidden');
-        saveButton.classList.add('hidden');
-        switchCameraButton.classList.remove('hidden');
-        capturedPhotoBlob = null;
-    
-    }
-
-    captureButton.addEventListener('click', () => {
-        if (!stream) {
-            showMessage('🚫 La cámara no está activa. Vuelve a intentar o revisa los permisos.', 'error', messageElement);
-            return;
-        }
-        const context = photoCanvas.getContext('2d');
-        photoCanvas.width = webcamVideo.videoWidth;
-        photoCanvas.height = webcamVideo.videoHeight;
-        context.drawImage(webcamVideo, 0, 0, photoCanvas.width, photoCanvas.height);
-        
-        photoCanvas.toBlob(blob => {
-            capturedPhotoBlob = blob;
-            webcamVideo.style.display = 'none';
-            photoCanvas.style.display = 'block';
-            captureButton.classList.add('hidden');
-            retakeButton.classList.remove('hidden');
-            saveButton.classList.remove('hidden');
-            switchCameraButton.classList.add('hidden'); // Ocultar el botón al tomar la foto
-            stopCamera();
-        }, 'image/jpeg', 0.95);
-    });
-    
-    // Event listener para el nuevo botón de cambio de cámara
-    switchCameraButton.addEventListener('click', switchCamera);
-
-   // Enviar la evidencia
-    saveButton.addEventListener('click', async () => {
-        if (!capturedPhotoBlob) {
-            showMessage('⚠️ Por favor, toma una foto primero antes de guardar.', 'error', messageElement);
-            return;
-        }
-        
-        const evidenceType = evidenceTypeSelect.value;
-        const specificType = specificTypeSelect.value;
-        let participantCode = '';
-        let additionalInfo = '';
-
-        if (evidenceType === 'participantes') {
-            participantCode = participantCodeSelect.value;
-            additionalInfo = participantNameMap[participantCode] || '';
-            if (specificType === 'PERFIL') {
-                additionalInfo = descriptionInput.value || '';
-            }
-        } else if (evidenceType === 'actividades') {
-            if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
-                additionalInfo = tutorNameSelect.value || '';
-            } else if (specificType === 'GESTION IGLESIA') {
-                additionalInfo = descriptionInput.value || '';
-            }
-        } else if (evidenceType === 'donaciones') {
-            if (specificType === 'GESTION IGLESIA') {
-                additionalInfo = descriptionInput.value || '';
-            }
-        }
-        
-        showMessage('⏳ Guardando evidencia en Google Drive...', 'info', messageElement);
-        closeCameraModal();
-
-        const reader = new FileReader();
-        reader.readAsDataURL(capturedPhotoBlob);
-        reader.onloadend = async function() {
-            const base64data = reader.result.split(',')[1];
-            
-        const postData = {
-            photoData: base64data,
-            evidenceType: evidenceType,
-            specificType: specificType,
-            participantCode: participantCode,
-            additionalInfo: additionalInfo
+        const evidenceOptionsMap = {
+            'participantes': [
+                { value: 'AYUDA ALIMENTARIA', text: 'Ayuda Alimentaria' },
+                { value: 'CUMPLEANOS', text: 'Cumpleaños' },
+                { value: 'PERSONAL', text: 'Donaciones Personal' },
+                { value: 'MEDICINA', text: 'Medicina' },
+                { value: 'REGALOS PADRINOS', text: 'Regalos Padrinos' },
+                { value: 'TFI', text: 'TFI' }
+            ],
+            'actividades': [
+                { value: 'AMAR', text: 'Actividad Amar es Esperar' },
+                { value: 'CRECER CON AMOR', text: 'Actividad Crecer Con Amor' },
+                { value: 'DEFENSORIA', text: 'Actividad Defensoria' },
+                { value: 'ACTIVIDADES EXTRACURRICUALRES', text: 'Actividad Extracurriculares' },
+                { value: 'MUSICA', text: 'Actividad Musica' },
+                { value: 'NAVIDAD', text: 'Actividad de Navidad' },
+                { value: 'PEDICULOSIS', text: 'Actividad Pediculosis' },
+                { value: 'QAHVA', text: 'Actividad QAHVA' },
+                { value: 'SALA CONEXION', text: 'Actividad Sala Conexion' },
+                { value: 'DROGAS', text: 'Actividad SPA (Drogas)' },
+                { value: 'JORNADAS DE LIMPIEZA', text: 'Aseo General' },
+                { value: 'MEDICO', text: 'Chequeo Pediatria' },
+                { value: 'PEDIATRIA', text: 'Chequeo Medico' },
+                { value: 'CLASES DE LIDERAZGO', text: 'Clases CEFI' },
+                { value: 'DANZA', text: 'Danza' },
+                { value: 'DEPORTE', text: 'Deporte' },
+                { value: 'DIA BIBLIA', text: 'Día de la Biblia' },
+                { value: 'DIA DEL NIÑO', text: 'Día del Niño' },
+                { value: 'ENCUENTROS CAMINA', text: 'Encuentro Caminadores' },
+                { value: 'ENCUENTROS SUPER', text: 'Encuentro Supervivencia' },
+                { value: 'PELICULAS', text: 'Proyección de Películas' },
+                { value: 'PROYECTO DE VIDA', text: 'Proyecto de Vida' }
+            ],
+            'donaciones': [
+                { value: 'DONACION DINERO', text: 'Donación Dinero' },
+                { value: 'DONACION ELECTRO', text: 'Donación Electrodomésticos' },
+                { value: 'CONSTRUCCION', text: 'Donación Material Cons' },
+                { value: 'MATERIAL', text: 'Donación Material Didac' },
+                { value: 'MERCADO', text: 'Donación Mercado (Alimentos)' },
+                { value: 'DONACION ROPA', text: 'Donación Ropa' },
+                { value: 'GESTION IGLESIA', text: 'Gestión con Iglesia' },
+                { value: 'REGALO ICC', text: 'Regalo Iglesia' }
+            ]
         };
 
-        // 👉 Codificamos como x-www-form-urlencoded para evitar preflight
-        const formBody = new URLSearchParams();
-        formBody.append('payload', JSON.stringify(postData));
+        // Lógica de Tabs
+        tabs.forEach(button => {
+            button.addEventListener('click', () => {
+                tabs.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
 
-        try {
-            const response = await fetch(scriptURL, {
-                method: 'POST',
-                body: formBody    // el navegador pone Content-Type automáticamente
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            if (result.status === 'success') {
-                showMessage('🎉 ¡Evidencia guardada correctamente en Drive! 🎉',
-                            'success', messageElement);
-            } else {
-                showMessage(`❌ Error al guardar: ${result.message}`,
-                            'error', messageElement);
-            }
-        } catch (error) {
-            console.error('Error al guardar:', error);
-            showMessage(
-                '🚨 Ocurrió un error inesperado al subir. Inténtalo de nuevo. Asegúrate de que el Apps Script esté desplegado correctamente.',
-                'error',
-                messageElement
-            );
-        } finally {
-            setTimeout(() => {
-                resetFormState();
-            }, 3000);
-        }
-    };
-});
-
-    
-    retakeButton.addEventListener('click', () => {
-        resetCameraAndButtons();
-        startCamera();
-    });
-
-    // Descargar evidencias
-    downloadButton.addEventListener('click', async () => {
-        const downloadMainType = downloadMainTypeSelect.value;
-        const downloadSpecificType = downloadSpecificTypeSelect.value;
-        const downloadMonth = downloadMonthInput.value;
-
-        if (!downloadMainType || !downloadSpecificType || !downloadMonth) {
-            showMessage('⚠️ Por favor, selecciona el tipo principal, tipo específico y el mes para la descarga.', 'error', downloadMessageElement);
-            return;
-        }
-
-        showMessage('⏳ Preparando el archivo ZIP para la descarga...', 'info', downloadMessageElement);
-
-        try {
-            const response = await fetch(`${scriptURL}?action=download&mainType=${encodeURIComponent(downloadMainType)}&specificType=${encodeURIComponent(downloadSpecificType)}&month=${downloadMonth}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                if (result.url) {
-                    window.open(result.url, '_blank');
-                    showMessage('✅ ¡Descarga iniciada! Revisa tus descargas. El archivo zip se eliminará del Drive temporalmente en un minuto.', 'success', downloadMessageElement);
+                if (button.dataset.tab !== 'upload-tab') {
+                    closeCameraModal();
+                    messageElement.classList.remove('show', 'success', 'error', 'info');
+                    messageElement.textContent = '';
                 } else {
-                    showMessage('😔 No se encontraron evidencias para los criterios seleccionados en ese mes.', 'error', downloadMessageElement);
+                    resetFormState();
                 }
-            } else {
-                showMessage(`❌ Error al descargar: ${result.message}`, 'error', downloadMessageElement);
+                downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
+                downloadMessageElement.textContent = '';
+            });
+        });
+
+        // Cargar la lista de participantes
+        async function loadParticipants() {
+            showMessage('Cargando participantes...', 'info', messageElement);
+            try {
+                const response = await fetch(`${scriptURL}?action=getParticipants`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const participants = await response.json();
+                participantNameMap = {};
+                participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
+                participants.forEach(p => {
+                    const option = document.createElement('option');
+                    option.value = p.code;
+                    option.textContent = `${p.code} - ${p.name}`;
+                    participantCodeSelect.appendChild(option);
+                    participantNameMap[p.code] = p.name;
+                });
+                showMessage('Participantes cargados.', 'success', messageElement, 2000);
+            } catch (error) {
+                console.error('Error al cargar participantes:', error);
+                showMessage('❌ Error al cargar la lista de participantes. Verifica la conexión o el script.', 'error', messageElement);
             }
-        } catch (error) {
-            console.error('Error al descargar:', error);
-            showMessage('🚨 Ocurrió un error al intentar descargar. Verifica la conexión o el Apps Script. Asegúrate de que el Apps Script esté desplegado con acceso "Cualquiera".', 'error', downloadMessageElement);
         }
-    });
 
-    // Funciones utilitarias
-    function showMessage(msg, type, element, duration = 5000) {
-        element.textContent = msg;
-        element.className = `message show ${type}`;
-        
-        setTimeout(() => {
-            element.classList.remove('show');
-            element.textContent = '';
-        }, duration);
-    }
+        // Lógica para mostrar/ocultar secciones y cargar opciones de tipos específicos
+        evidenceTypeSelect.addEventListener('change', () => {
+            participantsSection.classList.add('hidden');
+            descriptionSection.classList.add('hidden');
+            tutorSection.classList.add('hidden');
+            startCameraButton.classList.add('hidden');
+            messageElement.classList.remove('show');
 
-    function resetFormState() {
-        evidenceTypeSelect.value = '';
-        specificTypeSelect.value = '';
-        participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
-        descriptionInput.value = '';
-        tutorNameSelect.value = '';
-        
-        participantsSection.classList.add('hidden');
-        descriptionSection.classList.add('hidden');
-        tutorSection.classList.add('hidden');
-        startCameraButton.classList.add('hidden');
-        
-        messageElement.classList.remove('show', 'success', 'error', 'info');
-        messageElement.textContent = '';
-        stopCamera();
-        
-        downloadMainTypeSelect.value = '';
-        downloadSpecificTypeSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
-        downloadMonthInput.value = '';
-        downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
-        downloadMessageElement.textContent = '';
-    }
-</script>
+            const mainType = evidenceTypeSelect.value;
+            const specificSelect = specificTypeSelect;
+            specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
+
+            if (mainType && evidenceOptionsMap[mainType]) {
+                evidenceOptionsMap[mainType].forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.textContent = option.text;
+                    specificSelect.appendChild(opt);
+                });
+                startCameraButton.classList.remove('hidden');
+            } else {
+                specificSelect.innerHTML = '<option value="">-- Selecciona el tipo principal primero --</option>';
+            }
+
+            if (mainType === 'participantes') {
+                participantsSection.classList.remove('hidden');
+                loadParticipants();
+            }
+        });
+
+        specificTypeSelect.addEventListener('change', () => {
+            descriptionSection.classList.add('hidden');
+            tutorSection.classList.add('hidden');
+            const specificType = specificTypeSelect.value;
+
+            if (specificType === 'GESTION IGLESIA' || specificType === 'PERFIL') {
+                descriptionSection.classList.remove('hidden');
+            } else if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
+                tutorSection.classList.remove('hidden');
+            }
+        });
+
+        // Cargar opciones del selector de descarga
+        downloadMainTypeSelect.addEventListener('change', () => {
+            const mainType = downloadMainTypeSelect.value;
+            const specificSelect = downloadSpecificTypeSelect;
+            specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
+            if (mainType && evidenceOptionsMap[mainType]) {
+                evidenceOptionsMap[mainType].forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.textContent = option.text;
+                    specificSelect.appendChild(opt);
+                });
+            } else {
+                specificSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
+            }
+        });
+
+        // Control del modal de la cámara
+        startCameraButton.addEventListener('click', () => {
+            const evidenceType = evidenceTypeSelect.value;
+            const specificType = specificTypeSelect.value;
+            let valid = true;
+
+            if (!evidenceType || !specificType) {
+                valid = false;
+            }
+
+            if (evidenceType === 'participantes' && !participantCodeSelect.value) {
+                valid = false;
+            }
+
+            if (specificType === 'GESTION IGLESIA' || specificType === 'PERFIL') {
+                if (!descriptionInput.value) {
+                    valid = false;
+                }
+            }
+            if (specificType === 'ACTIVIDADES EXTRACURRICULARES' && !tutorNameSelect.value) {
+                valid = false;
+            }
+
+            if (!valid) {
+                showMessage('⚠️ Por favor, llena todos los campos del formulario antes de abrir la cámara.', 'error', messageElement);
+                return;
+            }
+
+            fullscreenCameraModal.classList.remove('hidden');
+            setTimeout(() => {
+                fullscreenCameraModal.classList.add('show');
+                startCamera();
+            }, 10);
+        });
+
+        closeCameraButton.addEventListener('click', closeCameraModal);
+
+        function closeCameraModal() {
+            fullscreenCameraModal.classList.remove('show');
+            setTimeout(() => {
+                fullscreenCameraModal.classList.add('hidden');
+                stopCamera();
+                resetCameraAndButtons();
+            }, 500);
+        }
+
+        // Lógica de la cámara
+        async function startCamera() {
+            if (stream) {
+                stopCamera();
+            }
+            try {
+                const constraints = {
+                    video: {
+                        facingMode: facingMode
+                    }
+                };
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                webcamVideo.srcObject = stream;
+                webcamVideo.play();
+
+                // Verificar si hay más de una cámara para mostrar el botón de cambio
+                navigator.mediaDevices.enumerateDevices()
+                    .then(devices => {
+                        cameraDevices = devices.filter(device => device.kind === 'videoinput');
+                        if (cameraDevices.length > 1) {
+                            switchCameraButton.classList.remove('hidden');
+                        } else {
+                            switchCameraButton.classList.add('hidden');
+                        }
+                    });
+
+            } catch (err) {
+                console.error('Error al acceder a la cámara:', err);
+                showMessage('🚫 No se pudo acceder a la cámara. Asegúrate de que los permisos estén habilitados o intenta desde otro dispositivo.', 'error', messageElement);
+                closeCameraModal();
+            }
+        }
+
+        // Nueva función para cambiar de cámara
+        function switchCamera() {
+            facingMode = (facingMode === 'environment') ? 'user' : 'environment';
+            startCamera();
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                webcamVideo.srcObject = null;
+                stream = null;
+            }
+        }
+
+        function resetCameraAndButtons() {
+            webcamVideo.style.display = 'block';
+            photoCanvas.style.display = 'none';
+            captureButton.classList.remove('hidden');
+            retakeButton.classList.add('hidden');
+            saveButton.classList.add('hidden');
+            switchCameraButton.classList.remove('hidden');
+            capturedPhotoBlob = null;
+
+        }
+
+        captureButton.addEventListener('click', () => {
+            if (!stream) {
+                showMessage('🚫 La cámara no está activa. Vuelve a intentar o revisa los permisos.', 'error', messageElement);
+                return;
+            }
+            const context = photoCanvas.getContext('2d');
+            photoCanvas.width = webcamVideo.videoWidth;
+            photoCanvas.height = webcamVideo.videoHeight;
+            context.drawImage(webcamVideo, 0, 0, photoCanvas.width, photoCanvas.height);
+
+            photoCanvas.toBlob(blob => {
+                capturedPhotoBlob = blob;
+                webcamVideo.style.display = 'none';
+                photoCanvas.style.display = 'block';
+                captureButton.classList.add('hidden');
+                retakeButton.classList.remove('hidden');
+                saveButton.classList.remove('hidden');
+                switchCameraButton.classList.add('hidden'); // Ocultar el botón al tomar la foto
+                stopCamera();
+            }, 'image/jpeg', 0.95);
+        });
+
+        // Event listener para el nuevo botón de cambio de cámara
+        switchCameraButton.addEventListener('click', switchCamera);
+
+        // Enviar la evidencia
+        saveButton.addEventListener('click', async () => {
+            if (!capturedPhotoBlob) {
+                showMessage('⚠️ Por favor, toma una foto primero antes de guardar.', 'error', messageElement);
+                return;
+            }
+
+            const evidenceType = evidenceTypeSelect.value;
+            const specificType = specificTypeSelect.value;
+            let participantCode = '';
+            let additionalInfo = '';
+
+            if (evidenceType === 'participantes') {
+                participantCode = participantCodeSelect.value;
+                additionalInfo = participantNameMap[participantCode] || '';
+                if (specificType === 'PERFIL') {
+                    additionalInfo = descriptionInput.value || '';
+                }
+            } else if (evidenceType === 'actividades') {
+                if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
+                    additionalInfo = tutorNameSelect.value || '';
+                } else if (specificType === 'GESTION IGLESIA') {
+                    additionalInfo = descriptionInput.value || '';
+                }
+            } else if (evidenceType === 'donaciones') {
+                if (specificType === 'GESTION IGLESIA') {
+                    additionalInfo = descriptionInput.value || '';
+                }
+            }
+
+            showMessage('⏳ Guardando evidencia en Google Drive...', 'info', messageElement);
+            closeCameraModal();
+
+            const reader = new FileReader();
+            reader.readAsDataURL(capturedPhotoBlob);
+            reader.onloadend = async function () {
+                const base64data = reader.result.split(',')[1];
+
+                const postData = {
+                    photoData: base64data,
+                    evidenceType: evidenceType,
+                    specificType: specificType,
+                    participantCode: participantCode,
+                    additionalInfo: additionalInfo
+                };
+
+                // 👉 Codificamos como x-www-form-urlencoded para evitar preflight
+                const formBody = new URLSearchParams();
+                formBody.append('payload', JSON.stringify(postData));
+
+                try {
+                    const response = await fetch(scriptURL, {
+                        method: 'POST',
+                        body: formBody    // el navegador pone Content-Type automáticamente
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    if (result.status === 'success') {
+                        showMessage('🎉 ¡Evidencia guardada correctamente en Drive! 🎉',
+                            'success', messageElement);
+                    } else {
+                        showMessage(`❌ Error al guardar: ${result.message}`,
+                            'error', messageElement);
+                    }
+                } catch (error) {
+                    console.error('Error al guardar:', error);
+                    showMessage(
+                        '🚨 Ocurrió un error inesperado al subir. Inténtalo de nuevo. Asegúrate de que el Apps Script esté desplegado correctamente.',
+                        'error',
+                        messageElement
+                    );
+                } finally {
+                    setTimeout(() => {
+                        resetFormState();
+                    }, 3000);
+                }
+            };
+        });
+
+
+        retakeButton.addEventListener('click', () => {
+            resetCameraAndButtons();
+            startCamera();
+        });
+
+        // Descargar evidencias
+        downloadButton.addEventListener('click', async () => {
+            const downloadMainType = downloadMainTypeSelect.value;
+            const downloadSpecificType = downloadSpecificTypeSelect.value;
+            const downloadMonth = downloadMonthInput.value;
+
+            if (!downloadMainType || !downloadSpecificType || !downloadMonth) {
+                showMessage('⚠️ Por favor, selecciona el tipo principal, tipo específico y el mes para la descarga.', 'error', downloadMessageElement);
+                return;
+            }
+
+            showMessage('⏳ Preparando el archivo ZIP para la descarga...', 'info', downloadMessageElement);
+
+            try {
+                const response = await fetch(`${scriptURL}?action=download&mainType=${encodeURIComponent(downloadMainType)}&specificType=${encodeURIComponent(downloadSpecificType)}&month=${downloadMonth}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    if (result.url) {
+                        window.open(result.url, '_blank');
+                        showMessage('✅ ¡Descarga iniciada! Revisa tus descargas. El archivo zip se eliminará del Drive temporalmente en un minuto.', 'success', downloadMessageElement);
+                    } else {
+                        showMessage('😔 No se encontraron evidencias para los criterios seleccionados en ese mes.', 'error', downloadMessageElement);
+                    }
+                } else {
+                    showMessage(`❌ Error al descargar: ${result.message}`, 'error', downloadMessageElement);
+                }
+            } catch (error) {
+                console.error('Error al descargar:', error);
+                showMessage('🚨 Ocurrió un error al intentar descargar. Verifica la conexión o el Apps Script. Asegúrate de que el Apps Script esté desplegado con acceso "Cualquiera".', 'error', downloadMessageElement);
+            }
+        });
+
+        // Funciones utilitarias
+        function showMessage(msg, type, element, duration = 5000) {
+            element.textContent = msg;
+            element.className = `message show ${type}`;
+
+            setTimeout(() => {
+                element.classList.remove('show');
+                element.textContent = '';
+            }, duration);
+        }
+
+        function resetFormState() {
+            evidenceTypeSelect.value = '';
+            specificTypeSelect.value = '';
+            participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
+            descriptionInput.value = '';
+            tutorNameSelect.value = '';
+
+            participantsSection.classList.add('hidden');
+            descriptionSection.classList.add('hidden');
+            tutorSection.classList.add('hidden');
+            startCameraButton.classList.add('hidden');
+
+            messageElement.classList.remove('show', 'success', 'error', 'info');
+            messageElement.textContent = '';
+            stopCamera();
+
+            downloadMainTypeSelect.value = '';
+            downloadSpecificTypeSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
+            downloadMonthInput.value = '';
+            downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
+            downloadMessageElement.textContent = '';
+        }
+    </script>
 
 </body>
+
 </html>
