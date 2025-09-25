@@ -626,6 +626,7 @@
                 </div>
             </div>
 
+            <!-- Sección de tutora y título extracurricular -->
             <div id="tutor-section" class="hidden">
                 <div class="form-group">
                     <label for="tutorName">Selecciona la Tutora:</label>
@@ -637,10 +638,14 @@
                         <option value="JULIANA">Juliana</option>
                     </select>
                 </div>
+
+                <div id="extraTitleWrapper" style="display:none;">
+                    <label for="extraActivityTitle">Título de la Actividad:</label>
+                    <input type="text" id="extraActivityTitle" placeholder="Escribe el título específico" />
+                </div>
             </div>
 
             <button id="start-camera-button" class="main-button hidden">Abrir Cámara</button>
-
             <p id="message" class="info"></p>
         </div>
 
@@ -664,9 +669,22 @@
                 <label for="downloadMonth">Selecciona el Mes de las Evidencias:</label>
                 <input type="month" id="downloadMonth">
             </div>
+            <!-- ✅ Selector de Tutora (solo para ACTIVIDADES) -->
+            <div id="downloadTutorSection" class="form-group hidden">
+                <label for="downloadTutor">Selecciona la Tutora:</label>
+                <select id="downloadTutor">
+                    <option value="">-- Selecciona una tutora --</option>
+                    <option value="LISBETH">Lisbeth</option>
+                    <option value="DIANA">Diana</option>
+                    <option value="HELEN">Helen</option>
+                    <option value="JULIANA">Juliana</option>
+                </select>
+            </div>
+
             <button id="download-button" class="main-button">⬇️ Descargar Evidencias (ZIP)</button>
             <p id="download-message" class="info"></p>
         </div>
+
 
         <div id="info-tab" class="tab-content">
             <h2>ℹ️ Información y Cómo Usar el Sistema</h2>
@@ -765,7 +783,8 @@
             </div>
         </div>
     </div>
-
+    
+    <script src="animaciones.js"></script>
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec'; // ⚠️ ¡Reemplaza con tu URL del Apps Script!
 
@@ -794,13 +813,46 @@
         const tutorNameSelect = document.getElementById('tutorName');
         const fullscreenCameraModal = document.getElementById('fullscreen-camera-modal');
         const closeCameraButton = document.getElementById('close-camera');
-        const switchCameraButton = document.getElementById('switch-camera-button'); // Nuevo selector para el botón de cambio
+        const switchCameraButton = document.getElementById('switch-camera-button');
+        const extraTitleWrapper = document.getElementById('extraTitleWrapper');
+        const extraActivityTitle = document.getElementById('extraActivityTitle');
+
+        const downloadTutorSection = document.getElementById('downloadTutorSection');
+        const downloadTutorSelect = document.getElementById('downloadTutor');
+
+        downloadMainTypeSelect.addEventListener('change', () => {
+            const mainType = downloadMainTypeSelect.value;
+            const specificSelect = downloadSpecificTypeSelect;
+            specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
+
+            if (mainType && evidenceOptionsMap[mainType]) {
+                evidenceOptionsMap[mainType].forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.textContent = option.text;
+                    specificSelect.appendChild(opt);
+                });
+            } else {
+                specificSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
+            }
+
+            // ✅ Mostrar selector de tutora solo si el tipo principal es ACTIVIDADES
+            if (mainType === 'actividades') {
+                downloadTutorSection.classList.remove('hidden');
+            } else {
+                downloadTutorSection.classList.add('hidden');
+                downloadTutorSelect.value = '';
+            }
+        });
+
+
 
         let capturedPhotoBlob = null;
         let stream = null;
         let participantNameMap = {};
-        let facingMode = 'environment'; // Variable para controlar la cámara activa
-        let cameraDevices = []; // Variable para almacenar los dispositivos de video
+        let facingMode = 'environment';
+        let cameraDevices = [];
+
 
         const evidenceOptionsMap = {
             'participantes': [
@@ -815,7 +867,7 @@
                 { value: 'AMAR', text: 'Actividad Amar es Esperar' },
                 { value: 'CRECER CON AMOR', text: 'Actividad Crecer Con Amor' },
                 { value: 'DEFENSORIA', text: 'Actividad Defensoria' },
-                { value: 'ACTIVIDADES EXTRACURRICUALRES', text: 'Actividad Extracurriculares' },
+                { value: 'ACTIVIDADES EXTRACURRICULARES', text: 'Actividad Extracurriculares' },
                 { value: 'MUSICA', text: 'Actividad Musica' },
                 { value: 'NAVIDAD', text: 'Actividad de Navidad' },
                 { value: 'PEDICULOSIS', text: 'Actividad Pediculosis' },
@@ -894,9 +946,12 @@
 
         // Lógica para mostrar/ocultar secciones y cargar opciones de tipos específicos
         evidenceTypeSelect.addEventListener('change', () => {
+            // Ocultar secciones por defecto
             participantsSection.classList.add('hidden');
             descriptionSection.classList.add('hidden');
             tutorSection.classList.add('hidden');
+            extraTitleWrapper.style.display = 'none';
+            extraActivityTitle.value = '';
             startCameraButton.classList.add('hidden');
             messageElement.classList.remove('show');
 
@@ -916,6 +971,12 @@
                 specificSelect.innerHTML = '<option value="">-- Selecciona el tipo principal primero --</option>';
             }
 
+            // ✅ Mostrar siempre el selector de tutora si el principal es ACTIVIDADES
+            if (mainType === 'actividades') {
+                tutorSection.classList.remove('hidden');
+            }
+
+            // Mostrar participantes solo si corresponde
             if (mainType === 'participantes') {
                 participantsSection.classList.remove('hidden');
                 loadParticipants();
@@ -923,14 +984,24 @@
         });
 
         specificTypeSelect.addEventListener('change', () => {
+            // Por defecto ocultar descripción y campo de título
             descriptionSection.classList.add('hidden');
-            tutorSection.classList.add('hidden');
+            extraTitleWrapper.style.display = 'none';
+            extraActivityTitle.value = '';
+
             const specificType = specificTypeSelect.value;
 
+            // Mostrar descripción si es necesario
             if (specificType === 'GESTION IGLESIA' || specificType === 'PERFIL') {
                 descriptionSection.classList.remove('hidden');
-            } else if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
-                tutorSection.classList.remove('hidden');
+            }
+
+            // Campo de título solo si es Actividades Extracurriculares
+            if (
+                evidenceTypeSelect.value === 'actividades' &&
+                specificType === 'ACTIVIDADES EXTRACURRICULARES'
+            ) {
+                extraTitleWrapper.style.display = 'block';
             }
         });
 
@@ -939,6 +1010,7 @@
             const mainType = downloadMainTypeSelect.value;
             const specificSelect = downloadSpecificTypeSelect;
             specificSelect.innerHTML = '<option value="">-- Selecciona una opción --</option>';
+
             if (mainType && evidenceOptionsMap[mainType]) {
                 evidenceOptionsMap[mainType].forEach(option => {
                     const opt = document.createElement('option');
@@ -970,12 +1042,27 @@
                     valid = false;
                 }
             }
-            if (specificType === 'ACTIVIDADES EXTRACURRICULARES' && !tutorNameSelect.value) {
+
+            // ✅ Si es cualquier ACTIVIDAD exige tutora
+            if (evidenceType === 'actividades' && !tutorNameSelect.value) {
+                valid = false;
+            }
+
+            // Y si es Actividad Extracurricular, exige título
+            if (
+                evidenceType === 'actividades' &&
+                specificType === 'ACTIVIDADES EXTRACURRICULARES' &&
+                !extraActivityTitle.value.trim()
+            ) {
                 valid = false;
             }
 
             if (!valid) {
-                showMessage('⚠️ Por favor, llena todos los campos del formulario antes de abrir la cámara.', 'error', messageElement);
+                showMessage(
+                    '⚠️ Por favor, llena todos los campos del formulario antes de abrir la cámara.',
+                    'error',
+                    messageElement
+                );
                 return;
             }
 
@@ -1122,12 +1209,28 @@
                 if (specificType === 'PERFIL') {
                     additionalInfo = descriptionInput.value || '';
                 }
+
             } else if (evidenceType === 'actividades') {
-                if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
-                    additionalInfo = tutorNameSelect.value || '';
-                } else if (specificType === 'GESTION IGLESIA') {
-                    additionalInfo = descriptionInput.value || '';
+
+                // ✅ Siempre obligatorio seleccionar tutora
+                if (!tutorNameSelect.value) {
+                    showMessage('⚠️ Debes seleccionar una tutora antes de guardar.', 'error', messageElement);
+                    return;
                 }
+
+                if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
+                    const title = document.getElementById('extraActivityTitle').value.trim();
+                    if (!title) {
+                        showMessage('⚠️ Debes escribir el título de la actividad extracurricular.', 'error', messageElement);
+                        return;
+                    }
+                    // Guardamos "Tutora_Titulo" como info
+                    additionalInfo = `${tutorNameSelect.value}_${title}`;
+                } else {
+                    // Otras actividades: solo la tutora
+                    additionalInfo = tutorNameSelect.value;
+                }
+
             } else if (evidenceType === 'donaciones') {
                 if (specificType === 'GESTION IGLESIA') {
                     additionalInfo = descriptionInput.value || '';
@@ -1181,7 +1284,7 @@
                     );
                 } finally {
                     setTimeout(() => {
-                        const type = evidenceTypeSelect.value; // obtiene la selección actual
+                        const type = evidenceTypeSelect.value;
                         if (type === 'participantes') {
                             resetAll();            // 🔄 Reinicia todo
                         } else {
@@ -1189,7 +1292,6 @@
                         }
                     }, 3000);
                 }
-
             };
         });
 
@@ -1204,16 +1306,47 @@
             const downloadMainType = downloadMainTypeSelect.value;
             const downloadSpecificType = downloadSpecificTypeSelect.value;
             const downloadMonth = downloadMonthInput.value;
+            const downloadTutor = downloadTutorSelect.value; // ✅ nuevo
 
             if (!downloadMainType || !downloadSpecificType || !downloadMonth) {
-                showMessage('⚠️ Por favor, selecciona el tipo principal, tipo específico y el mes para la descarga.', 'error', downloadMessageElement);
+                showMessage(
+                    '⚠️ Por favor, selecciona el tipo principal, tipo específico y el mes para la descarga.',
+                    'error',
+                    downloadMessageElement
+                );
                 return;
             }
 
-            showMessage('⏳ Preparando el archivo ZIP para la descarga...', 'info', downloadMessageElement);
+            // Si el tipo principal es ACTIVIDADES exigimos tutora
+            if (downloadMainType === 'actividades' && !downloadTutor) {
+                showMessage(
+                    '⚠️ Por favor, selecciona la tutora para filtrar las evidencias de actividades.',
+                    'error',
+                    downloadMessageElement
+                );
+                return;
+            }
+
+            showMessage(
+                '⏳ Preparando el archivo ZIP para la descarga...',
+                'info',
+                downloadMessageElement
+            );
 
             try {
-                const response = await fetch(`${scriptURL}?action=download&mainType=${encodeURIComponent(downloadMainType)}&specificType=${encodeURIComponent(downloadSpecificType)}&month=${downloadMonth}`);
+                const params = new URLSearchParams({
+                    action: 'download',
+                    mainType: downloadMainType,
+                    specificType: downloadSpecificType,
+                    month: downloadMonth
+                });
+
+                // Adjunta la tutora solo si se seleccionó y es actividades
+                if (downloadMainType === 'actividades' && downloadTutor) {
+                    params.append('tutor', downloadTutor);
+                }
+
+                const response = await fetch(`${scriptURL}?${params.toString()}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -1222,16 +1355,32 @@
                 if (result.status === 'success') {
                     if (result.url) {
                         window.open(result.url, '_blank');
-                        showMessage('✅ ¡Descarga iniciada! Revisa tus descargas. El archivo zip se eliminará del Drive temporalmente en un minuto.', 'success', downloadMessageElement);
+                        showMessage(
+                            '✅ ¡Descarga iniciada! Revisa tus descargas. El archivo ZIP se eliminará del Drive temporalmente en un minuto.',
+                            'success',
+                            downloadMessageElement
+                        );
                     } else {
-                        showMessage('😔 No se encontraron evidencias para los criterios seleccionados en ese mes.', 'error', downloadMessageElement);
+                        showMessage(
+                            '😔 No se encontraron evidencias para los criterios seleccionados en ese mes.',
+                            'error',
+                            downloadMessageElement
+                        );
                     }
                 } else {
-                    showMessage(`❌ Error al descargar: ${result.message}`, 'error', downloadMessageElement);
+                    showMessage(
+                        `❌ Error al descargar: ${result.message}`,
+                        'error',
+                        downloadMessageElement
+                    );
                 }
             } catch (error) {
                 console.error('Error al descargar:', error);
-                showMessage('🚨 Ocurrió un error al intentar descargar. Verifica la conexión o el Apps Script. Asegúrate de que el Apps Script esté desplegado con acceso "Cualquiera".', 'error', downloadMessageElement);
+                showMessage(
+                    '🚨 Ocurrió un error al intentar descargar. Verifica la conexión o el Apps Script.',
+                    'error',
+                    downloadMessageElement
+                );
             }
         });
 
@@ -1288,7 +1437,5 @@
         }
 
     </script>
-
 </body>
-
 </html>
