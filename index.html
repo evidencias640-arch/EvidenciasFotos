@@ -223,7 +223,7 @@
         }
 
         /* ---------------------------------------------------------------------- */
-        /* Estilos del Modal de Cámara - MODIFICADOS PARA NUEVO DISEÑO */
+        /* Estilos del Modal de Cámara - CON DISEÑO SOLICITADO */
         /* ---------------------------------------------------------------------- */
         #fullscreen-camera-modal {
             position: fixed;
@@ -250,8 +250,6 @@
             width: 95%;
             max-width: 700px;
             max-height: 90vh;
-            /* Eliminamos el background del modal para que solo se vea el video/canvas y el contenedor de botones */
-            /* background: #fff; */ 
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
@@ -265,7 +263,6 @@
             align-items: center;
             background-color: var(--primary-color);
             padding: 15px;
-            /* border-radius: 12px 12px 0 0; */
             width: 100%;
             box-sizing: border-box;
         }
@@ -314,7 +311,8 @@
             min-height: 400px; /* Altura mínima para asegurar el espacio */
             width: 100%;
         }
-
+        
+        /* SOLUCIÓN: object-fit: contain para mostrar el 100% del campo visual */
         #webcam-video,
         #photo-canvas {
             width: 95%; /* Ocupa casi todo el ancho disponible */
@@ -322,10 +320,10 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             margin: 20px 0 0 0; /* Espacio arriba, 0 abajo */
-            object-fit: cover; /* Cambiado a cover para llenar el espacio, puede recortar */
+            object-fit: contain; /* <-- FIX: Muestra el 100% del campo, sin recorte */
             background: black;
             height: auto;
-            aspect-ratio: 4/3; /* Proporción estándar de video/cámara */
+            /* Eliminamos aspect-ratio para que se adapte a la cámara nativamente */
         }
         
         /* Contenedor de video/canvas para limitar el área visible */
