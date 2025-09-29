@@ -222,7 +222,9 @@
             box-shadow: 0 2px 5px rgba(76, 175, 80, 0.2);
         }
 
-        /* Estilos del Modal de Cámara */
+        /* ---------------------------------------------------------------------- */
+        /* Estilos del Modal de Cámara - MODIFICADOS PARA NUEVO DISEÑO */
+        /* ---------------------------------------------------------------------- */
         #fullscreen-camera-modal {
             position: fixed;
             top: 0;
@@ -248,19 +250,55 @@
             width: 95%;
             max-width: 700px;
             max-height: 90vh;
-            background: #fff;
+            /* Eliminamos el background del modal para que solo se vea el video/canvas y el contenedor de botones */
+            /* background: #fff; */ 
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
+            background: black; /* Fondo negro para evitar bordes blancos */
+        }
+
+        /* NUEVO: Header con botón SALIR a la derecha */
+        .camera-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            padding: 15px;
+            /* border-radius: 12px 12px 0 0; */
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .camera-title {
-            background-color: var(--primary-color);
             color: white;
-            padding: 15px;
-            text-align: center;
             font-size: 1.5em;
             font-weight: bold;
+            flex-grow: 1;
+            text-align: center;
+            margin-right: -100px; /* Centra mejor el título al ignorar el espacio del botón */
+        }
+
+        .close-button {
+            background-color: #f44336;
+            /* Rojo para el botón de cerrar/SALIR */
+            color: white;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: background-color 0.2s, transform 0.2s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid #d32f2f; /* Borde sutil para darle más impacto */
+        }
+
+        .close-button:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
         }
 
         .camera-container {
@@ -268,22 +306,34 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: flex-start; /* Alinea los elementos arriba */
+            padding: 0;
+            background-color: #000;
+            position: relative;
+            /* Importante para el overlay y el contenedor de botones de captura */
+            min-height: 400px; /* Altura mínima para asegurar el espacio */
+            width: 100%;
         }
 
         #webcam-video,
         #photo-canvas {
-            width: 100%;
-            max-width: 500px;
-            /* aspect-ratio: 4/3;  ← opcional, el JS lo ajusta */
+            width: 95%; /* Ocupa casi todo el ancho disponible */
+            max-width: 500px; /* Limita el tamaño en pantallas grandes */
             border-radius: 10px;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            margin-bottom: 20px;
-            object-fit: contain;
-            /* ✅ ahora muestra todo el frame */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            margin: 20px 0 0 0; /* Espacio arriba, 0 abajo */
+            object-fit: cover; /* Cambiado a cover para llenar el espacio, puede recortar */
             background: black;
-            /* ✅ rellena bordes si la relación no coincide */
+            height: auto;
+            aspect-ratio: 4/3; /* Proporción estándar de video/cámara */
+        }
+        
+        /* Contenedor de video/canvas para limitar el área visible */
+        .video-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
         }
 
 
@@ -291,62 +341,105 @@
             display: none;
         }
 
-        .button-group-modal {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-            width: 100%;
+        /* Contenedor de botones superpuestos (Tomar Otra y Guardar) */
+        .button-overlay {
+            position: absolute;
+            bottom: 120px; /* Posición ajustada para no chocar con el grupo de botones de captura */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
             max-width: 500px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
-        .button-group-modal button {
+        .button-overlay.show {
+            opacity: 1;
+        }
+
+        .button-overlay button {
             flex: 1;
-            min-width: 120px;
             padding: 15px;
             font-size: 1.1em;
-            background-color: var(--primary-color);
-            color: white;
+            font-weight: 600;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
 
-        .button-group-modal button:hover {
-            background-color: var(--secondary-color);
-        }
-
-        #capture-button {
-            background-color: var(--primary-color);
+        .button-overlay button:hover {
+            transform: translateY(-3px);
         }
 
         #retake-button {
-            background-color: #f39c12;
+            background-color: #f39c12; /* Naranja */
+            color: white;
+            border: 2px solid #e67e22;
         }
 
         #save-button {
-            background-color: #27ae60;
+            background-color: #27ae60; /* Verde de Guardar */
+            color: white;
+            border: 2px solid #2ecc71;
+        }
+
+        /* NUEVO: Contenedor para los botones de "Tomar" y "Cambiar" */
+        .capture-button-wrapper {
+            position: absolute; /* Posicionamiento absoluto sobre el fondo negro */
+            bottom: 20px; /* Pegado a la parte inferior */
+            width: 90%;
+            max-width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+        }
+        
+        .capture-button-wrapper button {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        #capture-button {
+            background-color: var(--primary-color); /* Verde */
+            color: white;
+            border: 2px solid var(--primary-color); /* Borde verde */
+            padding: 15px 20px;
+        }
+
+        #capture-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
         }
 
         #switch-camera-button {
-            background-color: #3498db;
-        }
-
-        .close-button {
-            background-color: #f44336;
+            background-color: #3498db; /* Azul */
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 15px;
+            border: 2px solid #3498db; /* Borde azul */
+            padding: 15px 20px;
         }
 
-        .close-button:hover {
-            background-color: #d32f2f;
+        #switch-camera-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
         }
+        /* ---------------------------------------------------------------------- */
+        /* FIN Modificaciones del Modal */
+        /* ---------------------------------------------------------------------- */
+
 
         #message {
             margin-top: 30px;
@@ -527,6 +620,16 @@
             body {
                 font-size: 15px;
             }
+
+            .button-overlay {
+                bottom: 80px; /* Ajuste para móvil para no chocar con el botón de captura */
+                gap: 10px;
+            }
+            
+            .capture-button-wrapper {
+                bottom: 10px;
+                gap: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -626,7 +729,6 @@
                 </div>
             </div>
 
-            <!-- Sección de tutora y título extracurricular -->
             <div id="tutor-section" class="hidden">
                 <div class="form-group">
                     <label for="tutorName">Selecciona la Tutora:</label>
@@ -669,7 +771,6 @@
                 <label for="downloadMonth">Selecciona el Mes de las Evidencias:</label>
                 <input type="month" id="downloadMonth">
             </div>
-            <!-- ✅ Selector de Tutora (solo para ACTIVIDADES) -->
             <div id="downloadTutorSection" class="form-group hidden">
                 <label for="downloadTutor">Selecciona la Tutora:</label>
                 <select id="downloadTutor">
@@ -767,23 +868,29 @@
 
     <div id="fullscreen-camera-modal" class="hidden">
         <div class="modal-content">
-            <div class="camera-title">
-                <span>📷</span> Tomar Evidencia
+            <div class="camera-header">
+                <span class="camera-title">📸 Tomar Evidencia</span>
+                <button id="close-camera" class="close-button">SALIR</button>
             </div>
+            
             <div class="camera-container">
-                <video id="webcam-video" autoplay playsinline></video>
-                <canvas id="photo-canvas"></canvas>
-                <div class="button-group-modal">
-                    <button id="capture-button">📸 Tomar Foto</button>
-                    <button id="retake-button" class="hidden">🔄 Tomar Otra</button>
-                    <button id="save-button" class="hidden">✅ Guardar</button>
-                    <button id="switch-camera-button" class="hidden">🔄 Cambiar Cámara</button>
+                <div class="video-wrapper">
+                    <video id="webcam-video" autoplay playsinline></video>
+                    <canvas id="photo-canvas"></canvas>
+                    
+                    <div class="button-overlay">
+                        <button id="retake-button" class="hidden">🔄 Tomar Otra</button>
+                        <button id="save-button" class="hidden">✅ Guardar</button>
+                    </div>
                 </div>
-                <button id="close-camera" class="close-button">Cerrar</button>
+
+                <div class="capture-button-wrapper">
+                    <button id="capture-button">Tomar</button>
+                    <button id="switch-camera-button" class="hidden">Cambiar</button>
+                </div>
             </div>
         </div>
     </div>
-    
     <script src="animaciones.js"></script>
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec'; // ⚠️ ¡Reemplaza con tu URL del Apps Script!
@@ -816,9 +923,9 @@
         const switchCameraButton = document.getElementById('switch-camera-button');
         const extraTitleWrapper = document.getElementById('extraTitleWrapper');
         const extraActivityTitle = document.getElementById('extraActivityTitle');
-
         const downloadTutorSection = document.getElementById('downloadTutorSection');
         const downloadTutorSelect = document.getElementById('downloadTutor');
+        const buttonOverlay = document.querySelector('.button-overlay'); // Selector para el overlay de botones
 
         downloadMainTypeSelect.addEventListener('change', () => {
             const mainType = downloadMainTypeSelect.value;
@@ -836,7 +943,7 @@
                 specificSelect.innerHTML = '<option value="">-- Primero selecciona el tipo principal --</option>';
             }
 
-            // ✅ Mostrar selector de tutora solo si el tipo principal es ACTIVIDADES
+            // Mostrar selector de tutora solo si el tipo principal es ACTIVIDADES
             if (mainType === 'actividades') {
                 downloadTutorSection.classList.remove('hidden');
             } else {
@@ -971,7 +1078,7 @@
                 specificSelect.innerHTML = '<option value="">-- Selecciona el tipo principal primero --</option>';
             }
 
-            // ✅ Mostrar siempre el selector de tutora si el principal es ACTIVIDADES
+            // Mostrar siempre el selector de tutora si el principal es ACTIVIDADES
             if (mainType === 'actividades') {
                 tutorSection.classList.remove('hidden');
             }
@@ -1043,7 +1150,7 @@
                 }
             }
 
-            // ✅ Si es cualquier ACTIVIDAD exige tutora
+            // Si es cualquier ACTIVIDAD exige tutora
             if (evidenceType === 'actividades' && !tutorNameSelect.value) {
                 valid = false;
             }
@@ -1092,9 +1199,9 @@
             try {
                 const constraints = {
                     video: {
-                        width: { ideal: 1920 },   // resolución alta deseada
+                        width: { ideal: 1920 },
                         height: { ideal: 1080 },
-                        facingMode: facingMode     // 'environment' o 'user'
+                        facingMode: facingMode
                     }
                 };
 
@@ -1102,22 +1209,11 @@
                 webcamVideo.srcObject = stream;
                 webcamVideo.play();
 
-                // ✅ Ajustar la vista previa a la relación real de la cámara
-                webcamVideo.addEventListener('loadedmetadata', () => {
-                    const vW = webcamVideo.videoWidth;
-                    const vH = webcamVideo.videoHeight;
-
-                    // Forzar misma proporción en el contenedor
-                    const wrapper = document.querySelector('.camera-wrapper'); // tu div padre del video
-                    if (wrapper) {
-                        wrapper.style.aspectRatio = `${vW} / ${vH}`;
-                    }
-
-                    // Asegurar que el <video> se muestre completo sin recorte
-                    webcamVideo.style.width = '100%';
-                    webcamVideo.style.height = '100%';
-                    webcamVideo.style.objectFit = 'contain';
-                });
+                // Asegurar que solo los botones de "Tomar" y "Cambiar" sean visibles al inicio
+                captureButton.classList.remove('hidden');
+                buttonOverlay.classList.remove('show');
+                retakeButton.classList.add('hidden');
+                saveButton.classList.add('hidden');
 
                 // Verificar si hay más de una cámara para mostrar el botón de cambio
                 const devices = await navigator.mediaDevices.enumerateDevices();
@@ -1161,9 +1257,9 @@
             captureButton.classList.remove('hidden');
             retakeButton.classList.add('hidden');
             saveButton.classList.add('hidden');
-            switchCameraButton.classList.remove('hidden');
+            switchCameraButton.classList.remove('hidden'); // Se mostrará si hay más de 1 cámara en startCamera
+            buttonOverlay.classList.remove('show');
             capturedPhotoBlob = null;
-
         }
 
         captureButton.addEventListener('click', () => {
@@ -1180,10 +1276,13 @@
                 capturedPhotoBlob = blob;
                 webcamVideo.style.display = 'none';
                 photoCanvas.style.display = 'block';
-                captureButton.classList.add('hidden');
+                captureButton.classList.add('hidden'); // Oculta el botón de tomar foto
+                switchCameraButton.classList.add('hidden'); // Ocultar el botón al tomar la foto
+                
+                // Muestra los botones de retake y save en el overlay
                 retakeButton.classList.remove('hidden');
                 saveButton.classList.remove('hidden');
-                switchCameraButton.classList.add('hidden'); // Ocultar el botón al tomar la foto
+                buttonOverlay.classList.add('show'); // Muestra el overlay
                 stopCamera();
             }, 'image/jpeg', 0.95);
         });
@@ -1212,7 +1311,7 @@
 
             } else if (evidenceType === 'actividades') {
 
-                // ✅ Siempre obligatorio seleccionar tutora
+                // Siempre obligatorio seleccionar tutora
                 if (!tutorNameSelect.value) {
                     showMessage('⚠️ Debes seleccionar una tutora antes de guardar.', 'error', messageElement);
                     return;
@@ -1253,14 +1352,14 @@
                     additionalInfo: additionalInfo
                 };
 
-                // 👉 Codificamos como x-www-form-urlencoded para evitar preflight
+                // Codificamos como x-www-form-urlencoded para evitar preflight
                 const formBody = new URLSearchParams();
                 formBody.append('payload', JSON.stringify(postData));
 
                 try {
                     const response = await fetch(scriptURL, {
                         method: 'POST',
-                        body: formBody    // el navegador pone Content-Type automáticamente
+                        body: formBody
                     });
 
                     if (!response.ok) {
@@ -1286,9 +1385,9 @@
                     setTimeout(() => {
                         const type = evidenceTypeSelect.value;
                         if (type === 'participantes') {
-                            resetAll();            // 🔄 Reinicia todo
+                            resetAll();            // Reinicia todo
                         } else {
-                            resetKeepSelection();   // ✅ Mantiene selects en Actividades/Donaciones
+                            resetKeepSelection();   // Mantiene selects en Actividades/Donaciones
                         }
                     }, 3000);
                 }
@@ -1306,7 +1405,7 @@
             const downloadMainType = downloadMainTypeSelect.value;
             const downloadSpecificType = downloadSpecificTypeSelect.value;
             const downloadMonth = downloadMonthInput.value;
-            const downloadTutor = downloadTutorSelect.value; // ✅ nuevo
+            const downloadTutor = downloadTutorSelect.value;
 
             if (!downloadMainType || !downloadSpecificType || !downloadMonth) {
                 showMessage(
@@ -1405,6 +1504,8 @@
             participantsSection.classList.add('hidden');
             descriptionSection.classList.add('hidden');
             tutorSection.classList.add('hidden');
+            extraTitleWrapper.style.display = 'none';
+            extraActivityTitle.value = '';
             startCameraButton.classList.add('hidden');
 
             messageElement.classList.remove('show', 'success', 'error', 'info');
@@ -1432,8 +1533,8 @@
             retakeButton.classList.add('hidden');
             saveButton.classList.add('hidden');
             switchCameraButton.classList.remove('hidden');
+            buttonOverlay.classList.remove('show');
             messageElement.textContent = '';
-            // No tocamos evidenceTypeSelect, specificTypeSelect ni participantCodeSelect
         }
 
     </script>
