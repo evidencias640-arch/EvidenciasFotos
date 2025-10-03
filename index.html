@@ -253,7 +253,8 @@
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            background: black; /* Fondo negro para evitar bordes blancos */
+            background: black;
+            /* Fondo negro para evitar bordes blancos */
         }
 
         /* NUEVO: Header con botón SALIR a la derecha */
@@ -273,7 +274,8 @@
             font-weight: bold;
             flex-grow: 1;
             text-align: center;
-            margin-right: -100px; /* Centra mejor el título al ignorar el espacio del botón */
+            margin-right: -100px;
+            /* Centra mejor el título al ignorar el espacio del botón */
         }
 
         .close-button {
@@ -290,7 +292,8 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            border: 2px solid #d32f2f; /* Borde sutil para darle más impacto */
+            border: 2px solid #d32f2f;
+            /* Borde sutil para darle más impacto */
         }
 
         .close-button:hover {
@@ -303,29 +306,35 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Alinea los elementos arriba */
+            justify-content: flex-start;
+            /* Alinea los elementos arriba */
             padding: 0;
             background-color: #000;
             position: relative;
             /* Importante para el overlay y el contenedor de botones de captura */
-            min-height: 400px; /* Altura mínima para asegurar el espacio */
+            min-height: 400px;
+            /* Altura mínima para asegurar el espacio */
             width: 100%;
         }
-        
+
         /* SOLUCIÓN: object-fit: contain para mostrar el 100% del campo visual */
         #webcam-video,
         #photo-canvas {
-            width: 95%; /* Ocupa casi todo el ancho disponible */
-            max-width: 500px; /* Limita el tamaño en pantallas grandes */
+            width: 95%;
+            /* Ocupa casi todo el ancho disponible */
+            max-width: 500px;
+            /* Limita el tamaño en pantallas grandes */
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            margin: 20px 0 0 0; /* Espacio arriba, 0 abajo */
-            object-fit: contain; /* <-- FIX: Muestra el 100% del campo, sin recorte */
+            margin: 20px 0 0 0;
+            /* Espacio arriba, 0 abajo */
+            object-fit: contain;
+            /* <-- FIX: Muestra el 100% del campo, sin recorte */
             background: black;
             height: auto;
             /* Eliminamos aspect-ratio para que se adapte a la cámara nativamente */
         }
-        
+
         /* Contenedor de video/canvas para limitar el área visible */
         .video-wrapper {
             width: 100%;
@@ -342,7 +351,8 @@
         /* Contenedor de botones superpuestos (Tomar Otra y Guardar) */
         .button-overlay {
             position: absolute;
-            bottom: 120px; /* Posición ajustada para no chocar con el grupo de botones de captura */
+            bottom: 120px;
+            /* Posición ajustada para no chocar con el grupo de botones de captura */
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
@@ -376,21 +386,25 @@
         }
 
         #retake-button {
-            background-color: #f39c12; /* Naranja */
+            background-color: #f39c12;
+            /* Naranja */
             color: white;
             border: 2px solid #e67e22;
         }
 
         #save-button {
-            background-color: #27ae60; /* Verde de Guardar */
+            background-color: #27ae60;
+            /* Verde de Guardar */
             color: white;
             border: 2px solid #2ecc71;
         }
 
         /* NUEVO: Contenedor para los botones de "Tomar" y "Cambiar" */
         .capture-button-wrapper {
-            position: absolute; /* Posicionamiento absoluto sobre el fondo negro */
-            bottom: 20px; /* Pegado a la parte inferior */
+            position: absolute;
+            /* Posicionamiento absoluto sobre el fondo negro */
+            bottom: 20px;
+            /* Pegado a la parte inferior */
             width: 90%;
             max-width: 500px;
             display: flex;
@@ -399,7 +413,7 @@
             gap: 15px;
             z-index: 10;
         }
-        
+
         .capture-button-wrapper button {
             flex: 1;
             padding: 15px;
@@ -412,9 +426,11 @@
         }
 
         #capture-button {
-            background-color: var(--primary-color); /* Verde */
+            background-color: var(--primary-color);
+            /* Verde */
             color: white;
-            border: 2px solid var(--primary-color); /* Borde verde */
+            border: 2px solid var(--primary-color);
+            /* Borde verde */
             padding: 15px 20px;
         }
 
@@ -424,9 +440,11 @@
         }
 
         #switch-camera-button {
-            background-color: #3498db; /* Azul */
+            background-color: #3498db;
+            /* Azul */
             color: white;
-            border: 2px solid #3498db; /* Borde azul */
+            border: 2px solid #3498db;
+            /* Borde azul */
             padding: 15px 20px;
         }
 
@@ -434,6 +452,7 @@
             background-color: #2980b9;
             transform: translateY(-3px);
         }
+
         /* ---------------------------------------------------------------------- */
         /* FIN Modificaciones del Modal */
         /* ---------------------------------------------------------------------- */
@@ -620,10 +639,11 @@
             }
 
             .button-overlay {
-                bottom: 80px; /* Ajuste para móvil para no chocar con el botón de captura */
+                bottom: 80px;
+                /* Ajuste para móvil para no chocar con el botón de captura */
                 gap: 10px;
             }
-            
+
             .capture-button-wrapper {
                 bottom: 10px;
                 gap: 10px;
@@ -678,6 +698,73 @@
                 font-size: 14px;
             }
         }
+
+        /* Estilos para el nuevo módulo de Galería */
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            padding: 10px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--background-light);
+        }
+
+        .evidence-item {
+            width: 150px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            background-color: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .evidence-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        .evidence-item a.download-link {
+            display: block;
+            width: 90%;
+            padding: 5px 0;
+            margin: 5px 0 10px 0;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .evidence-item span {
+            font-size: 0.8em;
+            color: var(--text-light);
+            padding: 5px;
+            word-break: break-all;
+            white-space: normal;
+            height: 35px;
+            overflow: hidden;
+        }
+
+        .hidden-module {
+            display: none;
+        }
+
+        /* Asegúrate de que tienes un estilo para la clase 'hidden' en tus form-groups */
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -691,8 +778,9 @@
 
         <div class="tabs">
             <button class="tab-button active" data-tab="upload-tab">⬆️ Cargar Evidencia</button>
-            <button class="tab-button" data-tab="download-tab">⬇️ Descargar Evidencia</button>
-            <button class="tab-button" data-tab="info-tab">ℹ️ Información & Ayuda</button>
+            <button class="tab-button" data-tab="download-ind">💫 Descargar Evidencia Individual</button>
+            <button class="tab-button" data-tab="download-tab">⬇️ Descargar Evidencia General</button>
+            <button class="tab-button" data-tab="info-tab">💢 Información & Ayuda</button>
         </div>
 
         <div id="upload-tab" class="tab-content active">
@@ -786,6 +874,58 @@
             <p id="download-message" class="info"></p>
         </div>
 
+        <div id="download-ind" class="tab-content">
+            <h2>🔍 Revisión y Descarga Individual de Evidencias</h2>
+            <p>Utiliza esta sección para filtrar, revisar las miniaturas y descargar una a una las fotos que necesites.
+            </p>
+
+            <div class="card">
+                <div class="form-group">
+                    <label for="reviewMainTypeSelect">Tipo Principal de Evidencia:</label>
+                    <select id="reviewMainTypeSelect">
+                        <option value="">-- Selecciona una opción --</option>
+                        <option value="participantes">Participantes</option>
+                        <option value="actividades">Actividades</option>
+                        <option value="donaciones">Donaciones y Gestión</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reviewSpecificTypeSelect">Tipo Específico de Evidencia:</label>
+                    <select id="reviewSpecificTypeSelect">
+                        <option value="">-- Primero selecciona el tipo principal --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reviewMonthInput">Selecciona el Mes de las Evidencias:</label>
+                    <input type="month" id="reviewMonthInput">
+                </div>
+
+                <div id="reviewTutorSection" class="form-group hidden">
+                    <label for="reviewTutorInput">Selecciona la Tutora (Opcional):</label>
+                    <select id="reviewTutorInput">
+                        <option value="">-- Selecciona una tutora --</option>
+                        <option value="LISBETH">Lisbeth</option>
+                        <option value="DIANA">Diana</option>
+                        <option value="HELEN">Helen</option>
+                        <option value="JULIANA">Juliana</option>
+                        <option value="GENERAL">General</option>
+                    </select>
+                </div>
+
+                <button id="viewEvidencesButton" class="main-button" type="button" style="margin-top: 20px;">
+                    📸 Buscar y Ver Evidencias
+                </button>
+            </div>
+
+            <p id="reviewMessageElement" class="info" style="margin-top: 10px;"></p>
+
+            <div id="evidenceDisplayModule" class="hidden-module card" style="margin-top: 20px;">
+                <h4>Miniaturas para Revisión</h4>
+                <p id="galleryStatusMessage" class="info-text" style="text-align: center; margin-top: 10px;"></p>
+                <div id="evidenceGallery" class="gallery-container">
+                </div>
+            </div>
+        </div>
 
         <div id="info-tab" class="tab-content">
             <h2>ℹ️ Información y Cómo Usar el Sistema</h2>
@@ -872,12 +1012,12 @@
                 <span class="camera-title">📸 Tomar Evidencia</span>
                 <button id="close-camera" class="close-button">SALIR</button>
             </div>
-            
+
             <div class="camera-container">
                 <div class="video-wrapper">
                     <video id="webcam-video" autoplay playsinline></video>
                     <canvas id="photo-canvas"></canvas>
-                    
+
                     <div class="button-overlay">
                         <button id="retake-button" class="hidden">🔄 Tomar Otra</button>
                         <button id="save-button" class="hidden">✅ Guardar</button>
@@ -891,6 +1031,58 @@
             </div>
         </div>
     </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            /* sube más el z-index para que siempre esté encima */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function openModal(imgUrl) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImg");
+            modal.style.display = "block";
+            modalImg.src = imgUrl;
+        }
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+    </script>
+
+
+
     <script src="animaciones.js"></script>
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec'; // ⚠️ ¡Reemplaza con tu URL del Apps Script!
@@ -926,6 +1118,20 @@
         const downloadTutorSection = document.getElementById('downloadTutorSection');
         const downloadTutorSelect = document.getElementById('downloadTutor');
         const buttonOverlay = document.querySelector('.button-overlay'); // Selector para el overlay de botones
+
+        // --- NUEVAS REFERENCIAS PARA EL MÓDULO DE REVISIÓN INDIVIDUAL (AGREGADO) ---
+        const reviewMainTypeSelect = document.getElementById('reviewMainTypeSelect');
+        const reviewSpecificTypeSelect = document.getElementById('reviewSpecificTypeSelect');
+        const reviewMonthInput = document.getElementById('reviewMonthInput');
+        const reviewTutorSection = document.getElementById('reviewTutorSection');
+        const reviewTutorInput = document.getElementById('reviewTutorInput');
+        const reviewMessageElement = document.getElementById('reviewMessageElement');
+
+        const viewEvidencesButton = document.getElementById('viewEvidencesButton');
+        const evidenceDisplayModule = document.getElementById('evidenceDisplayModule');
+        const evidenceGallery = document.getElementById('evidenceGallery');
+        const galleryStatusMessage = document.getElementById('galleryStatusMessage');
+        // --- FIN NUEVAS REFERENCIAS ---
 
         downloadMainTypeSelect.addEventListener('change', () => {
             const mainType = downloadMainTypeSelect.value;
@@ -1007,6 +1213,10 @@
             ]
         };
 
+        // NOTA: Se ha eliminado el 'reviewSpecificTypesMap' obsoleto y ahora 
+        // se utilizará el 'evidenceOptionsMap' para la revisión individual también.
+
+
         // Lógica de Tabs
         tabs.forEach(button => {
             button.addEventListener('click', () => {
@@ -1024,6 +1234,11 @@
                 }
                 downloadMessageElement.classList.remove('show', 'success', 'error', 'info');
                 downloadMessageElement.textContent = '';
+
+                // Limpiar mensaje de revisión individual al cambiar de pestaña
+                reviewMessageElement.classList.remove('show', 'success', 'error', 'info');
+                reviewMessageElement.textContent = '';
+                evidenceDisplayModule.classList.add('hidden-module');
             });
         });
 
@@ -1279,7 +1494,7 @@
                 photoCanvas.style.display = 'block';
                 captureButton.classList.add('hidden'); // Oculta el botón de tomar foto
                 switchCameraButton.classList.add('hidden'); // Ocultar el botón al tomar la foto
-                
+
                 // Muestra los botones de retake y save en el overlay
                 retakeButton.classList.remove('hidden');
                 saveButton.classList.remove('hidden');
@@ -1401,7 +1616,7 @@
             startCamera();
         });
 
-        // Descargar evidencias
+        // Descargar evidencias (ZIP)
         downloadButton.addEventListener('click', async () => {
             const downloadMainType = downloadMainTypeSelect.value;
             const downloadSpecificType = downloadSpecificTypeSelect.value;
@@ -1538,6 +1753,172 @@
             messageElement.textContent = '';
         }
 
+
+        // ====================================================================================
+        // ========== NUEVA LÓGICA PARA EL MÓDULO DE REVISIÓN Y DESCARGA INDIVIDUAL ==========
+        // ====================================================================================
+
+        // 1. Lógica para cargar las opciones del select específico en la pestaña de revisión
+        function updateReviewSpecificTypes(mainType, specificSelectElement) {
+            specificSelectElement.innerHTML = '<option value="">-- Selecciona una opción --</option>';
+
+            if (evidenceOptionsMap[mainType]) {
+                evidenceOptionsMap[mainType].forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.textContent = option.text;
+                    specificSelectElement.appendChild(opt);
+                });
+            }
+        }
+
+        // 2. Control de Eventos de Filtro para la Revisión
+        reviewMainTypeSelect.addEventListener('change', () => {
+            // Mostrar/Ocultar Tutora solo para 'actividades'
+            if (reviewMainTypeSelect.value === 'actividades') {
+                reviewTutorSection.classList.remove('hidden');
+            } else {
+                reviewTutorSection.classList.add('hidden');
+                reviewTutorInput.value = ''; // Limpiar la tutora al ocultar
+            }
+
+            // Llenar Tipos Específicos usando la misma lista de actividades (evidenceOptionsMap)
+            updateReviewSpecificTypes(reviewMainTypeSelect.value, reviewSpecificTypeSelect);
+
+            // Ocultar resultados anteriores al cambiar filtro
+            evidenceDisplayModule.classList.add('hidden-module');
+            displayReviewMessage('', 'info');
+        });
+
+
+        // 3. Manejador del botón BUSCAR/VER EVIDENCIAS (CORREGIDO PARA USAR FETCH)
+        viewEvidencesButton.addEventListener('click', handleViewEvidences);
+
+        async function handleViewEvidences() {
+            const mainType = reviewMainTypeSelect.value;
+            const specificType = reviewSpecificTypeSelect.value;
+            const month = reviewMonthInput.value;
+
+            const tutor = (!reviewTutorSection.classList.contains('hidden') && reviewTutorInput.value ? reviewTutorInput.value.trim().toUpperCase() : '');
+
+            if (!mainType || !specificType || !month) {
+                displayReviewMessage('🛑 Por favor, selecciona Tipo Principal, Específico y Mes para buscar.', 'error');
+                evidenceDisplayModule.classList.add('hidden-module');
+                return;
+            }
+
+            displayReviewMessage('⏳ Buscando evidencias. Por favor, espera...', 'info');
+            evidenceDisplayModule.classList.add('hidden-module');
+            evidenceGallery.innerHTML = '';
+            galleryStatusMessage.textContent = 'Buscando archivos en Google Drive...';
+
+            try {
+                // CONSTRUCCIÓN DE LA URL CON PARÁMETROS para la acción 'getUrls'
+                const params = new URLSearchParams({
+                    action: 'getUrls',
+                    mainType: mainType,
+                    specificType: specificType,
+                    month: month,
+                    tutor: tutor
+                });
+
+                // Llamada a la URL de Apps Script
+                const response = await fetch(`${scriptURL}?${params.toString()}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const responseText = await response.text();
+                showEvidenceGallery(responseText); // Pasamos el texto como antes, showEvidenceGallery lo parseará
+
+            } catch (error) {
+                console.error('Error en handleViewEvidences (fetch):', error);
+                handleFailure(`Error de red o comunicación: ${error.message}`);
+            }
+        }
+
+        // 4. Función que construye la Galería Visual (Success Handler)
+        function showEvidenceGallery(response) {
+            try {
+                const data = JSON.parse(response);
+                evidenceGallery.innerHTML = '';
+
+                if (data.status === 'success' && data.files.length > 0) {
+                    displayReviewMessage(`✅ ${data.message}`, 'success');
+                    evidenceDisplayModule.classList.remove('hidden-module');
+                    galleryStatusMessage.textContent = `${data.files.length} imágenes encontradas.`;
+
+                    data.files.forEach(file => {
+                        const item = document.createElement('div');
+                        item.className = 'evidence-item';
+
+                        // URL optimizada para miniatura de Drive (w150-h100)
+                        const previewUrl = `https://drive.google.com/thumbnail?sz=w200&id=${file.id}`;
+                        const fullViewUrl = `https://drive.google.com/uc?export=view&id=${file.id}`;
+
+                        const card = `
+  <div class="evidence-card">
+    <img src="${previewUrl}" 
+         alt="${file.name}" 
+         class="evidence-preview" 
+         style="cursor:pointer;" 
+         onclick="openModal('${fullViewUrl}')"/>
+    <p>${file.name}</p>
+    <a href="${file.downloadUrl}" target="_blank" class="download-btn">↓ Descargar</a>
+  </div>
+`;
+
+
+
+                        const img = document.createElement('img');
+                        img.src = previewUrl;
+                        img.alt = file.name;
+                        img.title = file.name;
+
+                        // Enlace de descarga individual: usa file.downloadUrl
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = file.downloadUrl;
+                        downloadLink.target = '_blank';
+                        downloadLink.className = 'download-link';
+                        downloadLink.textContent = '↓ Descargar';
+
+                        const nameSpan = document.createElement('span');
+                        nameSpan.textContent = file.name;
+
+                        item.appendChild(img);
+                        item.appendChild(nameSpan);
+                        item.appendChild(downloadLink);
+                        evidenceGallery.appendChild(item);
+                    });
+                } else if (data.status === 'success' && data.files.length === 0) {
+                    displayReviewMessage('ℹ️ No se encontraron evidencias con esos criterios.', 'info');
+                    galleryStatusMessage.textContent = '0 imágenes encontradas.';
+                    evidenceDisplayModule.classList.remove('hidden-module'); // Mostrar módulo vacío
+                } else {
+                    displayReviewMessage('❌ Error al obtener la lista: ' + data.message, 'error');
+                    galleryStatusMessage.textContent = 'Error al cargar la galería.';
+                    evidenceDisplayModule.classList.add('hidden-module');
+                }
+            } catch (e) {
+                console.error('Error al procesar la respuesta:', e);
+                displayReviewMessage('❌ Error fatal al procesar la respuesta del servidor.', 'error');
+                evidenceDisplayModule.classList.add('hidden-module');
+            }
+        }
+
+        // 5. Función de Mensaje Específica para esta Sección
+        function displayReviewMessage(message, type) {
+            reviewMessageElement.textContent = message;
+            reviewMessageElement.className = 'info show ' + type;
+        }
+
+        // 6. Manejador de Errores General (Ahora es usado para errores de red/Apps Script)
+        function handleFailure(error) {
+            console.error('Error:', error);
+            displayReviewMessage('❌ Error de comunicación con Google Apps Script: ' + error, 'error');
+        }
+
     </script>
 </body>
+
 </html>
