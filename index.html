@@ -1081,7 +1081,106 @@
         }
     </script>
 
-
+<!-- 🔹 ANIMACIÓN ZIP BUILDER OVERLAY -->
+<!-- 🔹 ANIMACIÓN ZIP COMPATIBLE -->
+<div id="zipBuilderOverlay" class="hidden-module">
+    <div class="zip-overlay-bg"></div>
+    <div class="zip-builder-box">
+      <div class="zip-icon">
+        <div class="zip-bar"></div>
+        <span class="zip-text">.zip</span>
+      </div>
+      <h3 id="zipBuilderTitle">Construyendo tu archivo ZIP...</h3>
+      <div class="zip-progress">
+        <div id="zipProgressBar" class="zip-progress-bar"></div>
+      </div>
+      <p id="zipProgressText">Empaquetando evidencias...</p>
+    </div>
+  </div>
+  
+  
+  <style>
+  #zip-builder-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.55);
+  }
+  .zip-builder-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(76,175,80,0.15), transparent 70%);
+    animation: pulseBg 4s ease-in-out infinite alternate;
+  }
+  .zip-builder-card {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    padding: 40px 50px;
+    text-align: center;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    z-index: 10;
+    width: 360px;
+    animation: popIn 0.4s ease-out;
+  }
+  .zip-icon {
+    width: 90px;
+    height: 100px;
+    margin: 0 auto 20px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #a5d6a7, #4caf50);
+    position: relative;
+    box-shadow: 0 6px 15px rgba(76,175,80,0.35);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2em;
+  }
+  .zip-bar {
+    width: 70%;
+    height: 10px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    animation: zipPulse 1.4s ease-in-out infinite;
+  }
+  .zip-progress {
+    height: 14px;
+    width: 100%;
+    border-radius: 10px;
+    background: #c8e6c9;
+    overflow: hidden;
+    margin-top: 15px;
+  }
+  .zip-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4caf50, #81c784);
+    transition: width 0.4s ease;
+  }
+  @keyframes zipPulse {
+    0%,100% { transform: scaleX(0.8); opacity: 0.8; }
+    50% { transform: scaleX(1.05); opacity: 1; }
+  }
+  @keyframes pulseBg {
+    0% { opacity: 0.5; }
+    100% { opacity: 0.8; }
+  }
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  </style>
+  
 
     <script src="animaciones.js"></script>
     <script>
@@ -1618,86 +1717,65 @@
 
         // Descargar evidencias (ZIP)
         downloadButton.addEventListener('click', async () => {
-            const downloadMainType = downloadMainTypeSelect.value;
-            const downloadSpecificType = downloadSpecificTypeSelect.value;
-            const downloadMonth = downloadMonthInput.value;
-            const downloadTutor = downloadTutorSelect.value;
+  const overlay = document.getElementById('zipBuilderOverlay');
+  const bar = document.getElementById('zipProgressBar');
+  const text = document.getElementById('zipProgressText');
 
-            if (!downloadMainType || !downloadSpecificType || !downloadMonth) {
-                showMessage(
-                    '⚠️ Por favor, selecciona el tipo principal, tipo específico y el mes para la descarga.',
-                    'error',
-                    downloadMessageElement
-                );
-                return;
-            }
+  if (!overlay || !bar || !text) {
+    console.warn("⚠️ No se encontró el contenedor de animación ZIP. Verifica el ID 'zipBuilderOverlay'.");
+    return;
+  }
 
-            // Si el tipo principal es ACTIVIDADES exigimos tutora
-            if (downloadMainType === 'actividades' && !downloadTutor) {
-                showMessage(
-                    '⚠️ Por favor, selecciona la tutora para filtrar las evidencias de actividades.',
-                    'error',
-                    downloadMessageElement
-                );
-                return;
-            }
+  // Mostrar animación
+  overlay.classList.remove('hidden-module');
+  bar.style.width = "0%";
+  text.textContent = "Empaquetando evidencias...";
 
-            showMessage(
-                '⏳ Preparando el archivo ZIP para la descarga...',
-                'info',
-                downloadMessageElement
-            );
+  let progress = 0;
+  const interval = setInterval(() => {
+    if (progress < 90) {
+      progress += Math.random() * 6;
+      bar.style.width = progress + "%";
+      text.textContent =
+        progress < 40
+          ? "Empaquetando evidencias..."
+          : progress < 70
+          ? "Comprimiendo archivos..."
+          : "Generando ZIP final...";
+    }
+  }, 400);
 
-            try {
-                const params = new URLSearchParams({
-                    action: 'download',
-                    mainType: downloadMainType,
-                    specificType: downloadSpecificType,
-                    month: downloadMonth
-                });
+  try {
+    const response = await fetch(`${scriptURL}?${params.toString()}`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const result = await response.json();
 
-                // Adjunta la tutora solo si se seleccionó y es actividades
-                if (downloadMainType === 'actividades' && downloadTutor) {
-                    params.append('tutor', downloadTutor);
-                }
+    clearInterval(interval);
+    if (result.status === 'success' && result.url) {
+      bar.style.width = "100%";
+      text.textContent = "✅ ZIP listo para descargar";
+      setTimeout(() => {
+        overlay.classList.add('hidden-module');
+        window.open(result.url, '_blank');
+      }, 1000);
 
-                const response = await fetch(`${scriptURL}?${params.toString()}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const result = await response.json();
+      showMessage(
+        '✅ ¡Descarga iniciada! El archivo ZIP se eliminará temporalmente después.',
+        'success',
+        downloadMessageElement
+      );
+    } else {
+      clearInterval(interval);
+      overlay.classList.add('hidden-module');
+      showMessage('😕 No se encontraron evidencias para descargar.', 'error', downloadMessageElement);
+    }
+  } catch (error) {
+    clearInterval(interval);
+    overlay.classList.add('hidden-module');
+    showMessage('🚨 Error al generar ZIP. Verifica la conexión o el Apps Script.', 'error', downloadMessageElement);
+  }
+});
 
-                if (result.status === 'success') {
-                    if (result.url) {
-                        window.open(result.url, '_blank');
-                        showMessage(
-                            '✅ ¡Descarga iniciada! Revisa tus descargas. El archivo ZIP se eliminará del Drive temporalmente en un minuto.',
-                            'success',
-                            downloadMessageElement
-                        );
-                    } else {
-                        showMessage(
-                            '😔 No se encontraron evidencias para los criterios seleccionados en ese mes.',
-                            'error',
-                            downloadMessageElement
-                        );
-                    }
-                } else {
-                    showMessage(
-                        `❌ Error al descargar: ${result.message}`,
-                        'error',
-                        downloadMessageElement
-                    );
-                }
-            } catch (error) {
-                console.error('Error al descargar:', error);
-                showMessage(
-                    '🚨 Ocurrió un error al intentar descargar. Verifica la conexión o el Apps Script.',
-                    'error',
-                    downloadMessageElement
-                );
-            }
-        });
 
         // Funciones utilitarias
         function showMessage(msg, type, element, duration = 5000) {
