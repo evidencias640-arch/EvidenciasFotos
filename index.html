@@ -1081,122 +1081,244 @@
         }
     </script>
 
-    <!-- 🔹 OVERLAY ANIMACIÓN ZIP GENERALES -->
-    <div id="zipBuilderOverlay" class="hidden-module">
-        <div class="zip-overlay-bg"></div>
-        <div class="zip-builder-box">
+    <!-- 🔹 ANIMACIÓN CREANDO ZIP -->
+    <div id="zipOverlay" class="hidden-module">
+        <div class="zip-box">
             <div class="zip-icon">
-                <div class="zip-bar"></div>
-                <span class="zip-text">.zip</span>
+                <div class="file"></div>
+                <div class="zip-line"></div>
+                <div class="zip-particle"></div>
             </div>
-            <h3 id="zipBuilderTitle">Construyendo tu archivo ZIP...</h3>
-            <div class="zip-progress">
-                <div id="zipProgressBar" class="zip-progress-bar"></div>
-            </div>
-            <p id="zipProgressText">Empaquetando evidencias...</p>
+            <h3 id="zipTitle">Creando archivo .ZIP</h3>
+            <p id="zipText">Empaquetando evidencias...</p>
         </div>
     </div>
 
     <style>
-        #zipBuilderOverlay {
+        /* === OVERLAY GENERAL === */
+        #zipOverlay {
             position: fixed;
             inset: 0;
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.95));
+            backdrop-filter: blur(8px);
             z-index: 9999;
             display: flex;
-            align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(6px);
-            transition: opacity 0.3s ease;
+            align-items: center;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
-        #zipBuilderOverlay.hidden-module {
+        #zipOverlay.hidden-module {
             opacity: 0;
             pointer-events: none;
+            visibility: hidden;
         }
 
-        .zip-builder-box {
-            background: #1e293b;
-            color: #e2e8f0;
-            border-radius: 14px;
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
-            padding: 40px 50px;
-            text-align: center;
+        /* === CONTENEDOR === */
+        .zip-box {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            color: #f8fafc;
             font-family: "Poppins", sans-serif;
-            width: 350px;
-            animation: fadeInBox 0.4s ease-out;
+            text-align: center;
+            padding: 55px 75px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            animation: zipAppear 0.4s ease-out;
         }
 
-        @keyframes fadeInBox {
+        @keyframes zipAppear {
             from {
-                transform: scale(0.9);
+                transform: scale(0.9) translateY(20px);
                 opacity: 0;
             }
 
             to {
-                transform: scale(1);
+                transform: scale(1) translateY(0);
                 opacity: 1;
             }
         }
 
-        .zip-icon {
-            width: 90px;
-            height: 100px;
-            margin: 0 auto 20px;
-            border-radius: 10px;
-            background: linear-gradient(180deg, #22c55e, #15803d);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 6px 18px rgba(34, 197, 94, 0.4);
+        /* === EFECTO DE PULSO DE LUZ === */
+        .zip-box::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.06), transparent 70%);
+            animation: lightPulse 3s linear infinite;
         }
 
-        .zip-bar {
-            width: 70%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 5px;
-            margin-bottom: 6px;
-            animation: zipPulse 1.4s ease-in-out infinite;
-        }
-
-        .zip-text {
-            font-weight: 700;
-            color: white;
-        }
-
-        .zip-progress {
-            margin-top: 15px;
-            width: 100%;
-            height: 14px;
-            background: #334155;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .zip-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #22c55e, #4ade80);
-            transition: width 0.3s ease;
-            border-radius: 8px;
-        }
-
-        @keyframes zipPulse {
+        @keyframes lightPulse {
 
             0%,
             100% {
-                transform: scaleX(0.85);
-                opacity: 0.7;
+                transform: scale(1);
+                opacity: 0.4;
             }
 
             50% {
-                transform: scaleX(1.05);
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* === ICONO CENTRAL (MAQUINA ZIP) === */
+        .zip-icon {
+            position: relative;
+            width: 90px;
+            height: 110px;
+            margin: 0 auto 25px;
+            perspective: 600px;
+        }
+
+        /* === ARCHIVO PRINCIPAL === */
+        .file {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, #22c55e, #16a34a);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-style: preserve-3d;
+            animation: floatFile 3s ease-in-out infinite;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.4);
+        }
+
+        @keyframes floatFile {
+
+            0%,
+            100% {
+                transform: translateY(0) rotateX(0deg);
+            }
+
+            50% {
+                transform: translateY(-6px) rotateX(3deg);
+            }
+        }
+
+        /* === DIENTES DE CIERRE ZIP === */
+        .zip-line {
+            position: absolute;
+            left: 40px;
+            top: 18px;
+            width: 8px;
+            height: 70px;
+            background: #f1f5f9;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .zip-particle {
+            position: absolute;
+            left: 41px;
+            top: 18px;
+            width: 6px;
+            height: 10px;
+            background: #22c55e;
+            border-radius: 1px;
+            animation: zipMovePro 1.2s infinite ease-in-out;
+        }
+
+        @keyframes zipMovePro {
+            0% {
+                top: 18px;
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 78px;
+                opacity: 0;
+            }
+        }
+
+        /* === EFECTO DE CONSTRUCCIÓN (PARTÍCULAS) === */
+        .zip-particles {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .zip-particles span {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            opacity: 0;
+            animation: buildDots 1.4s ease-in-out infinite;
+        }
+
+        .zip-particles span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .zip-particles span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes buildDots {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.2;
+            }
+
+            50% {
+                transform: translateY(-6px);
                 opacity: 1;
             }
         }
+
+        /* === TÍTULOS Y TEXTOS === */
+        #zipTitle {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        #zipText {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+
+        /* === ESTADOS DE ÉXITO Y ERROR === */
+        #zipOverlay.success .file {
+            background: linear-gradient(to bottom right, #22c55e, #15803d);
+            box-shadow: 0 0 35px rgba(34, 197, 94, 0.6);
+        }
+
+        #zipOverlay.error .file {
+            background: linear-gradient(to bottom right, #dc2626, #b91c1c);
+            box-shadow: 0 0 35px rgba(220, 38, 38, 0.6);
+        }
+
+        #zipOverlay.error .zip-line,
+        #zipOverlay.error .zip-particle {
+            background: #f1f5f9;
+        }
+
+        #zipOverlay.error #zipTitle {
+            color: #fef2f2;
+        }
+
+        #zipOverlay.error #zipText {
+            color: #fee2e2;
+        }
     </style>
+
 
     <!-- 🔹 ANIMACIÓN DE BÚSQUEDA DE EVIDENCIAS INDIVIDUALES -->
     <div id="searchOverlay" class="hidden-module">
@@ -2013,47 +2135,76 @@
             startCamera();
         });
 
-        // ======== FUNCIONES ANIMACIÓN ZIP =========
-        function showZipBuilder() {
-            const overlay = document.getElementById('zipBuilderOverlay');
-            const bar = document.getElementById('zipProgressBar');
-            const text = document.getElementById('zipProgressText');
-            if (!overlay || !bar || !text) return null;
+        // ======== ANIMACIÓN ZIP =========
+        function showZipOverlay() {
+            const overlay = document.getElementById('zipOverlay');
+            const title = document.getElementById('zipTitle');
+            const text = document.getElementById('zipText');
+            if (!overlay || !text || !title) return null;
 
-            overlay.classList.remove('hidden-module');
-            bar.style.width = "0%";
+            // 🔹 Reinicia la animación (quita X o ✓ si habían quedado)
+            overlay.classList.remove('hidden-module', 'error', 'success');
+            title.textContent = "Creando archivo .ZIP";
             text.textContent = "Empaquetando evidencias...";
-            let progress = 0;
+
+            // 🔹 Animación de puntos
+            let dots = 0;
             const interval = setInterval(() => {
-                if (progress < 90) {
-                    progress += Math.random() * 5;
-                    bar.style.width = progress + "%";
-                    text.textContent =
-                        progress < 40 ? "Empaquetando evidencias..." :
-                            progress < 70 ? "Comprimiendo archivos..." :
-                                "Generando ZIP final...";
-                }
+                dots = (dots + 1) % 4;
+                text.textContent = "Empaquetando evidencias" + ".".repeat(dots);
             }, 400);
-            return { overlay, bar, text, interval };
+
+            return { overlay, interval };
         }
 
-        function hideZipBuilder(success = true) {
-            const overlay = document.getElementById('zipBuilderOverlay');
-            const bar = document.getElementById('zipProgressBar');
-            const text = document.getElementById('zipProgressText');
-            if (!overlay || !bar || !text) return;
+        function hideZipOverlay(success = true) {
+            const overlay = document.getElementById('zipOverlay');
+            const title = document.getElementById('zipTitle');
+            const text = document.getElementById('zipText');
+            if (!overlay || !title || !text) return;
+
+            // Limpia cualquier clase previa
+            overlay.classList.remove('error', 'success');
 
             if (success) {
-                bar.style.width = "100%";
-                text.textContent = "✅ ZIP listo para descargar";
+                overlay.classList.add('success');
+                title.textContent = "✅ Archivo ZIP listo para descargar";
+                text.textContent = "Descarga iniciada automáticamente";
+                setTimeout(() => {
+                    overlay.classList.add('hidden-module');
+                    overlay.classList.remove('success');
+                }, 1200);
             } else {
-                text.textContent = "❌ Error de conexión o servidor";
+                overlay.classList.add('error');
+                title.textContent = "❌ No se encontraron evidencias";
+                text.textContent = "Intenta con otros criterios";
+                setTimeout(() => {
+                    overlay.classList.add('hidden-module');
+                    overlay.classList.remove('error');
+                }, 2000);
             }
-            setTimeout(() => overlay.classList.add('hidden-module'), 1000);
         }
 
+        // 🔹 Reinicia visualmente la animación al cambiar cualquier criterio
+        ['downloadMainType', 'downloadSpecificType', 'downloadMonth', 'downloadTutor'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('change', () => {
+                    const overlay = document.getElementById('zipOverlay');
+                    const title = document.getElementById('zipTitle');
+                    const text = document.getElementById('zipText');
+                    if (overlay && title && text) {
+                        overlay.classList.add('hidden-module');
+                        overlay.classList.remove('error', 'success');
+                        title.textContent = "Creando archivo .ZIP";
+                        text.textContent = "Empaquetando evidencias...";
+                    }
+                });
+            }
+        });
 
-        // Descargar evidencias (ZIP)
+
+        // ======== DESCARGAR EVIDENCIAS (ZIP) =========
         downloadButton.addEventListener('click', async () => {
             const downloadMainType = downloadMainTypeSelect.value;
             const downloadSpecificType = downloadSpecificTypeSelect.value;
@@ -2061,19 +2212,25 @@
             const downloadTutor = downloadTutorSelect.value;
 
             if (!downloadMainType || !downloadSpecificType || !downloadMonth) {
-                showMessage('⚠️ Por favor, selecciona el tipo principal, tipo específico y el mes para la descarga.', 'error', downloadMessageElement);
+                showMessage(
+                    '⚠️ Por favor, selecciona el tipo principal, tipo específico y el mes para la descarga.',
+                    'error',
+                    downloadMessageElement
+                );
                 return;
             }
 
             if (downloadMainType === 'actividades' && !downloadTutor) {
-                showMessage('⚠️ Por favor, selecciona la tutora para filtrar las evidencias de actividades.', 'error', downloadMessageElement);
+                showMessage(
+                    '⚠️ Por favor, selecciona la tutora para filtrar las evidencias de actividades.',
+                    'error',
+                    downloadMessageElement
+                );
                 return;
             }
 
-            showMessage('⏳ Preparando el archivo ZIP para la descarga...', 'info', downloadMessageElement);
-
-            // ⬇️ Mostrar animación ZIP
-            const zipAnim = showZipBuilder();
+            // === Mostrar animación de preparación ZIP ===
+            const zipAnim = showZipOverlay();
 
             try {
                 const params = new URLSearchParams({
@@ -2087,40 +2244,53 @@
                     params.append('tutor', downloadTutor);
                 }
 
-                const response = await fetch(`${scriptURL}?${params.toString()}`, {
-                    method: "GET",
-                    mode: "no-cors", // 🔧 evita error de CORS falso
-                    cache: "no-cache"
-                });
+                const response = await fetch(`${scriptURL}?${params.toString()}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-                if (!response.ok && response.type !== "opaque") { // "opaque" = respuesta no legible pero exitosa
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                let result;
-                try {
-                    result = await response.json();
-                } catch {
-                    result = { status: "success", url: `${scriptURL}?${params.toString()}` };
-                }
+                const result = await response.json();
 
                 clearInterval(zipAnim?.interval);
 
+                // ✅ Caso con evidencias (descargar ZIP)
                 if (result.status === 'success' && result.url) {
-                    hideZipBuilder(true);
-                    window.open(result.url, '_blank');
-                    showMessage('✅ ¡Descarga iniciada! Revisa tus descargas.', 'success', downloadMessageElement);
-                } else {
-                    hideZipBuilder(false);
-                    showMessage('😔 No se encontraron evidencias para los criterios seleccionados.', 'error', downloadMessageElement);
+                    hideZipOverlay(true);
+                    // Descarga automática del ZIP
+                    const link = document.createElement('a');
+                    link.href = result.url;
+                    link.download = 'Evidencias.zip';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    showMessage(
+                        '✅ ¡Descarga iniciada! El archivo ZIP se eliminará del Drive temporalmente en un minuto.',
+                        'success',
+                        downloadMessageElement
+                    );
                 }
+                // ❌ Caso sin evidencias
+                else {
+                    hideZipOverlay(false);
+                    showMessage(
+                        '❌ No se encontraron evidencias para los criterios seleccionados en ese mes.',
+                        'error',
+                        downloadMessageElement
+                    );
+                }
+
             } catch (error) {
                 console.error('Error al descargar:', error);
                 clearInterval(zipAnim?.interval);
-                hideZipBuilder(false);
-                showMessage('🚨 Error de conexión con Apps Script.', 'error', downloadMessageElement);
+                hideZipOverlay(false);
+                showMessage(
+                    '🚨 Ocurrió un error al intentar descargar. Verifica la conexión o el Apps Script.',
+                    'error',
+                    downloadMessageElement
+                );
             }
         });
+
+
 
 
         // Funciones utilitarias
