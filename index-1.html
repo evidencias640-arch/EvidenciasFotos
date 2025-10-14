@@ -216,28 +216,32 @@
         /* Ocultar el marcador de cámara */
         #start-camera-button { display: none !important; }
 
-        /* ==================== 7. Animación de Carga (Profesional) ==================== */
+        /* ==================== 7. Animación de Carga (Profesional: Construcción) ==================== */
         .spinner-container {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: 15px;
             height: 40px;
+            font-weight: 600;
         }
 
+        /* Estilo de la nueva animación (puntos rebotando) */
         .loader {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-top: 4px solid var(--primary-color);
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 0.8s linear infinite;
-            margin-right: 10px;
+            margin: 0 5px;
+            background-color: var(--primary-color);
+            animation: bounce 1.4s infinite ease-in-out both;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .loader:nth-child(2) { animation-delay: -0.32s; }
+        .loader:nth-child(3) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
         }
 
         .upload-progress-bar {
@@ -247,14 +251,43 @@
             border-radius: 5px;
             margin-top: 10px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Sombra para profundidad */
         }
 
         .progress-bar-fill {
             height: 100%;
             width: 0%;
             background-color: var(--accent-color);
-            transition: width 0.4s ease;
+            transition: width 0.4s ease, background-color 0.4s ease;
+            border-radius: 5px;
         }
+
+        /* ==================== 8. Navegación Secundaria (Mejorado) ==================== */
+        .nav-link {
+            text-align: center;
+            margin: 20px 0 35px 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav-link a {
+            color: var(--primary-dark);
+            text-decoration: none; /* Quitar el subrayado */
+            font-weight: 700; /* Negrita */
+            font-size: 1.1em;
+            padding: 10px 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-link a:hover {
+            background-color: var(--primary-color);
+            color: var(--card-bg);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
 
         /* Responsividad */
         @media (max-width: 576px) {
@@ -271,7 +304,10 @@
         <h1>Carga de Evidencias en Lote Profesional 🚀</h1>
 
         <p id="message" class="info"></p>
-        <center></center><p><a href="index.html" style="text-decoration: none; font-weight: bold;">💥 Ir a Carga de Evidencia Toma de Foto. ⚜</a></p></center>
+        
+        <p class="nav-link">
+            <a href="index-1.html">📸 Ir a Carga de Evidencia Toma de Foto</a>
+        </p>
 
         <div id="upload-tab" class="tab-content active">
             <h3>📝 Detalles de la Evidencia</h3>
@@ -342,6 +378,7 @@
             
             <div id="upload-animation" class="hidden-module">
                 <div class="spinner-container">
+                    <div class="loader"></div> <div class="loader"></div>
                     <div class="loader"></div>
                     <span id="upload-counter-text">Preparando subida...</span>
                 </div>
