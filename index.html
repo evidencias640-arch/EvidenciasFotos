@@ -1912,8 +1912,8 @@
             try {
                 const constraints = {
                     video: {
-                        width: { ideal: 1200 },
-                        height: { ideal: 1600 },
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 },
                         facingMode: facingMode
                     }
                 };
@@ -1980,9 +1980,9 @@
             }
             const context = photoCanvas.getContext('2d');
             // 🔧 Forzar tamaño fijo de 1200x1600 al capturar
-            photoCanvas.width = 1200;
-            photoCanvas.height = 1600;
-            context.drawImage(webcamVideo, 0, 0, 1200, 1600);
+            photoCanvas.width = 1920;
+            photoCanvas.height = 1080;
+            context.drawImage(webcamVideo, 0, 0, 1920, 1080);
 
 
             photoCanvas.toBlob(blob => {
