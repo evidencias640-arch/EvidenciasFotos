@@ -609,37 +609,45 @@
             }
         }
 
-        async function uploadPhoto(file) {
-            const selectedCode = participantCodeSelect.value;
-            const participantName = participantNameMap[selectedCode] || '';
-            
-            const data = {
-                action: 'doPostEvidencia', 
-                mainType: evidenceTypeSelect.value,
-                specificType: specificTypeSelect.value,
-                participantCode: selectedCode,
-                participantName: participantName, // Enviar el nombre
-                description: descriptionInput.value.trim(),
-                tutorName: tutorNameSelect.value,
-                extraTitle: extraActivityTitle.value.trim(),
-                imageData: file.base64Data
-            };
+async function uploadPhoto(file, index) {
+    const selectedCode = participantCodeSelect.value;
+    const participantName = participantNameMap[selectedCode] || '';
+    const mainType = evidenceTypeSelect.value;
+    const specificType = specificTypeSelect.value;
+    const tutorName = tutorNameSelect.value;
+    const description = descriptionInput.value.trim();
+    const extraTitle = extraActivityTitle.value.trim();
 
-            try {
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'cors', 
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams(data).toString() 
-                });
-                
-                const result = await response.json();
-                return result; 
+    // Construir identificador adicional único para el lote
+    let additionalInfo = '';
+    if (mainType === 'actividades') additionalInfo = tutorName;
+    if (mainType === 'participantes') additionalInfo = selectedCode;
+    if (mainType === 'donaciones') additionalInfo = description || 'GENERAL';
 
-            } catch (error) {
-                throw new Error(`Error de red: ${error.message}`);
-            }
-        }
+    // Añadir índice para que cada archivo tenga su propio sufijo (_L1, _L2, _L3, etc.)
+    additionalInfo += `_L${index + 1}`;
+
+    // Formato que entiende tu Apps Script
+    const payload = {
+        photoData: file.base64Data,        // nombre que el backend espera
+        evidenceType: mainType,
+        specificType: specificType,
+        participantCode: selectedCode,
+        additionalInfo: additionalInfo
+    };
+
+    try {
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        return await response.json();
+    } catch (error) {
+        throw new Error(`Error de red: ${error.message}`);
+    }
+}
 
         // =======================================================
         // === 4. LÓGICA DE CARGA DE ARCHIVOS MÚLTIPLES ===
@@ -730,7 +738,7 @@
                 progressBarFill.style.width = `${((i + 1) / initialCount) * 100}%`;
 
                 try {
-                    const result = await uploadPhoto(file); 
+                    const result = await uploadPhoto(file, i);
                     if (result && result.status === 'success') {
                         successfulUploads++;
                     } else {
