@@ -5,15 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📂 Carga de Evidencias en Lote Profesional</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
     <style>
         /* ==================== 1. Variables y Reset ==================== */
         :root {
-            --primary-color: #007bff; /* Azul vibrante */
+            --primary-color: #007bff;
+            /* Azul vibrante */
             --primary-dark: #0056b3;
-            --secondary-color: #ffc107; /* Amarillo para acción */
-            --accent-color: #28a745; /* Verde para éxito */
+            --secondary-color: #ffc107;
+            /* Amarillo para acción */
+            --accent-color: #28a745;
+            /* Verde para éxito */
             --background-light: #f8f9fa;
             --card-bg: #ffffff;
             --text-dark: #343a40;
@@ -25,7 +30,11 @@
             --warning-color: #ff9800;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             font-family: 'Open Sans', sans-serif;
@@ -45,8 +54,18 @@
             box-shadow: 0 10px 30px var(--shadow-medium);
             animation: fadeIn 0.8s ease-out;
         }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* ==================== 2. Tipografía y Encabezado ==================== */
         h1 {
@@ -66,7 +85,7 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
         }
-        
+
         /* ==================== 3. Formulario y Grupos ==================== */
         .form-group {
             margin-bottom: 20px;
@@ -81,7 +100,10 @@
             transition: color 0.3s;
         }
 
-        select, input[type="text"], textarea, input[type="file"] {
+        select,
+        input[type="text"],
+        textarea,
+        input[type="file"] {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -91,7 +113,9 @@
             background-color: #fcfcfc;
         }
 
-        select:focus, input:focus, textarea:focus {
+        select:focus,
+        input:focus,
+        textarea:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
             outline: none;
@@ -99,8 +123,10 @@
         }
 
         /* Campos opcionales/condicionales */
-        .hidden-module { display: none !important; }
-        
+        .hidden-module {
+            display: none !important;
+        }
+
         /* ==================== 4. Botones y Animación ==================== */
         .main-button {
             padding: 14px 20px;
@@ -133,7 +159,7 @@
             cursor: not-allowed;
             box-shadow: none;
         }
-        
+
         /* Módulo de Carga */
         #file-upload-module {
             border: 2px dashed var(--primary-color);
@@ -156,12 +182,36 @@
             animation: slideIn 0.5s ease-out;
         }
 
-        .info.show { display: block; }
-        .success { background-color: var(--accent-color); color: white; }
-        .warning { background-color: var(--warning-color); color: var(--text-dark); }
-        .error { background-color: var(--error-color); color: white; }
-        
-        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .info.show {
+            display: block;
+        }
+
+        .success {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .warning {
+            background-color: var(--warning-color);
+            color: var(--text-dark);
+        }
+
+        .error {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* ==================== 6. Miniaturas ==================== */
         #thumbnail-container {
@@ -177,7 +227,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .thumbnail-item {
             position: relative;
             width: 100px;
@@ -187,8 +237,10 @@
             box-shadow: 0 3px 10px var(--shadow-medium);
             transition: transform 0.2s ease;
         }
-        
-        .thumbnail-item:hover { transform: scale(1.08); }
+
+        .thumbnail-item:hover {
+            transform: scale(1.08);
+        }
 
         .thumbnail-item img {
             width: 100%;
@@ -212,9 +264,11 @@
             z-index: 10;
             transition: background-color 0.2s;
         }
-        
+
         /* Ocultar el marcador de cámara */
-        #start-camera-button { display: none !important; }
+        #start-camera-button {
+            display: none !important;
+        }
 
         /* ==================== 7. Animación de Carga (Profesional: Construcción) ==================== */
         .spinner-container {
@@ -236,12 +290,25 @@
             animation: bounce 1.4s infinite ease-in-out both;
         }
 
-        .loader:nth-child(2) { animation-delay: -0.32s; }
-        .loader:nth-child(3) { animation-delay: -0.16s; }
+        .loader:nth-child(2) {
+            animation-delay: -0.32s;
+        }
+
+        .loader:nth-child(3) {
+            animation-delay: -0.16s;
+        }
 
         @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1.0);
+            }
         }
 
         .upload-progress-bar {
@@ -251,7 +318,8 @@
             border-radius: 5px;
             margin-top: 10px;
             overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Sombra para profundidad */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Sombra para profundidad */
         }
 
         .progress-bar-fill {
@@ -271,8 +339,10 @@
 
         .nav-link a {
             color: var(--primary-dark);
-            text-decoration: none; /* Quitar el subrayado */
-            font-weight: 700; /* Negrita */
+            text-decoration: none;
+            /* Quitar el subrayado */
+            font-weight: 700;
+            /* Negrita */
             font-size: 1.1em;
             padding: 10px 15px;
             border: 2px solid var(--primary-color);
@@ -291,11 +361,19 @@
 
         /* Responsividad */
         @media (max-width: 576px) {
-            .container { padding: 20px; }
-            .thumbnail-item { width: 80px; height: 80px; }
-            h1 { font-size: 1.8em; }
-        }
+            .container {
+                padding: 20px;
+            }
 
+            .thumbnail-item {
+                width: 80px;
+                height: 80px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
     </style>
 </head>
 
@@ -304,14 +382,14 @@
         <h1>Carga de Evidencias en Lote Profesional 🚀</h1>
 
         <p id="message" class="info"></p>
-        
+
         <p class="nav-link">
             <a href="index.html">📸 Ir a Carga de Evidencia Toma de Foto</a>
         </p>
 
         <div id="upload-tab" class="tab-content active">
             <h3>📝 Detalles de la Evidencia</h3>
-            
+
             <div class="form-group">
                 <label for="evidenceType">Elige el Tipo Principal de Evidencia:</label>
                 <select id="evidenceType">
@@ -356,29 +434,31 @@
                     <input type="text" id="extraActivityTitle" placeholder="Ej: Clase de Natación - Grupo A" />
                 </div>
             </div>
-            
+
             <div id="description-section" class="hidden-module">
                 <div class="form-group">
                     <label for="description">Descripción breve (Obligatoria para Gestión con Iglesia):</label>
                     <input type="text" id="description" placeholder="Ej: Adecuación Parque Techo" />
                 </div>
             </div>
-            
+
         </div>
         <div id="file-upload-module" class="hidden-module">
-            
+
             <h3>🖼️ Archivos para Subir</h3>
-            <p style="color: var(--text-light); margin-bottom: 15px; font-size: 0.95em;">Selecciona una o varias imágenes.</p>
-            
+            <p style="color: var(--text-light); margin-bottom: 15px; font-size: 0.95em;">Selecciona una o varias
+                imágenes.</p>
+
             <input type="file" id="multi-file-input" accept="image/jpeg, image/png, image/webp" multiple>
 
             <div id="thumbnail-container">
                 <p style="text-align: center; color: var(--text-light);">No hay archivos seleccionados.</p>
             </div>
-            
+
             <div id="upload-animation" class="hidden-module">
                 <div class="spinner-container">
-                    <div class="loader"></div> <div class="loader"></div>
+                    <div class="loader"></div>
+                    <div class="loader"></div>
                     <div class="loader"></div>
                     <span id="upload-counter-text">Preparando subida...</span>
                 </div>
@@ -391,7 +471,7 @@
                 <span id="upload-status-icon">⬆️</span> Subir <span id="file-count">0</span> Evidencias Seleccionadas
             </button>
         </div>
-        
+
         <button id="start-camera-button" class="hidden-module"></button>
 
     </div>
@@ -399,7 +479,7 @@
     <script>
         // ------------------ CONFIGURACIÓN GLOBAL ------------------
         // ⚠️ ¡REEMPLAZA ESTE URL CON EL URL PUBLICADO DE TU APPS SCRIPT!
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzynxOxVk-tg20To8yJzOhhOElR3ePcs53TAIuQzOXl0tujr7Udye6oZTFt-qhgCWe-HA/exec'; 
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz7pEks_KhWPnNwBU7lyWVvgk4u9VEfJeFN4Z4dkoPn-fF2cAHvBhS7FM3l8XN0L9RycA/exec';
 
         // =======================================================
         // === 1. SELECTORES Y VARIABLES DE ESTADO ===
@@ -417,17 +497,17 @@
         const messageElement = document.getElementById('message');
         const fileUploadModule = document.getElementById('file-upload-module');
         const multiFileInput = document.getElementById('multi-file-input');
-        const thumbnailContainer = document.getElementById('thumbnail-container'); 
-        const uploadSelectedButton = document.getElementById('upload-selected-button'); 
-        const fileCountSpan = document.getElementById('file-count'); 
-        const uploadStatusIcon = document.getElementById('upload-status-icon'); 
+        const thumbnailContainer = document.getElementById('thumbnail-container');
+        const uploadSelectedButton = document.getElementById('upload-selected-button');
+        const fileCountSpan = document.getElementById('file-count');
+        const uploadStatusIcon = document.getElementById('upload-status-icon');
         const uploadAnimation = document.getElementById('upload-animation');
         const uploadCounterText = document.getElementById('upload-counter-text');
         const progressBarFill = document.getElementById('progress-fill');
 
-        let selectedFiles = []; 
-        let fileCounter = 0; 
-        let participantNameMap = {}; 
+        let selectedFiles = [];
+        let fileCounter = 0;
+        let participantNameMap = {};
 
         // Mapeo de Opciones de Evidencia (Actualizado)
         const evidenceOptionsMap = {
@@ -441,7 +521,7 @@
             ],
             'actividades': [
                 { value: 'AMAR', text: 'Actividad Amar es Esperar' },
-                { value: 'ENCUENTRO CON JESUS', text: 'Act Encuentro con Jesus' },
+                { value: 'CRECER CON AMOR', text: 'Actividad Crecer Con Amor' },
                 { value: 'CUMPLEAÑOS', text: 'Cumpleaños' },
                 { value: 'DEFENSORIA', text: 'Actividad Defensoria' },
                 { value: 'ACTIVIDADES EXTRACURRICULARES', text: 'Actividad Extracurriculares' }, // Requiere Título Extra
@@ -479,7 +559,7 @@
         // =======================================================
         // === 2. FUNCIONES DE VALIDACIÓN Y UI ===
         // =======================================================
-        
+
         function showMessage(message, type, duration = 5000) {
             messageElement.textContent = message;
             messageElement.className = `info show ${type}`;
@@ -514,7 +594,7 @@
             renderThumbnails();
             checkFormAndEnableModules();
         }
-        
+
         function validateForm(showError = true) {
             const mainType = evidenceTypeSelect.value;
             const specificType = specificTypeSelect.value;
@@ -565,7 +645,7 @@
         // =======================================================
         // === 3. COMUNICACIÓN (FETCH) ===
         // =======================================================
-        
+
         function handleSuccess() {
             showMessage('✅ Evidencia(s) guardada(s) con éxito!', 'success');
             // Ocultar animación
@@ -590,7 +670,7 @@
                 const response = await fetch(`${scriptURL}?action=getParticipants`);
                 if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
                 const data = await response.json();
-                
+
                 if (data.status === 'error') { throw new Error(data.message); }
 
                 participantNameMap = {};
@@ -609,45 +689,40 @@
             }
         }
 
-async function uploadPhoto(file, index) {
-    const selectedCode = participantCodeSelect.value;
-    const participantName = participantNameMap[selectedCode] || '';
-    const mainType = evidenceTypeSelect.value;
-    const specificType = specificTypeSelect.value;
-    const tutorName = tutorNameSelect.value;
-    const description = descriptionInput.value.trim();
-    const extraTitle = extraActivityTitle.value.trim();
+        async function uploadPhoto(file) {
+            const selectedCode = participantCodeSelect.value || '';
+            const additionalInfo = extraActivityTitle.value.trim() || descriptionInput.value.trim() || '';
 
-    // Construir identificador adicional único para el lote
-    let additionalInfo = '';
-    if (mainType === 'actividades') additionalInfo = tutorName;
-    if (mainType === 'participantes') additionalInfo = selectedCode;
-    if (mainType === 'donaciones') additionalInfo = description || 'GENERAL';
+            // Igual que en el sistema que sube una sola
+            const postData = {
+                photoData: file.base64Data,                   // 👈 el Apps Script espera "photoData"
+                evidenceType: evidenceTypeSelect.value,
+                specificType: specificTypeSelect.value,
+                participantCode: selectedCode,
+                additionalInfo: additionalInfo
+            };
 
-    // Añadir índice para que cada archivo tenga su propio sufijo (_L1, _L2, _L3, etc.)
-    additionalInfo += `_L${index + 1}`;
+            // Convertir a formato URL-encoded con un campo "payload"
+            const formBody = new URLSearchParams();
+            formBody.append('payload', JSON.stringify(postData));
 
-    // Formato que entiende tu Apps Script
-    const payload = {
-        photoData: file.base64Data,        // nombre que el backend espera
-        evidenceType: mainType,
-        specificType: specificType,
-        participantCode: selectedCode,
-        additionalInfo: additionalInfo
-    };
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: formBody
+                });
 
-    try {
-        const response = await fetch(scriptURL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-        return await response.json();
-    } catch (error) {
-        throw new Error(`Error de red: ${error.message}`);
-    }
-}
+                const result = await response.json();
+                return result;
+
+            } catch (error) {
+                console.error('Error en uploadPhoto:', error);
+                throw new Error(`Ocurrió un error al subir la foto: ${error.message}`);
+            }
+        }
+
 
         // =======================================================
         // === 4. LÓGICA DE CARGA DE ARCHIVOS MÚLTIPLES ===
@@ -666,7 +741,7 @@ async function uploadPhoto(file, index) {
                     const base64Content = e.target.result.split(',')[1];
                     fileCounter++;
                     selectedFiles.push({
-                        id: fileCounter, 
+                        id: fileCounter,
                         name: file.name,
                         base64Data: base64Content
                     });
@@ -683,17 +758,17 @@ async function uploadPhoto(file, index) {
             uploadSelectedButton.disabled = selectedFiles.length === 0;
 
             if (selectedFiles.length === 0) {
-                 thumbnailContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No hay archivos seleccionados.</p>';
-                 return;
+                thumbnailContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No hay archivos seleccionados.</p>';
+                return;
             }
 
             selectedFiles.forEach((file) => {
                 const thumbnailDiv = document.createElement('div');
                 thumbnailDiv.className = 'thumbnail-item';
-                
+
                 const img = document.createElement('img');
                 img.src = 'data:image/jpeg;base64,' + file.base64Data;
-                
+
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'X';
                 deleteBtn.className = 'delete-thumbnail-btn';
@@ -716,7 +791,7 @@ async function uploadPhoto(file, index) {
         async function uploadSelectedFiles() {
             if (!validateForm()) return;
 
-            const filesToUpload = [...selectedFiles]; 
+            const filesToUpload = [...selectedFiles];
             const initialCount = filesToUpload.length;
             let successfulUploads = 0;
             let hadError = false;
@@ -725,7 +800,7 @@ async function uploadPhoto(file, index) {
 
             uploadSelectedButton.disabled = true;
             uploadStatusIcon.textContent = '...';
-            
+
             // Mostrar animación profesional
             uploadAnimation.classList.remove('hidden-module');
             progressBarFill.style.width = '0%';
@@ -734,26 +809,38 @@ async function uploadPhoto(file, index) {
 
             for (let i = 0; i < filesToUpload.length; i++) {
                 const file = filesToUpload[i];
-                uploadCounterText.textContent = `Subiendo ${i + 1} de ${initialCount} (${file.name})...`;
+
+                // --- Generar sufijo incremental para evitar duplicados ---
+                const fileSuffix = i === 0 ? '' : `${i}`;
+                const fileNameParts = file.name.split('.');
+                const extension = fileNameParts.pop();
+                const baseName = fileNameParts.join('.');
+                const uniqueFileName = `${baseName}${fileSuffix}.${extension}`;
+
+                // Actualizar el nombre del archivo temporalmente
+                const fileWithUniqueName = { ...file, name: uniqueFileName };
+
+                uploadCounterText.textContent = `Subiendo ${i + 1} de ${initialCount} (${uniqueFileName})...`;
                 progressBarFill.style.width = `${((i + 1) / initialCount) * 100}%`;
 
                 try {
-                    const result = await uploadPhoto(file, i);
+                    const result = await uploadPhoto(fileWithUniqueName);
                     if (result && result.status === 'success') {
                         successfulUploads++;
                     } else {
                         throw new Error(result ? result.message : 'Error desconocido.');
                     }
                 } catch (error) {
-                    console.error(`Error al subir ${file.name}:`, error);
+                    console.error(`Error al subir ${uniqueFileName}:`, error);
                     hadError = true;
-                    showMessage(`❌ Error al subir ${file.name}: ${error.message || error}`, 'error');
+                    showMessage(`❌ Error al subir ${uniqueFileName}: ${error.message || error}`, 'error');
                 }
             }
 
+
             // Finalizar animación
             progressBarFill.style.width = '100%';
-            
+
             if (successfulUploads === initialCount) {
                 handleSuccess();
             } else if (successfulUploads > 0 && hadError) {
@@ -810,7 +897,7 @@ async function uploadPhoto(file, index) {
                 participantsSection.classList.remove('hidden-module');
                 loadParticipants();
             }
-            
+
             checkFormAndEnableModules();
         });
 
@@ -829,7 +916,7 @@ async function uploadPhoto(file, index) {
             if (mainType === 'donaciones' && specificType === 'GESTION IGLESIA') {
                 descriptionSection.classList.remove('hidden-module');
             }
-            
+
             checkFormAndEnableModules();
         });
 
@@ -842,9 +929,9 @@ async function uploadPhoto(file, index) {
 
         // 6. INICIALIZACIÓN
         document.addEventListener('DOMContentLoaded', () => {
-            hideAllModules(); 
+            hideAllModules();
         });
-    </script> 
+    </script>
 </body>
 
 </html>
