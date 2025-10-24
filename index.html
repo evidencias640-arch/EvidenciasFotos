@@ -1910,14 +1910,13 @@
                 stopCamera();
             }
             try {
-const constraints = {
-  video: {
-    width: { ideal: 1200, max: 1920 },
-    height: { ideal: 1600, max: 1080 },
-    facingMode: facingMode || "environment" // o "user"
-  }
-};
-
+            const constraints = {
+              video: {
+                width: { ideal: 1200, max: 1920 },
+                height: { ideal: 1600, max: 1080 },
+                facingMode: facingMode || "environment" // o "user"
+              }
+            };
                 stream = await navigator.mediaDevices.getUserMedia(constraints);
                 webcamVideo.srcObject = stream;
                 webcamVideo.play();
