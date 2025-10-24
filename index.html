@@ -1910,13 +1910,13 @@
                 stopCamera();
             }
             try {
-                const constraints = {
-                    video: {
-                        width: { ideal: 1920 },
-                        height: { ideal: 1080 },
-                        facingMode: facingMode
-                    }
-                };
+const constraints = {
+  video: {
+    width: { ideal: 1200, max: 1920 },
+    height: { ideal: 1600, max: 1080 },
+    facingMode: facingMode || "environment" // o "user"
+  }
+};
 
                 stream = await navigator.mediaDevices.getUserMedia(constraints);
                 webcamVideo.srcObject = stream;
@@ -1974,31 +1974,65 @@
         }
 
         captureButton.addEventListener('click', () => {
-            if (!stream) {
-                showMessage('🚫 La cámara no está activa. Vuelve a intentar o revisa los permisos.', 'error', messageElement);
-                return;
-            }
-            const context = photoCanvas.getContext('2d');
-            // 🔧 Forzar tamaño fijo de 1200x1600 al capturar
-            photoCanvas.width = 1920;
-            photoCanvas.height = 1080;
-            context.drawImage(webcamVideo, 0, 0, 1920, 1080);
+    if (!stream) {
+        showMessage('🚫 La cámara no está activa. Vuelve a intentar o revisa los permisos.', 'error', messageElement);
+        return;
+    }
 
+    const context = photoCanvas.getContext('2d');
+    
+    // 🔧 Forzar tamaño fijo de salida (retrato)
+    const targetWidth = 1200;
+    const targetHeight = 1600;
+    photoCanvas.width = targetWidth;
+    photoCanvas.height = targetHeight;
 
-            photoCanvas.toBlob(blob => {
-                capturedPhotoBlob = blob;
-                webcamVideo.style.display = 'none';
-                photoCanvas.style.display = 'block';
-                captureButton.classList.add('hidden'); // Oculta el botón de tomar foto
-                switchCameraButton.classList.add('hidden'); // Ocultar el botón al tomar la foto
+    // --- Obtener tamaño real del video para calcular recorte centrado ---
+    const videoWidth = webcamVideo.videoWidth;
+    const videoHeight = webcamVideo.videoHeight;
 
-                // Muestra los botones de retake y save en el overlay
-                retakeButton.classList.remove('hidden');
-                saveButton.classList.remove('hidden');
-                buttonOverlay.classList.add('show'); // Muestra el overlay
-                stopCamera();
-            }, 'image/jpeg', 0.95);
-        });
+    // Calcular proporciones
+    const videoAspect = videoWidth / videoHeight;
+    const targetAspect = targetWidth / targetHeight;
+
+    let sx, sy, sWidth, sHeight;
+
+    // 📏 Si el video es más ancho que el canvas → recorta los lados
+    if (videoAspect > targetAspect) {
+        sHeight = videoHeight;
+        sWidth = videoHeight * targetAspect;
+        sx = (videoWidth - sWidth) / 2;
+        sy = 0;
+    } 
+    // 📏 Si el video es más alto que el canvas → recorta arriba y abajo
+    else {
+        sWidth = videoWidth;
+        sHeight = videoWidth / targetAspect;
+        sx = 0;
+        sy = (videoHeight - sHeight) / 2;
+    }
+
+    // --- Dibujar al canvas (centrado y ajustado a 1200x1600) ---
+    context.drawImage(webcamVideo, sx, sy, sWidth, sHeight, 0, 0, targetWidth, targetHeight);
+
+    // --- Convertir el canvas a blob (JPEG alta calidad) ---
+    photoCanvas.toBlob(blob => {
+        capturedPhotoBlob = blob;
+
+        webcamVideo.style.display = 'none';
+        photoCanvas.style.display = 'block';
+
+        captureButton.classList.add('hidden'); 
+        switchCameraButton.classList.add('hidden'); 
+
+        retakeButton.classList.remove('hidden');
+        saveButton.classList.remove('hidden');
+        buttonOverlay.classList.add('show'); 
+
+        stopCamera();
+    }, 'image/jpeg', 0.95);
+});
+
 
         // Event listener para el nuevo botón de cambio de cámara
         switchCameraButton.addEventListener('click', switchCamera);
