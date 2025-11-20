@@ -1,13 +1,13 @@
 <!DOCTYPE html>
+<!-- saved from url=(0065)https://evidencias640-arch.github.io/EvidenciasFotos/index-1.html -->
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📂 Carga de Evidencias en Lote Profesional</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
-        rel="stylesheet">
+    <link href="./📂 Carga de Evidencias en Lote Profesional_files/css2" rel="stylesheet">
 
     <style>
         /* ==================== 1. Variables y Reset ==================== */
@@ -381,10 +381,12 @@
     <div class="container">
         <h1>Carga de Evidencias en Lote Profesional 🚀</h1>
 
-        <p id="message" class="info"></p>
+        <p id="message" class="info error">❌ Error al cargar la lista de participantes. Verifica la hoja
+            "Participantes".</p>
 
         <p class="nav-link">
-            <a href="index.html">📸 Ir a Carga de Evidencia Toma de Foto</a>
+            <a href="https://evidencias640-arch.github.io/EvidenciasFotos/index.html">📸 Ir a Carga de Evidencia Toma de
+                Foto</a>
         </p>
 
         <div id="upload-tab" class="tab-content active">
@@ -400,11 +402,11 @@
                 </select>
             </div>
 
-            <div id="participants-section" class="hidden-module">
+            <div id="participants-section" class="">
                 <div class="form-group">
                     <label for="participantCode">Selecciona el Participante (Obligatorio):</label>
                     <select id="participantCode">
-                        <option value="">-- Cargando participantes --</option>
+                        <option value="">-- Selecciona un participante --</option>
                     </select>
                 </div>
             </div>
@@ -412,7 +414,13 @@
             <div class="form-group">
                 <label for="specificType">Elige el Tipo Específico de Evidencia:</label>
                 <select id="specificType">
-                    <option value="">-- Selecciona el tipo principal primero --</option>
+                    <option value="">-- Selecciona una opción --</option>
+                    <option value="AYUDA ALIMENTARIA">Ayuda Alimentaria</option>
+                    <option value="CUMPLEANOS">Cumpleaños Especifico</option>
+                    <option value="PERSONAL">Donaciones Personal</option>
+                    <option value="MEDICINA">Medicina</option>
+                    <option value="REGALOS PADRINOS">Regalos Padrinos</option>
+                    <option value="TFI">TFI</option>
                 </select>
             </div>
 
@@ -431,14 +439,14 @@
 
                 <div id="extraTitleWrapper" class="hidden-module">
                     <label for="extraActivityTitle">Título de la Actividad Extracurricular:</label>
-                    <input type="text" id="extraActivityTitle" placeholder="Ej: Clase de Natación - Grupo A" />
+                    <input type="text" id="extraActivityTitle" placeholder="Ej: Clase de Natación - Grupo A">
                 </div>
             </div>
 
             <div id="description-section" class="hidden-module">
                 <div class="form-group">
                     <label for="description">Descripción breve (Obligatoria para Gestión con Iglesia):</label>
-                    <input type="text" id="description" placeholder="Ej: Adecuación Parque Techo" />
+                    <input type="text" id="description" placeholder="Ej: Adecuación Parque Techo">
                 </div>
             </div>
 
@@ -449,7 +457,7 @@
             <p style="color: var(--text-light); margin-bottom: 15px; font-size: 0.95em;">Selecciona una o varias
                 imágenes.</p>
 
-            <input type="file" id="multi-file-input" accept="image/jpeg, image/png, image/webp" multiple>
+            <input type="file" id="multi-file-input" accept="image/jpeg, image/png, image/webp" multiple="">
 
             <div id="thumbnail-container">
                 <p style="text-align: center; color: var(--text-light);">No hay archivos seleccionados.</p>
@@ -467,7 +475,7 @@
                 </div>
             </div>
 
-            <button id="upload-selected-button" class="main-button" type="button" disabled>
+            <button id="upload-selected-button" class="main-button" type="button" disabled="">
                 <span id="upload-status-icon">⬆️</span> Subir <span id="file-count">0</span> Evidencias Seleccionadas
             </button>
         </div>
@@ -675,26 +683,45 @@
             showMessage('Cargando participantes...', 'info');
             try {
                 const response = await fetch(`${scriptURL}?action=getParticipants`);
-                if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
                 const data = await response.json();
 
-                if (data.status === 'error') { throw new Error(data.message); }
+                let participantsList = [];
+
+                // 🟢 Caso 1: El servidor devuelve directamente un array
+                if (Array.isArray(data)) {
+                    participantsList = data;
+                }
+                // 🟢 Caso 2: Formato recomendado { participants: [...] }
+                else if (data && Array.isArray(data.participants)) {
+                    participantsList = data.participants;
+                }
+                // ❌ Caso inválido
+                else {
+                    console.error("Respuesta del servidor:", data);
+                    throw new Error("El servidor devolvió un formato inválido.");
+                }
 
                 participantNameMap = {};
                 participantCodeSelect.innerHTML = '<option value="">-- Selecciona un participante --</option>';
-                data.participants.forEach(p => {
+
+                participantsList.forEach(p => {
                     const option = document.createElement('option');
                     option.value = p.code;
                     option.textContent = `${p.code} - ${p.name}`;
                     participantCodeSelect.appendChild(option);
                     participantNameMap[p.code] = p.name;
                 });
+
                 showMessage('Participantes cargados.', 'success', 2000);
+
             } catch (error) {
                 console.error('Error al cargar participantes:', error);
                 showMessage('❌ Error al cargar la lista de participantes. Verifica la hoja "Participantes".', 'error');
             }
         }
+
 
         async function uploadPhoto(file) {
             const selectedCode = participantCodeSelect.value || '';
@@ -939,6 +966,9 @@
             hideAllModules();
         });
     </script>
+
+
+
 </body>
 
 </html>
