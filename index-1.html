@@ -727,12 +727,16 @@
             const selectedCode = participantCodeSelect.value || '';
             const additionalInfo = extraActivityTitle.value.trim() || descriptionInput.value.trim() || '';
 
+            // 🟢 NUEVO: Obtener el nombre del participante
+            const participantName = participantNameMap[selectedCode] || ''; // Busca el nombre usando el código
+
             // Igual que en el sistema que sube una sola
             const postData = {
                 photoData: file.base64Data,                   // 👈 el Apps Script espera "photoData"
                 evidenceType: evidenceTypeSelect.value,
                 specificType: specificTypeSelect.value,
                 participantCode: selectedCode,
+                participantName: participantName, // 🟢 NUEVO: Añadir el nombre aquí
                 additionalInfo: additionalInfo
             };
 
@@ -756,7 +760,6 @@
                 throw new Error(`Ocurrió un error al subir la foto: ${error.message}`);
             }
         }
-
 
         // =======================================================
         // === 4. LÓGICA DE CARGA DE ARCHIVOS MÚLTIPLES ===
