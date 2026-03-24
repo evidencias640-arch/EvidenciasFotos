@@ -725,23 +725,42 @@
 
 
         async function uploadPhoto(file, fileSuffix = '') {
-            const selectedCode = participantCodeSelect.value || '';
+            const selectedCode  = participantCodeSelect.value || '';
+            const evidenceType  = evidenceTypeSelect.value;
+            const specificType  = specificTypeSelect.value;
 
-            // ✅ Obtener nombre del participante desde el mapa
-            const participantName = participantNameMap[selectedCode] || '';
+            // Construir additionalInfo EXACTAMENTE igual que el index.html que funciona
+            let additionalInfo = '';
 
-            // ✅ Campos separados tal como los espera el Apps Script en saveEvidence()
+            if (evidenceType === 'participantes') {
+                additionalInfo = participantNameMap[selectedCode] || '';
+
+            } else if (evidenceType === 'actividades') {
+                if (specificType === 'ACTIVIDADES EXTRACURRICULARES') {
+                    const extraTitle = extraActivityTitle.value.trim();
+                    additionalInfo = tutorNameSelect.value + '_' + extraTitle;
+                } else {
+                    // Cualquier otra actividad: solo la tutora
+                    additionalInfo = tutorNameSelect.value;
+                }
+
+            } else if (evidenceType === 'donaciones') {
+                if (specificType === 'GESTION IGLESIA') {
+                    additionalInfo = descriptionInput.value.trim();
+                }
+            }
+
+            const postData = {
+                photoData:       file.base64Data,
+                evidenceType:    evidenceType,
+                specificType:    specificType,
+                participantCode: selectedCode,
+                additionalInfo:  additionalInfo,
+                fileSuffix:      fileSuffix
+            };
+
             const formBody = new URLSearchParams();
-            formBody.append('action',          'doPostEvidencia');
-            formBody.append('imageData',        file.base64Data);           // Apps Script espera "imageData"
-            formBody.append('mainType',         evidenceTypeSelect.value);  // Apps Script espera "mainType"
-            formBody.append('specificType',     specificTypeSelect.value);
-            formBody.append('participantCode',  selectedCode);
-            formBody.append('participantName',  participantName);
-            formBody.append('tutorName',        tutorNameSelect.value || '');       // ✅ TUTORA correcta
-            formBody.append('extraTitle',       extraActivityTitle.value.trim());   // ✅ Título extracurricular
-            formBody.append('description',      descriptionInput.value.trim());     // ✅ Descripción Gestión Iglesia
-            formBody.append('fileSuffix',       fileSuffix);                        // ✅ Sufijo para evitar duplicados en lote
+            formBody.append('payload', JSON.stringify(postData));
 
             try {
                 const response = await fetch(scriptURL, {
@@ -846,11 +865,11 @@
             for (let i = 0; i < filesToUpload.length; i++) {
                 const file = filesToUpload[i];
 
-                // ✅ El sufijo se envía al servidor para que lo agregue AL FINAL del nombre generado
-                // Ejemplo: JULIANA.jpg / JULIANA1.jpg / JULIANA2.jpg
+                // Sufijo incremental: primera foto sin número, luego 1, 2, 3...
+                // Resultado: JULIANA.jpg / JULIANA1.jpg / JULIANA2.jpg
                 const fileSuffix = i === 0 ? '' : `${i}`;
 
-                uploadCounterText.textContent = `Subiendo ${i + 1} de ${initialCount} (archivo ${i + 1})...`;
+                uploadCounterText.textContent = `Subiendo ${i + 1} de ${initialCount}...`;
                 progressBarFill.style.width = `${((i + 1) / initialCount) * 100}%`;
 
                 try {
