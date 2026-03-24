@@ -724,26 +724,24 @@
         }
 
 
-        async function uploadPhoto(file) {
+        async function uploadPhoto(file, fileSuffix = '') {
             const selectedCode = participantCodeSelect.value || '';
-            const additionalInfo = extraActivityTitle.value.trim() || descriptionInput.value.trim() || '';
 
-            // 🟢 NUEVO: Obtener el nombre del participante
-            const participantName = participantNameMap[selectedCode] || ''; // Busca el nombre usando el código
+            // ✅ Obtener nombre del participante desde el mapa
+            const participantName = participantNameMap[selectedCode] || '';
 
-            // Igual que en el sistema que sube una sola
-            const postData = {
-                photoData: file.base64Data,                   // 👈 el Apps Script espera "photoData"
-                evidenceType: evidenceTypeSelect.value,
-                specificType: specificTypeSelect.value,
-                participantCode: selectedCode,
-                participantName: participantName, // 🟢 NUEVO: Añadir el nombre aquí
-                additionalInfo: additionalInfo
-            };
-
-            // Convertir a formato URL-encoded con un campo "payload"
+            // ✅ Campos separados tal como los espera el Apps Script en saveEvidence()
             const formBody = new URLSearchParams();
-            formBody.append('payload', JSON.stringify(postData));
+            formBody.append('action',          'doPostEvidencia');
+            formBody.append('imageData',        file.base64Data);           // Apps Script espera "imageData"
+            formBody.append('mainType',         evidenceTypeSelect.value);  // Apps Script espera "mainType"
+            formBody.append('specificType',     specificTypeSelect.value);
+            formBody.append('participantCode',  selectedCode);
+            formBody.append('participantName',  participantName);
+            formBody.append('tutorName',        tutorNameSelect.value || '');       // ✅ TUTORA correcta
+            formBody.append('extraTitle',       extraActivityTitle.value.trim());   // ✅ Título extracurricular
+            formBody.append('description',      descriptionInput.value.trim());     // ✅ Descripción Gestión Iglesia
+            formBody.append('fileSuffix',       fileSuffix);                        // ✅ Sufijo para evitar duplicados en lote
 
             try {
                 const response = await fetch(scriptURL, {
@@ -848,30 +846,24 @@
             for (let i = 0; i < filesToUpload.length; i++) {
                 const file = filesToUpload[i];
 
-                // --- Generar sufijo incremental para evitar duplicados ---
+                // ✅ El sufijo se envía al servidor para que lo agregue AL FINAL del nombre generado
+                // Ejemplo: JULIANA.jpg / JULIANA1.jpg / JULIANA2.jpg
                 const fileSuffix = i === 0 ? '' : `${i}`;
-                const fileNameParts = file.name.split('.');
-                const extension = fileNameParts.pop();
-                const baseName = fileNameParts.join('.');
-                const uniqueFileName = `${baseName}${fileSuffix}.${extension}`;
 
-                // Actualizar el nombre del archivo temporalmente
-                const fileWithUniqueName = { ...file, name: uniqueFileName };
-
-                uploadCounterText.textContent = `Subiendo ${i + 1} de ${initialCount} (${uniqueFileName})...`;
+                uploadCounterText.textContent = `Subiendo ${i + 1} de ${initialCount} (archivo ${i + 1})...`;
                 progressBarFill.style.width = `${((i + 1) / initialCount) * 100}%`;
 
                 try {
-                    const result = await uploadPhoto(fileWithUniqueName);
+                    const result = await uploadPhoto(file, fileSuffix);
                     if (result && result.status === 'success') {
                         successfulUploads++;
                     } else {
                         throw new Error(result ? result.message : 'Error desconocido.');
                     }
                 } catch (error) {
-                    console.error(`Error al subir ${uniqueFileName}:`, error);
+                    console.error(`Error al subir archivo ${i + 1}:`, error);
                     hadError = true;
-                    showMessage(`❌ Error al subir ${uniqueFileName}: ${error.message || error}`, 'error');
+                    showMessage(`❌ Error al subir archivo ${i + 1}: ${error.message || error}`, 'error');
                 }
             }
 
